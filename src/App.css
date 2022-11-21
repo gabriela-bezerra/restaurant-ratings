@@ -1,0 +1,198 @@
+.loading-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  margin-top: 300px;
+}
+
+.loading-box img {
+  display: block;
+  max-height: 100px;
+  margin: auto;
+  animation: pulse 1s infinite;
+}
+
+.loading-box div {
+  font-size: 20px;
+  font-family: cursive;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.6);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.cover {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace
+}
+
+.login-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover {
+  background-color: white;
+  width: 30em;
+  height: 35em;
+  position: relative;
+  border-radius: 1em;
+  box-shadow: 0 0.188em 1.55em rgb(156, 156, 156);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.alt-login {
+  width: 80%;
+  height: 3em;
+  display: flex;
+  justify-content: space-around;
+}
+
+.alt-login div {
+  width: 45%;
+  height: 90%;
+  border-radius: 0.25em;
+  background-color: whitesmoke;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.google {
+  background-image: url("/Users/gabrielabezerra/src/react-project/restaurant-ratings/src/google.png");
+}
+
+.facebook {
+  background-image: url("/Users/gabrielabezerra/src/react-project/restaurant-ratings/src/facebook.png");
+}
+
+input {
+  border: none;
+  background-color: rgb(229, 226, 226);
+  height: 4em;
+  width: 80%;
+  border-radius: 0.25em;
+  text-align: center;
+  padding: 2em;
+}
+
+input :focus {
+  outline-color: rgb(32, 177, 255);
+}
+
+.login-btn {
+  width: 40%;
+  height: 3em;
+  background-color: rgb(32, 177, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+  border-radius: 0.25em;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  transform: scale(1.25);
+}
+
+.text {
+  position: relative;
+  bottom: -2em;
+}
+
+
+
+.search-inputs {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace
+}
+
+.search-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-inputs {
+
+  width: 30em;
+  height: 35em;
+  position: relative;
+  border-radius: 1em;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.sign-up-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-btn {
+  width: 40%;
+  height: 3em;
+  background-color: rgb(32, 177, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+  border-radius: 0.25em;
+  cursor: pointer;
+}
+
+.add-restaurant-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover-add {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace
+}
+
+.cover-add {
+  background-color: white;
+  width: 40em;
+  height: 40em;
+  position: relative;
+  border-radius: 1em;
+  box-shadow: 0 0.188em 1.55em rgb(156, 156, 156);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
