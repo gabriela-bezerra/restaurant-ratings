@@ -25,8 +25,17 @@ fake.add_provider(internet)
 fake.add_provider(person)
 fake.add_provider(company)
 
+# creates a category
+
 categories_options = ["Asian Fusion", "Bakery", "Bar/Louge", "Barbeque", "Breakfast", "British", "Brunch", "Burgers", "Caribbean", "Chinese",
                       "Coffee", "Cuban", "Deli", "Fast Food", "Doughnuts", "French", "German", "Italian", "Japonese", "Mexican", "Steaks", "Vegan", "Thai"]
+
+for category in categories_options:
+    db_category = crud.create_a_category(name=category)
+    model.db.session.add(db_category)
+    model.db.session.flush()
+    print('------db_category-------')
+    print(db_category)
 
 for _ in range(20):
     name = fake.company()
@@ -37,7 +46,6 @@ for _ in range(20):
     zipcode = fake.zipcode_in_state('WA')
     latitude, longitude, _, _, _ = fake.local_latlng()
 
-    category = choice(categories_options)
     rating = randint(1, 5)
     review = fake.text()
     photo_url = fake.image_url()
@@ -51,22 +59,20 @@ for _ in range(20):
         zipcode=zipcode,
         latitude=latitude,
         longitude=longitude)
+    print('------Restaurant-------')
     print(db_restaurant)
 
     model.db.session.add(db_restaurant)
     model.db.session.flush()
 
-    # creates a category
-    db_category = crud.create_a_category(name=category)
-    print(db_category)
-
-    model.db.session.add(db_category)
-    model.db.session.flush()
+    category = crud.random_category()
+    print('------random category-------')
+    print(category)
 
     # creates a relationship Restaurant-Category
     db_restaurantsCategories = crud.add_a_restaurant_to_a_category(
         restaurant_id=db_restaurant.restaurant_id,
-        category_id=db_category.category_id)
+        category_id=category.category_id)
 
     print(db_restaurantsCategories)
     model.db.session.add(db_restaurantsCategories)

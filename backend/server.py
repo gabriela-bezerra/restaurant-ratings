@@ -113,6 +113,7 @@ def show_restaurant_information(restaurant_id):
                     'state': restaurant.state,
                     'zipcode': restaurant.zipcode})
 
+
 # CATEGORIES RELATED ROUTES-------------------------------------
 
 
@@ -131,17 +132,16 @@ def get_all_categories():
 
 @app.route('/api/categories/results', methods=['POST'])
 def get_search_results():
+    """ Return a list with all restaurants by category """
 
     search_request = request.get_json()
-    print('-------------------------')
-    print(search_request)
 
-    get_categories = crud.get_categoryId_by_name(search_request)
+    get_restaurants = crud.get_restaurants_by_category(search_request)
 
     results = []
 
-    for obj in categories:
-        results.append(obj.name)
+    for restaurant in get_restaurants:
+        results.append(restaurant.name)
 
     return jsonify(results)
 

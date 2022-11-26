@@ -78,7 +78,7 @@ class RestaurantCategory(db.Model):
         "categories.category_id"), nullable=False)
 
     def __repr__(self):
-        return f'<Restaurants Categories id={self.restaurant_category_id}>'
+        return f'<Restaurants Categories id={self.restaurant_category_id}, restaurant_id={self.restaurant_id}, category_id={self.category_id} >'
 
 
 class Rating(db.Model):

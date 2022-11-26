@@ -17,6 +17,7 @@ function SearchBar(props) {
 
     const submit = (e) => {
         e.preventDefault()
+        console.log(selected)
         fetch('/api/categories/results', {
             method: 'POST',
             body: JSON.stringify(selected),
@@ -24,9 +25,7 @@ function SearchBar(props) {
                 'Content-Type': 'application/json',
             }
         }).then(result => result.json())
-            .then(data => {
-                console.log(data)
-            })
+            .then((data) => setRestaurants(data));
     };
 
     const submitAll = (e) => {
@@ -51,6 +50,11 @@ function SearchBar(props) {
                             ))}
                         </select>
                         <button type='button' onClick={submit}> Submit </button>
+                        {restaurants.map((value) => (
+                            <ul>
+                                <li>{value}</li>
+                            </ul>
+                        ))}
                     </div>
                     <div>
                         <label className='categories-city'> Search by city</label>
@@ -63,7 +67,7 @@ function SearchBar(props) {
                     <button type='button' onClick={submitAll} > Submit</button>
                     {restaurants.map((value) => (
                         <ul>
-                            <li> Restaurant: {value}</li>
+                            <li>{value}</li>
                         </ul>
                     ))}
                 </div>

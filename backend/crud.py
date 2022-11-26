@@ -1,6 +1,7 @@
 """CRUD operations."""
 
 from model import db, User, Restaurant, Category, RestaurantCategory, Rating, Review, Photo, connect_to_db
+from sqlalchemy.sql import func
 
 # Users ------------
 
@@ -86,18 +87,28 @@ def get_categoryId_by_name(name):
     return Category.query.filter(Category.name == name).all()
 
 
+def random_category():
+
+    return Category.query.order_by(func.random()).first()
+
+
+def get_restaurants_by_category(category_name):
+    """Gives all restaurants by category."""
+
+    get_category = Category.query.filter(
+        Category.name == category_name).all()
+
+    for categories in get_category:
+        return categories.restaurants
+
+
 # Restaurants categories ------------
+
 
 def add_a_restaurant_to_a_category(restaurant_id, category_id):
     """Creates a relationship restaurant-category"""
 
     return RestaurantCategory(restaurant_id=restaurant_id, category_id=category_id)
-
-
-def get_restaurants_by_category(categoryId):
-    """Gives all restaurants by category."""
-
-    return RestaurantCategory.query.filter(RestaurantCategory.category_id == category_id)
 
 
 # Ratings ------------
