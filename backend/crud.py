@@ -54,6 +54,11 @@ def get_specific_restaurant(restaurant_id):
     return Restaurant.query.get(restaurant_id)
 
 
+def get_specific_restaurant(restaurant_zipcode):
+    """Gives restaurant of choice."""
+
+    return Restaurant.query.filter_by(zipcode=restaurant_zipcode)
+
 # Categories ------------
 
 
@@ -69,6 +74,18 @@ def get_all_categories():
     return Category.query.all()
 
 
+def category_by_name():
+    """Group categories by name."""
+
+    return db.session.query(Category.name).group_by('name').all()
+
+
+def get_categoryId_by_name(name):
+    """Get category_id by category name"""
+
+    return Category.query.filter(Category.name == name).all()
+
+
 # Restaurants categories ------------
 
 def add_a_restaurant_to_a_category(restaurant_id, category_id):
@@ -77,10 +94,11 @@ def add_a_restaurant_to_a_category(restaurant_id, category_id):
     return RestaurantCategory(restaurant_id=restaurant_id, category_id=category_id)
 
 
-def get_restaurants_by_category(restaurant_id):
+def get_restaurants_by_category(categoryId):
     """Gives all restaurants by category."""
 
-    return RestaurantCategory.query.filter(RestaurantCategory.restaurant_id == restaurant_id)
+    return RestaurantCategory.query.filter(RestaurantCategory.category_id == category_id)
+
 
 # Ratings ------------
 

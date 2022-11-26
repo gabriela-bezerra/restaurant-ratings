@@ -1,7 +1,7 @@
-function UserProfile(props) {
+function UserProfile({ user }) {
 
     return (
-        <h1>User Profile</h1>
+        <h1>welcome!</h1>
 
 
     )

@@ -1,13 +1,15 @@
 """Server for restaurant ratings app."""
 
-from flask import (Flask, jsonify, render_template, request, flash, session,
-                   redirect)
+from flask import (Flask, jsonify, render_template, request, session,)
 from model import connect_to_db, db, User
 import crud
+import json
+from jinja2 import StrictUndefined
 
 
 app = Flask(__name__)
 app.secret_key = "dev"
+app.jinja_env.undefined = StrictUndefined
 
 
 @app.route('/')
@@ -17,34 +19,36 @@ def show_homepage():
     return render_template('index.html')
 
 
-@app.route('/<path>')
-def route(path):
+# USER RELATED ROUTES-------------------------------------
 
-    return render_template('index.html')
+@app.route('/api/create', methods=['POST'])
+def create_user_account():
+    """ Creates user account. """
 
+    data = request.get_json()
 
-# @app.route('/user', methods=['POST'])
-# def make_user():
-#     """Create a new user"""
+    first_name = data.get('firstName')
+    last_name = data.get('lastName')
+    email = data.get('email')
+    password = data.get('password')
 
-#     email = request.form.get('email')
-#     password = request.form.get('password')
+    new_user = crud.create_user(fname=first_name,
+                                lname=last_name,
+                                email=email,
+                                password=password)
 
-#     checking_user = crud.get_user_by_email(email)
+    db.session.add(new_user)
+    db.session.commit()
 
-#     if checking_user:
-#         flash("This email is already for use by an existing user.")
-#     else:
-#         checking_user = crud.create_user(email, password)
-#         db.session.add(checking_user)
-#         db.session.commit()
-#         flash("You have successfully created an account! Please login.")
-
-#     return redirect('/')
+    return jsonify({'firstName': first_name,
+                    'lastName': last_name,
+                    'email': email,
+                    'password': password})
 
 
 @app.route('/api/login', methods=['POST'])
 def login_user():
+    """ Checks user in the data base for login. """
 
     data = request.get_json()
 
@@ -59,22 +63,87 @@ def login_user():
         return jsonify({'status': '420', 'message': ' User not found, please sign up.'})
     elif password == user_password:
         session['user_id'] = user_id
-        return jsonify({'status': '200', 'message': 'Logged in successfuly'})
+        return jsonify({'status': '200', 'message': 'Logged in!'})
     else:
         return jsonify({'status': '400', 'message': 'Incorret password'})
 
 
-# @app.route('/api/categories')
-# def get_categories():
+# RESTAURANTS RELATED ROUTES-------------------------------------
 
-#     categories = crud.get_all_categories()
+@app.route('/api/restaurants')
+def get_all_restaurants():
+    """ Return all restaurants. """
 
-#     category = []
+    restaurants = crud.get_all_restaurants()
 
-#     for items in categories:
-#         category.append(items.name)
+    results = []
 
-#     return jsonify(category)
+    for obj in restaurants:
+        results.append(obj.name)
+
+    return jsonify(results)
+
+
+@app.route('/api/restaurants/<zipcode>')
+def get_restaurants_by_zipcode(zipcode):
+    """ Return restaurants by zipcode """
+
+    # restaurants = crud.get_restaurants_by_zipcode(zipcode)
+
+    # results = {}
+
+    # for obj in restaurants:
+    #     results = {'restaurant': obj.name}
+
+    # print('------------------')
+    # print(results)
+    # return jsonify({'restaurants': restaurants})
+
+
+@app.route('/api/restaurant/<restaurant_id>')
+def show_restaurant_information(restaurant_id):
+    """ Shows details for individual restaurant """
+
+    restaurant = crud.get_specific_restaurant(restaurant_id)
+
+    return jsonify({'id': restaurant.id,
+                    'name': restaurant.name,
+                    'address': restaurant.address,
+                    'city': restaurant.city,
+                    'state': restaurant.state,
+                    'zipcode': restaurant.zipcode})
+
+# CATEGORIES RELATED ROUTES-------------------------------------
+
+
+@app.route('/api/categories')
+def get_all_categories():
+    """ Return a list with all categories. """
+
+    categories = crud.category_by_name()
+    results = []
+
+    for obj in categories:
+        results.append(obj.name)
+
+    return jsonify(results)
+
+
+@app.route('/api/categories/results', methods=['POST'])
+def get_search_results():
+
+    search_request = request.get_json()
+    print('-------------------------')
+    print(search_request)
+
+    get_categories = crud.get_categoryId_by_name(search_request)
+
+    results = []
+
+    for obj in categories:
+        results.append(obj.name)
+
+    return jsonify(results)
 
 
 if __name__ == "__main__":

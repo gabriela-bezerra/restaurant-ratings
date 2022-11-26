@@ -1,20 +1,21 @@
-function SignUpForm(props) {
+function SignUpForm({ handleSubmit, setFirstName, setLastName, setEmail, setPassword }) {
 
 
 
     return (
-        <form className="sign-up-page">
-            <div className="cover">
-                <h1>Sign up</h1>
-                First Name <input type="text" name="first-name" />
-                Last Name <input type="text" name="last-name" />
-                Email<input type="text" name="email" />
-                Password<input type="password" name="password" />
-
-                <input type="submit" className="submit-btn" value="Submit" />
-
-            </div>
-        </form >
+        <div> Create An Account
+            <form className="sign-up-page" onSubmit={handleSubmit}>
+                <label htmlFor="first-name">First Name</label>
+                <input type="text" id="first-name" onChange={setFirstName}></input>
+                <label htmlFor="last-name">Last Name</label>
+                <input type="text" id="last-name" onChange={setLastName}></input>
+                <label htmlFor="email" >Email Address</label>
+                <input type="text" id="email" onChange={setEmail}></input>
+                <label htmlFor="password"> Password</label>
+                <input type="password" id='password' onChange={setPassword}></input>
+                <button type="submit">Sign Up </button>
+            </form>
+        </div>
     )
 }
 export default SignUpForm;
