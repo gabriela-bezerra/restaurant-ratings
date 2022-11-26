@@ -75,12 +75,6 @@ def get_all_categories():
     return Category.query.all()
 
 
-def category_by_name():
-    """Group categories by name."""
-
-    return db.session.query(Category.name).group_by('name').all()
-
-
 def get_categoryId_by_name(name):
     """Get category_id by category name"""
 

@@ -121,7 +121,7 @@ def show_restaurant_information(restaurant_id):
 def get_all_categories():
     """ Return a list with all categories. """
 
-    categories = crud.category_by_name()
+    categories = crud.get_all_categories()
     results = []
 
     for obj in categories:
