@@ -84,8 +84,8 @@ def get_all_restaurants():
     return jsonify(results)
 
 
-@app.route('/api/restaurants/<zipcode>',  methods=['POST'])
-def get_restaurants_by_zipcode(zipcode):
+@app.route('/api/restaurants/results',  methods=['POST'])
+def get_restaurants_by_zipcode():
     """ Return restaurants by zipcode """
 
     zipcode = request.get_json()
@@ -131,7 +131,7 @@ def get_all_categories():
 
 
 @app.route('/api/categories/results', methods=['POST'])
-def get_search_results(category):
+def get_search_results():
     """ Return a list with all restaurants by category """
 
     category = request.get_json()

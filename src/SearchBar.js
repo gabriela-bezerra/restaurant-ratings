@@ -7,7 +7,11 @@ function SearchBar(props) {
 
     const [selected, setSelected] = useState(categories[0]);
 
+    const [zipcode, setZipcode] = useState("")
+
     const [restaurants, setRestaurants] = useState([])
+
+
 
     useEffect(() => {
         fetch('/api/categories')
@@ -28,6 +32,19 @@ function SearchBar(props) {
             .then((data) => setRestaurants(data));
     };
 
+    const submitZipcode = (e) => {
+        e.preventDefault()
+        console.log(zipcode)
+        fetch('/api/restaurants/results', {
+            method: 'POST',
+            body: JSON.stringify(zipcode),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(result => result.json())
+            .then((data) => setRestaurants(data));
+    };
+
     const submitAll = (e) => {
         e.preventDefault()
         fetch('/api/restaurants')
@@ -35,15 +52,6 @@ function SearchBar(props) {
             .then((restaurantsData) => setRestaurants(restaurantsData));
 
     }
-
-    const submitZipcode = (e) => {
-        e.preventDefault()
-        fetch('/api/restaurants')
-            .then((response) => response.json())
-            .then((restaurantsData) => setRestaurants(restaurantsData));
-
-    }
-
     return (
         <section className="search-page">
             <div className="search-inputs">
@@ -61,7 +69,7 @@ function SearchBar(props) {
                     </div>
                     <div>
                         <label className='categories-city'> Search by zipcode</label>
-                        <input type="text" className='categories-city' />
+                        <input type="text" className='categories-city' value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
                         <button type='button' className='btn-city' onClick={submitZipcode}> Submit </button>
                     </div>
                     <div>
