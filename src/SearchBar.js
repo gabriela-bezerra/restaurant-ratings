@@ -15,7 +15,7 @@ function SearchBar(props) {
             .then((data) => setCategorires(data));
     }, []);
 
-    const submit = (e) => {
+    const submitCategory = (e) => {
         e.preventDefault()
         console.log(selected)
         fetch('/api/categories/results', {
@@ -36,6 +36,14 @@ function SearchBar(props) {
 
     }
 
+    const submitZipcode = (e) => {
+        e.preventDefault()
+        fetch('/api/restaurants')
+            .then((response) => response.json())
+            .then((restaurantsData) => setRestaurants(restaurantsData));
+
+    }
+
     return (
         <section className="search-page">
             <div className="search-inputs">
@@ -49,31 +57,27 @@ function SearchBar(props) {
                                 </option>
                             ))}
                         </select>
-                        <button type='button' onClick={submit}> Submit </button>
-                        {restaurants.map((value) => (
-                            <ul>
-                                <li>{value}</li>
-                            </ul>
-                        ))}
+                        <button type='button' className='btn-category' onClick={submitCategory}> Submit </button>
                     </div>
                     <div>
-                        <label className='categories-city'> Search by city</label>
+                        <label className='categories-city'> Search by zipcode</label>
                         <input type="text" className='categories-city' />
-                        <button type='button' onClick={submit}> Submit </button>
+                        <button type='button' className='btn-city' onClick={submitZipcode}> Submit </button>
+                    </div>
+                    <div>
+                        <label className='all-restaurants'> All Restaurants</label>
+                        <button type='button' className='btn-all' onClick={submitAll} > Submit</button>
                     </div>
                 </form>
-                <div>
-                    All Restaurants
-                    <button type='button' onClick={submitAll} > Submit</button>
-                    {restaurants.map((value) => (
-                        <ul>
-                            <li>{value}</li>
-                        </ul>
-                    ))}
-                </div>
+            </div>
+            <div className="dataResult">
+                {restaurants.map((value) => (
+                    <ul>
+                        <li>{value}</li>
+                    </ul>
+                ))}
             </div>
 
-            <div className="dataResult"></div>
         </section>
 
 

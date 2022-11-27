@@ -49,16 +49,16 @@ def get_all_restaurants():
     return Restaurant.query.all()
 
 
-def get_specific_restaurant(restaurant_id):
+def get_restaurant_by_name(restaurant_name):
     """Gives restaurant of choice."""
 
-    return Restaurant.query.get(restaurant_id)
+    return Restaurant.query.filter(Restaurant.name == restaurant_name).first()
 
 
-def get_specific_restaurant(restaurant_zipcode):
+def get_restaurant_by_zipcode(restaurant_zipcode):
     """Gives restaurant of choice."""
 
-    return Restaurant.query.filter_by(zipcode=restaurant_zipcode)
+    return Restaurant.query.filter(Restaurant.zipcode == restaurant_zipcode).all()
 
 # Categories ------------
 

@@ -84,20 +84,20 @@ def get_all_restaurants():
     return jsonify(results)
 
 
-@app.route('/api/restaurants/<zipcode>')
+@app.route('/api/restaurants/<zipcode>',  methods=['POST'])
 def get_restaurants_by_zipcode(zipcode):
     """ Return restaurants by zipcode """
 
-    # restaurants = crud.get_restaurants_by_zipcode(zipcode)
+    zipcode = request.get_json()
 
-    # results = {}
+    get_restaurants = crud.get_restaurant_by_zipcode(zipcode)
 
-    # for obj in restaurants:
-    #     results = {'restaurant': obj.name}
+    results = []
 
-    # print('------------------')
-    # print(results)
-    # return jsonify({'restaurants': restaurants})
+    for restaurant in get_restaurants:
+        results.append(restaurant.name)
+
+    return jsonify(results)
 
 
 @app.route('/api/restaurant/<restaurant_id>')
@@ -131,12 +131,12 @@ def get_all_categories():
 
 
 @app.route('/api/categories/results', methods=['POST'])
-def get_search_results():
+def get_search_results(category):
     """ Return a list with all restaurants by category """
 
-    search_request = request.get_json()
+    category = request.get_json()
 
-    get_restaurants = crud.get_restaurants_by_category(search_request)
+    get_restaurants = crud.get_restaurants_by_category(category)
 
     results = []
 
