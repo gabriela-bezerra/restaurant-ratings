@@ -60,13 +60,19 @@ def get_restaurant_by_zipcode(restaurant_zipcode):
 
     return Restaurant.query.filter(Restaurant.zipcode == restaurant_zipcode).all()
 
+
 # Categories ------------
 
 
 def create_a_category(name):
     """Create and return a new category"""
 
-    return Category(name=name)
+    checking_categories = Category.query.filter(Category.name == name).first()
+
+    if checking_categories:
+        return checking_categories
+    else:
+        return Category(name=name)
 
 
 def get_all_categories():
@@ -141,16 +147,26 @@ def create_review(restaurant_id, user_id, review, date):
 def filter_reviews_by_user(user_id):
     """Gives all reviews attributed to a user."""
 
-    return Review.query.filter(Review.user_id == user_id)
+    return Review.query.filter(Review.user_id == user_id).first()
 
 
 def filter_ratings_by_restaurant(restaurant_id):
     """Gives all reviews attributed to a restaurant."""
 
-    return Review.query.filter(Review.restaurant_id == restaurant_id)
+    return Review.query.filter(Review.restaurant_id == restaurant_id).first()
 
+
+def get_reviews_by_restaurant(restaurant_id):
+    """Gives all restaurants by category."""
+
+    get_reviews = Review.query.filter(
+        Review.restaurant_id == restaurant_id).all()
+
+    for reviews in get_reviews:
+        return reviews.restaurant
 
 # Photos ------------
+
 
 def add_photo(photo_url, restaurant_id, user_id):
     """Create a rating."""

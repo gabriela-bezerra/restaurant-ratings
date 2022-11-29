@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function SearchBar(props) {
 
@@ -7,9 +8,11 @@ function SearchBar(props) {
 
     const [selected, setSelected] = useState(categories[0]);
 
-    const [zipcode, setZipcode] = useState("")
+    const [zipcode, setZipcode] = useState("");
 
-    const [restaurants, setRestaurants] = useState([])
+    const [restaurants, setRestaurants] = useState([]);
+
+    // const [restaurantInfo, setRestaurantInfo] = useState("");
 
 
 
@@ -52,6 +55,24 @@ function SearchBar(props) {
             .then((restaurantsData) => setRestaurants(restaurantsData));
 
     }
+
+
+    const handleRestaurantDetails = (e) => {
+
+        console.log('Gabriela')
+        console.log(e)
+        fetch('/api/restaurant/details', {
+            method: 'POST',
+            body: JSON.stringify(e),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(result => result.json())
+            .then((data) => console.log(data));
+    };
+
+
+
     return (
         <section className="search-page">
             <div className="search-inputs">
@@ -81,12 +102,12 @@ function SearchBar(props) {
             <div className="dataResult">
                 {restaurants.map((value) => (
                     <ul>
-                        <li>{value}</li>
+                        <li key={value}><Link onClick={() => handleRestaurantDetails(value)} >{value}</Link></li>
                     </ul>
                 ))}
             </div>
 
-        </section>
+        </section >
 
 
     )

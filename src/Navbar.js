@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
+import logo from '/Users/gabrielabezerra/src/react-project/restaurant-ratings/src/logo.png'
 
 
-function Navbar(logo) {
+
+function Navbar(loggedIn) {
+
+
 
     // if (loggedIn) {
     //     return (
@@ -24,9 +28,10 @@ function Navbar(logo) {
         <nav>
             <Link to="/" className="navbar-brand d-flex justify-content-start">
                 <img src={logo} height="60" alt="logo" />
+                <span> Restaurants Finder</span>
             </Link>
 
-            <section className="d-flex justify-content-end">
+            <section className="nav-items d-flex justify-content-end">
                 <Link to="/" className="nav-link nav-item" > Home
                 </Link>
 

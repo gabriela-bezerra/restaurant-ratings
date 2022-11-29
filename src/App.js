@@ -12,7 +12,7 @@ import AddNewRestaurant from './AddNewRestaurant'
 import SearchResult from './SearchResult'
 import RestaurantDetails from './RestaurantDetails'
 import UserProfile from './UserProfile'
-import logo from '/Users/gabrielabezerra/src/react-project/restaurant-ratings/src/logo.png'
+
 
 
 
@@ -54,7 +54,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar logo={logo} brand="Restaurant Finder" loggedIn={loggedIn} />
+      <Navbar loggedIn={loggedIn} />
       <div className="container-fluid">
         <Route exact path="/">
           <Homepage />

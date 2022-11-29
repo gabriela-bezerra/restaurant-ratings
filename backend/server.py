@@ -100,13 +100,17 @@ def get_restaurants_by_zipcode():
     return jsonify(results)
 
 
-@app.route('/api/restaurant/<restaurant_id>')
-def show_restaurant_information(restaurant_id):
+@app.route('/api/restaurant/details', methods=['POST'])
+def show_restaurant_information():
     """ Shows details for individual restaurant """
 
-    restaurant = crud.get_specific_restaurant(restaurant_id)
+    restaurant_name = request.get_json()
+    print('_______restaurant from front end')
+    print(restaurant_name)
 
-    return jsonify({'id': restaurant.id,
+    restaurant = crud.get_restaurant_by_name(restaurant_name)
+
+    return jsonify({'restaurant_id': restaurant.restaurant_id,
                     'name': restaurant.name,
                     'address': restaurant.address,
                     'city': restaurant.city,
@@ -122,12 +126,13 @@ def get_all_categories():
     """ Return a list with all categories. """
 
     categories = crud.get_all_categories()
+
     results = []
 
     for obj in categories:
         results.append(obj.name)
 
-    return jsonify(results)
+    return jsonify(sorted(results))
 
 
 @app.route('/api/categories/results', methods=['POST'])

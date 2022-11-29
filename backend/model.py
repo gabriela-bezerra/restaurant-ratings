@@ -117,7 +117,7 @@ class Review(db.Model):
     user = db.relationship("User", back_populates="reviews")
 
     def __repr__(self):
-        return f'<Reviews review_id={self.review_id} restaurant_id={self.restaurant_id} user_id={self.user_id}>'
+        return f'<Reviews review_id={self.review_id} restaurant_id={self.restaurant_id} user_id={self.user_id}, review={self.review}>'
 
 
 class Photo(db.Model):
