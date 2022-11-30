@@ -78,24 +78,27 @@ def get_all_restaurants():
 
     results = []
 
-    for obj in restaurants:
-        results.append(obj.name)
+    for restaurant in restaurants:
+        results.append(restaurant.to_dict())
 
     return jsonify(results)
 
 
-@app.route('/api/restaurants/results',  methods=['POST'])
+@app.route('/api/restaurants/zipcode',  methods=['POST'])
 def get_restaurants_by_zipcode():
     """ Return restaurants by zipcode """
 
     zipcode = request.get_json()
+    print(zipcode)
 
     get_restaurants = crud.get_restaurant_by_zipcode(zipcode)
+    print(get_restaurants)
 
     results = []
+    print(results)
 
     for restaurant in get_restaurants:
-        results.append(restaurant.name)
+        results.append(restaurant.to_dict())
 
     return jsonify(results)
 
@@ -104,11 +107,9 @@ def get_restaurants_by_zipcode():
 def show_restaurant_information():
     """ Shows details for individual restaurant """
 
-    restaurant_name = request.get_json()
-    print('_______restaurant from front end')
-    print(restaurant_name)
+    restaurant_id = request.get_json()
 
-    restaurant = crud.get_restaurant_by_name(restaurant_name)
+    restaurant = crud.get_restaurant_by_id(restaurant_id)
 
     return jsonify({'restaurant_id': restaurant.restaurant_id,
                     'name': restaurant.name,
@@ -146,7 +147,7 @@ def get_search_results():
     results = []
 
     for restaurant in get_restaurants:
-        results.append(restaurant.name)
+        results.append(restaurant.to_dict())
 
     return jsonify(results)
 

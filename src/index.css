@@ -43,7 +43,8 @@
   cursor: pointer;
 }
 
-/* .google {
+/* 
+.google {
   background-image: url("../img/google.png");
 }
 
@@ -121,13 +122,6 @@ input :focus {
   font-family: 'Courier New', Courier, monospace
 }
 
-.sign-up-page {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .submit-btn {
   width: 40%;
@@ -173,4 +167,41 @@ input :focus {
   right: 0px;
   width: 300px;
   padding: 10px;
+}
+
+.sign-up-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover-sign-up {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace
+}
+
+.cover-sign-up {
+  background-color: white;
+  width: 30em;
+  height: 35em;
+  position: relative;
+  border-radius: 1em;
+  box-shadow: 0 0.188em 1.55em rgb(156, 156, 156);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.input-sign-up {
+  border: none;
+  background-color: rgb(229, 226, 226);
+  height: 2.5em;
+  width: 80%;
+  border-radius: 0.25em;
+  text-align: center;
+  padding: 2em;
 }

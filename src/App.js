@@ -15,19 +15,17 @@ import UserProfile from './UserProfile'
 
 
 
-
-
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false)
 
-  const [user, setUser] = useState({ email: "", password: "" });
+  const [user, setUser] = useState({ firstName: "", lastName: "", email: "", password: "" });
+
+  // const [errorMessage, setErrorMessage] = useState("");
 
   let history = useHistory();
 
-  // const [restaurantId, setRestaurantId] = useState(0)
-  // const [restaurants, setRestaurants] = useState([]);
-
+  // SIGN UP PAGE -------------------------
 
   const handleCreateSubmit = (e) => {
     e.preventDefault();
@@ -39,17 +37,40 @@ function App() {
       }
     })
       .then((response) => response.json())
-      .then((result) => {
+      .then((result => {
+        setLoggedIn(true)
         history.push('/login')
-      });
+      }));
   };
 
-  // useEffect(() => {
-  //   fetch('/api/restaurants')
-  //     .then((response) => response.json())
-  //     .then((responseJson) => setRestaurants(responseJson.restaurants))
-  // }, []);
+  // LOGIN PAGE ----------------------------
 
+
+
+  // const handleLoginSubmit = (e) => {
+  //   e.preventDefault()
+  //   console.log(user)
+  //   fetch('/api/login', {
+  //     method: 'POST',
+  //     body: JSON.stringify(user),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     }
+  //   }).then(result => result.json())
+  //     .then(data => {
+  //       console.log(data)
+  //       if (data.status === '200') {
+  //         setErrorMessage("")
+  //         history.push('/')
+  //       } else {
+  //         setErrorMessage(data.message)
+
+  //       }
+
+  //     })
+  // }
+
+  // SEARCH PAGE ----------------------------
 
 
   return (
@@ -62,7 +83,7 @@ function App() {
         </Route>
 
         <Route exact path="/login">
-          <LoginForm />
+          <LoginForm user={user} setUser={setUser} />
         </Route>
 
         <Route exact path="/sign-up">
@@ -81,11 +102,11 @@ function App() {
           <SearchResult />
         </Route>
 
-        <Route exact path="/restaurant-details">
+        <Route exact path="/restaurant-details/:restaurant_id">
           <RestaurantDetails />
         </Route>
 
-        <Route exact path="/user-profile">
+        <Route exact path="/user-profile/">
           <UserProfile user={user} />
         </Route>
       </div>

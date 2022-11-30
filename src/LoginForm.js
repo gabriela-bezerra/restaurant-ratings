@@ -1,14 +1,15 @@
+import React from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-function LoginForm(props) {
+function LoginForm({ user, setUser }) {
 
-    const [user, setUser] = useState({ email: "", password: "" });
 
     const [errorMessage, setErrorMessage] = useState("");
 
     let history = useHistory();
-
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -21,6 +22,7 @@ function LoginForm(props) {
         }).then(result => result.json())
             .then(data => {
                 if (data.status === '200') {
+                    toast("Logged in successfuly!")
                     setErrorMessage("")
                     history.push('/')
                 } else {
@@ -30,6 +32,7 @@ function LoginForm(props) {
 
             })
     }
+
 
 
     return (

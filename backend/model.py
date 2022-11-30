@@ -49,6 +49,18 @@ class Restaurant(db.Model):
     def __repr__(self):
         return f'<Restaurant name={self.name}>'
 
+    def to_dict(self):
+
+        return {
+            'restaurant_id': self.restaurant_id,
+            'name': self.name,
+            'address': self.address,
+            'city': self.city,
+            'state': self.state,
+            'zipcode': self.zipcode,
+            'latitude': self.latitude,
+            'longitude': self.longitude}
+
 
 class Category(db.Model):
     """A category."""

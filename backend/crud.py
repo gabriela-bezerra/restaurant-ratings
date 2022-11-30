@@ -49,10 +49,10 @@ def get_all_restaurants():
     return Restaurant.query.all()
 
 
-def get_restaurant_by_name(restaurant_name):
+def get_restaurant_by_id(restaurant_id):
     """Gives restaurant of choice."""
 
-    return Restaurant.query.filter(Restaurant.name == restaurant_name).first()
+    return Restaurant.query.filter(Restaurant.restaurant_id == restaurant_id).first()
 
 
 def get_restaurant_by_zipcode(restaurant_zipcode):

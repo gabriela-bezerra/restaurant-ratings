@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom'
 
 function SearchBar(props) {
 
@@ -12,9 +13,6 @@ function SearchBar(props) {
 
     const [restaurants, setRestaurants] = useState([]);
 
-    // const [restaurantInfo, setRestaurantInfo] = useState("");
-
-
 
     useEffect(() => {
         fetch('/api/categories')
@@ -22,9 +20,8 @@ function SearchBar(props) {
             .then((data) => setCategorires(data));
     }, []);
 
-    const submitCategory = (e) => {
+    const handleSubmitCategory = (e) => {
         e.preventDefault()
-        console.log(selected)
         fetch('/api/categories/results', {
             method: 'POST',
             body: JSON.stringify(selected),
@@ -35,10 +32,11 @@ function SearchBar(props) {
             .then((data) => setRestaurants(data));
     };
 
-    const submitZipcode = (e) => {
+    const handleSubmitZipcode = (e) => {
         e.preventDefault()
         console.log(zipcode)
-        fetch('/api/restaurants/results', {
+        console.log(restaurants)
+        fetch('/api/restaurants/zipcode', {
             method: 'POST',
             body: JSON.stringify(zipcode),
             headers: {
@@ -48,7 +46,7 @@ function SearchBar(props) {
             .then((data) => setRestaurants(data));
     };
 
-    const submitAll = (e) => {
+    const handleSubmitAll = (e) => {
         e.preventDefault()
         fetch('/api/restaurants')
             .then((response) => response.json())
@@ -57,19 +55,17 @@ function SearchBar(props) {
     }
 
 
-    const handleRestaurantDetails = (e) => {
-
-        console.log('Gabriela')
-        console.log(e)
-        fetch('/api/restaurant/details', {
-            method: 'POST',
-            body: JSON.stringify(e),
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then(result => result.json())
-            .then((data) => console.log(data));
-    };
+    // const handleRestaurantLink = (e) => {
+    //     // e.preventDefault() *** Uncaught TypeError: e.preventDefault is not a function
+    //     fetch('/api/restaurant/details', {
+    //         method: 'POST',
+    //         body: JSON.stringify(e),
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         }
+    //     }).then(result => result.json())
+    //         .then((data) => console.log(data));
+    // };
 
 
 
@@ -80,29 +76,29 @@ function SearchBar(props) {
                     <div>
                         <label className='categories-dropdown'> Search by category</label>
                         <select value={selected} onChange={(e) => setSelected(e.target.value)}>
-                            {categories.map((value) => (
-                                <option value={value} key={value}>
-                                    {value}
+                            {categories.map((category) => (
+                                <option value={category} key={category}>
+                                    {category}
                                 </option>
                             ))}
                         </select>
-                        <button type='button' className='btn-category' onClick={submitCategory}> Submit </button>
+                        <button type='button' className='btn-category' onClick={handleSubmitCategory}> Submit </button>
                     </div>
                     <div>
                         <label className='categories-city'> Search by zipcode</label>
                         <input type="text" className='categories-city' value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
-                        <button type='button' className='btn-city' onClick={submitZipcode}> Submit </button>
+                        <button type='button' className='btn-city' onClick={handleSubmitZipcode}> Submit </button>
                     </div>
                     <div>
                         <label className='all-restaurants'> All Restaurants</label>
-                        <button type='button' className='btn-all' onClick={submitAll} > Submit</button>
+                        <button type='button' className='btn-all' onClick={handleSubmitAll} > Submit</button>
                     </div>
                 </form>
-            </div>
+            </div >
             <div className="dataResult">
-                {restaurants.map((value) => (
+                {restaurants.map((restaurant) => (
                     <ul>
-                        <li key={value}><Link onClick={() => handleRestaurantDetails(value)} >{value}</Link></li>
+                        <li key={restaurant.restaurant_id}><Link to={`/restaurant-details/${restaurant.restaurant_id}`} >{restaurant.name}</Link></li>
                     </ul>
                 ))}
             </div>
