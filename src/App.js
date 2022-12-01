@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import './App.css';
 import Homepage from './Homepage';
 import Navbar from './Navbar'
@@ -21,9 +21,9 @@ function App() {
 
   const [user, setUser] = useState({ firstName: "", lastName: "", email: "", password: "" });
 
-  // const [errorMessage, setErrorMessage] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
 
-  let history = useHistory();
+  // const history = useHistory();
 
   // SIGN UP PAGE -------------------------
 
@@ -37,45 +37,18 @@ function App() {
       }
     })
       .then((response) => response.json())
-      .then((result => {
+      .then((result) => {
         setLoggedIn(true)
-        history.push('/login')
-      }));
+        setStatusMessage(result.message)
+      }, []);
   };
-
-  // LOGIN PAGE ----------------------------
-
-
-
-  // const handleLoginSubmit = (e) => {
-  //   e.preventDefault()
-  //   console.log(user)
-  //   fetch('/api/login', {
-  //     method: 'POST',
-  //     body: JSON.stringify(user),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     }
-  //   }).then(result => result.json())
-  //     .then(data => {
-  //       console.log(data)
-  //       if (data.status === '200') {
-  //         setErrorMessage("")
-  //         history.push('/')
-  //       } else {
-  //         setErrorMessage(data.message)
-
-  //       }
-
-  //     })
-  // }
-
-  // SEARCH PAGE ----------------------------
-
+  console.log('app page---------')
+  console.log(user)
+  console.log(loggedIn)
 
   return (
     <BrowserRouter>
-      <Navbar loggedIn={loggedIn} />
+      <Navbar loggedIn={loggedIn} user={user} />
       <div className="container-fluid">
         <Route exact path="/">
           <Homepage />
@@ -83,7 +56,7 @@ function App() {
         </Route>
 
         <Route exact path="/login">
-          <LoginForm user={user} setUser={setUser} />
+          <LoginForm user={user} setUser={setUser} setLoggedIn={setLoggedIn} />
         </Route>
 
         <Route exact path="/sign-up">
@@ -91,7 +64,8 @@ function App() {
             setFirstName={(e) => setUser({ ...user, firstName: e.target.value })}
             setLastName={(e) => setUser({ ...user, lastName: e.target.value })}
             setEmail={(e) => setUser({ ...user, email: e.target.value })}
-            setPassword={(e) => setUser({ ...user, password: e.target.value })} />
+            setPassword={(e) => setUser({ ...user, password: e.target.value })}
+            statusMessage={statusMessage} />
         </Route>
 
         <Route exact path="/add-restaurant">
@@ -106,7 +80,7 @@ function App() {
           <RestaurantDetails />
         </Route>
 
-        <Route exact path="/user-profile/">
+        <Route exact path="/user-profile/:user_id">
           <UserProfile user={user} />
         </Route>
       </div>

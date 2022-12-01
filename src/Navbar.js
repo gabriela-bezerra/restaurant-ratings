@@ -3,48 +3,55 @@ import logo from '/Users/gabrielabezerra/src/react-project/restaurant-ratings/sr
 
 
 
-function Navbar(loggedIn) {
+function Navbar(loggedIn, user) {
 
+    console.log('nav page---------')
+    console.log(loggedIn)
+    console.log(user)
 
-
-    // if (loggedIn) {
-    //     return (
-    //         <nav>
-    //             <Link to="/" className="navbar-brand d-flex justify-content-start">
-    //                 <img src={logo} height="60" alt="logo" />
-    //             </Link>
-
-    //             <section className="d-flex justify-content-end">
-    //                 <Link to="/" className="nav-link nav-item" > Home
-    //                 </Link>
-
-    //                 <Link to="/add-restaurant" className="nav-link nav-item" >Add Restaurant
-    //                 </Link>
-    //             </section>
-    //         </nav>
-    //     );
-    // } else {
-    return (
-        <nav>
-            <Link to="/" className="navbar-brand d-flex justify-content-start">
-                <img src={logo} height="60" alt="logo" />
-                <span> Restaurants Finder</span>
-            </Link>
-
-            <section className="nav-items d-flex justify-content-end">
-                <Link to="/" className="nav-link nav-item" > Home
+    if (loggedIn === true) {
+        return (
+            <nav>
+                <Link to="/" className="navbar-brand d-flex justify-content-start">
+                    <img src={logo} height="60" alt="logo" />
+                    <span> Restaurants Finder</span>
                 </Link>
 
-                <Link to="/sign-up" className="nav-link nav-item"> Sign up
+                <section className="nav-items d-flex justify-content-end">
+                    <Link to="/" className="nav-link nav-item" > Home
+                    </Link>
+
+                    <Link to="/add-restaurant" className="nav-link nav-item" >Add Restaurant
+                    </Link>
+
+                    <Link to={`/user-profile/${user.user_id}`} className="nav-link nav-item" >Profile
+                    </Link>
+                </section>
+            </nav>
+        );
+    } else {
+        return (
+            <nav>
+                <Link to="/" className="navbar-brand d-flex justify-content-start">
+                    <img src={logo} height="60" alt="logo" />
+                    <span> Restaurants Finder</span>
                 </Link>
 
-                <Link to="/login" className="nav-link nav-item"> Login
-                </Link>
+                <section className="nav-items d-flex justify-content-end">
+                    <Link to="/" className="nav-link nav-item" > Home
+                    </Link>
 
-                <Link to="/add-restaurant" className="nav-link nav-item">Add Restaurant
-                </Link>
-            </section>
-        </nav>
-    );
+                    <Link to="/sign-up" className="nav-link nav-item"> Sign up
+                    </Link>
+
+                    <Link to="/login" className="nav-link nav-item"> Login
+                    </Link>
+
+                    <Link to="/add-restaurant" className="nav-link nav-item">Add Restaurant
+                    </Link>
+                </section>
+            </nav>
+        );
+    }
 }
 export default Navbar;

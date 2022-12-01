@@ -1,10 +1,11 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css'
 
-function LoginForm({ user, setUser }) {
+
+function LoginForm({ user, setUser, setLoggedIn }) {
 
 
     const [errorMessage, setErrorMessage] = useState("");
@@ -24,14 +25,15 @@ function LoginForm({ user, setUser }) {
                 if (data.status === '200') {
                     toast("Logged in successfuly!")
                     setErrorMessage("")
+                    setLoggedIn(true)
                     history.push('/')
                 } else {
                     setErrorMessage(data.message)
 
                 }
 
-            })
-    }
+            }, []);
+    };
 
 
 

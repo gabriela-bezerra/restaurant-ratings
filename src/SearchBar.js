@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom'
 
 function SearchBar(props) {
 
@@ -53,20 +52,6 @@ function SearchBar(props) {
             .then((restaurantsData) => setRestaurants(restaurantsData));
 
     }
-
-
-    // const handleRestaurantLink = (e) => {
-    //     // e.preventDefault() *** Uncaught TypeError: e.preventDefault is not a function
-    //     fetch('/api/restaurant/details', {
-    //         method: 'POST',
-    //         body: JSON.stringify(e),
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         }
-    //     }).then(result => result.json())
-    //         .then((data) => console.log(data));
-    // };
-
 
 
     return (

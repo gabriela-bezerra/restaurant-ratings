@@ -89,6 +89,8 @@ for restaurant in restaurant_data:
 
 model.db.session.commit()
 
+restaurants = crud.get_all_restaurants()
+
 for n in range(20):
     password = 'test'
     fname = fake.first_name()
@@ -104,24 +106,19 @@ for n in range(20):
     model.db.session.add(user)
     model.db.session.flush()
 
-    # # creates a review
-    # restaurants = crud.get_all_restaurants()
+    # creates a review
+    for restaurant in restaurants:
+        review = fake.text()
+        date = datetime.date.today()
+        restaurant_id = restaurant.restaurant_id
+        review = crud.create_review(
+            restaurant_id=restaurant_id,
+            user_id=user.user_id,
+            review=review,
+            date=date)
 
-    # for restaurant in restaurants:
-    #     restaurant_id = restaurant.restaurant_id
-    #     print('--------test-------')
-    #     print(restaurant_id)
-    #     review = fake.text()
-    #     date = datetime.date.today()
-
-    #     review = crud.create_review(
-    #         restaurant_id=restaurant_id,
-    #         user_id=user.user_id,
-    #         review=review,
-    #         date=date)
-
-    # model.db.session.add(review)
-    # model.db.session.flush()
+    model.db.session.add(review)
+    model.db.session.flush()
 
 
 model.db.session.commit()

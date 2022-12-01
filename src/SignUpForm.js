@@ -1,4 +1,4 @@
-function SignUpForm({ handleSubmit, setFirstName, setLastName, setEmail, setPassword }) {
+function SignUpForm({ handleSubmit, setFirstName, setLastName, setEmail, setPassword, statusMessage }) {
 
 
 
@@ -15,6 +15,7 @@ function SignUpForm({ handleSubmit, setFirstName, setLastName, setEmail, setPass
                     <input className="input-sign-up" type="text" id="email" onChange={setEmail}></input>
                     <label htmlFor="password"> Password</label>
                     <input className="input-sign-up" type="password" id='password' onChange={setPassword}></input>
+                    {statusMessage}
                     <button className="login-btn" type="submit">Create Account </button>
                 </div>
             </form>

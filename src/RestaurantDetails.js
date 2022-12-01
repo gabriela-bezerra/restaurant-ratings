@@ -8,8 +8,7 @@ function RestaurantDetails(props) {
 
     const [restaurant, setRestaurant] = useState([]);
 
-    // const handleRestaurantLink = () => {
-    //     // e.preventDefault() *** Uncaught TypeError: e.preventDefault is not a function
+
     useEffect(() => {
         fetch('/api/restaurant/details', {
             method: 'POST',
@@ -19,29 +18,22 @@ function RestaurantDetails(props) {
             }
         }).then(result => result.json())
             .then((data) => setRestaurant(data));
-    });
-    console.log(restaurant_id)
-    console.log(restaurant)
+    }, [restaurant_id]);
 
     return (
         <div>
             <h1> Restaurant Details</h1>
             <div>
-                <ul key={restaurant.name}>
-                    <li> {restaurant.name}</li>
-                    <li> {restaurant.address} {restaurant.city} {restaurant.zipcode}</li>
+                <img src={restaurant.photo} alt='Restaurant cover' width="300" height="300" />
+                <h3>{restaurant.name}</h3>
+                <p> {restaurant.address} {restaurant.city} {restaurant.zipcode}</p>
+                <p> Rating : {restaurant.rating} </p>
+                <p> Reviews: {restaurant.reviews}</p>
 
-                </ul>
-
-                {/* {Object.values(restaurant).map((row_, index) =>
-                    <tr>
-                        {Object.values(row_).map(item => <td>{item}</td>)}
-                    </tr>
-                )} */}
             </div>
 
 
-        </div>
+        </div >
     );
 };
 export default RestaurantDetails;

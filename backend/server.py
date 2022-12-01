@@ -32,18 +32,25 @@ def create_user_account():
     email = data.get('email')
     password = data.get('password')
 
-    new_user = crud.create_user(fname=first_name,
-                                lname=last_name,
-                                email=email,
-                                password=password)
+    if crud.get_user_by_email(email) == None:
+        new_user = crud.create_user(fname=first_name,
+                                    lname=last_name,
+                                    email=email,
+                                    password=password)
 
-    db.session.add(new_user)
-    db.session.commit()
+        db.session.add(new_user)
+        db.session.commit()
 
-    return jsonify({'firstName': first_name,
-                    'lastName': last_name,
-                    'email': email,
-                    'password': password})
+        session['user_id'] = new_user.user_id
+
+        return jsonify({'status': '200',
+                        'message': 'Account created successfuly!',
+                        'firstName': first_name,
+                        'lastName': last_name,
+                        'email': email,
+                        'password': password})
+    else:
+        return jsonify({'status': '400', 'message': 'This email already exists. PLease login.'})
 
 
 @app.route('/api/login', methods=['POST'])
@@ -111,12 +118,22 @@ def show_restaurant_information():
 
     restaurant = crud.get_restaurant_by_id(restaurant_id)
 
+    rating = crud.get_ratings_by_restaurant(restaurant_id)
+
+    photos = crud.filter_photos_by_restaurant(restaurant_id)
+
+    reviews = crud.get_reviews_by_restaurant(restaurant_id)
+    print(reviews)
+
     return jsonify({'restaurant_id': restaurant.restaurant_id,
                     'name': restaurant.name,
                     'address': restaurant.address,
                     'city': restaurant.city,
                     'state': restaurant.state,
-                    'zipcode': restaurant.zipcode})
+                    'zipcode': restaurant.zipcode,
+                    'rating': rating.score,
+                    'photo': photos.photo_url,
+                    'reviews': reviews})
 
 
 # CATEGORIES RELATED ROUTES-------------------------------------
@@ -150,6 +167,25 @@ def get_search_results():
         results.append(restaurant.to_dict())
 
     return jsonify(results)
+
+
+# @app.route('api/search-results', methods=['POST'])
+# def get_search():
+#     """ Return list of restaurants accordingly to request """
+
+#     request = request.get_json()
+
+#     categories = crud.get_all_categories()
+
+#     results = []
+
+#     get_restaurants = []
+
+#     if request in categories.name:
+#         get_restaurants = crud.get_restaurants_by_category(request)
+#     elif req
+
+    # return jsonify(results)
 
 
 if __name__ == "__main__":

@@ -120,16 +120,16 @@ def create_rating(restaurant_id, user_id, score):
     return Rating(restaurant_id=restaurant_id, user_id=user_id, score=score)
 
 
-def filter_ratings_by_user(user_id):
+def get_ratings_by_user(user_id):
     """Gives all ratings attributed to a user."""
 
-    return Rating.query.filter(Rating.user_id == user_id)
+    return Rating.query.filter(Rating.user_id == user_id).first()
 
 
-def filter_ratings_by_restaurant(restaurant_id):
+def get_ratings_by_restaurant(restaurant_id):
     """Gives all ratings attributed to a restaurant."""
 
-    return Rating.query.filter(Rating.restaurant_id == restaurant_id)
+    return Rating.query.filter(Rating.restaurant_id == restaurant_id).first()
 
 # def delete_specific_rating(restaurant_id):
 
@@ -159,11 +159,8 @@ def filter_ratings_by_restaurant(restaurant_id):
 def get_reviews_by_restaurant(restaurant_id):
     """Gives all restaurants by category."""
 
-    get_reviews = Review.query.filter(
+    return Review.query.filter(
         Review.restaurant_id == restaurant_id).all()
-
-    for reviews in get_reviews:
-        return reviews.restaurant
 
 # Photos ------------
 
@@ -183,7 +180,7 @@ def filter_photos_by_user(user_id):
 def filter_photos_by_restaurant(restaurant_id):
     """Gives all ratings attributed to a user."""
 
-    return Photo.query.filter(Photo.restaurant_id == restaurant_id)
+    return Photo.query.filter(Photo.restaurant_id == restaurant_id).first()
 
 
 if __name__ == '__main__':
