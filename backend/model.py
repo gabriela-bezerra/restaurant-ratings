@@ -131,6 +131,16 @@ class Review(db.Model):
     def __repr__(self):
         return f'<Reviews review_id={self.review_id} restaurant_id={self.restaurant_id} user_id={self.user_id}, review={self.review}>'
 
+    def to_dict(self):
+
+        return {
+            'review_id': self.review_id,
+            'restaurant_id': self.restaurant_id,
+            'user_id': self.user_id,
+            'review': self.review,
+            'date': self.date
+        }
+
 
 class Photo(db.Model):
     """A photo."""

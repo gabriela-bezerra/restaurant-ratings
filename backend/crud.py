@@ -35,6 +35,11 @@ def get_user_password_and_user_id(email):
         return [None, None]
 
 
+def random_user():
+
+    return User.query.order_by(func.random()).first()
+
+
 # Restaurants ------------
 
 def create_restaurant(name, address, city, state, zipcode, latitude, longitude):

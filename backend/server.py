@@ -96,13 +96,10 @@ def get_restaurants_by_zipcode():
     """ Return restaurants by zipcode """
 
     zipcode = request.get_json()
-    print(zipcode)
 
     get_restaurants = crud.get_restaurant_by_zipcode(zipcode)
-    print(get_restaurants)
 
     results = []
-    print(results)
 
     for restaurant in get_restaurants:
         results.append(restaurant.to_dict())
@@ -123,7 +120,12 @@ def show_restaurant_information():
     photos = crud.filter_photos_by_restaurant(restaurant_id)
 
     reviews = crud.get_reviews_by_restaurant(restaurant_id)
-    print(reviews)
+
+    reviews_dict = []
+    print(reviews_dict)
+
+    for review in reviews:
+        reviews_dict.append(review.to_dict())
 
     return jsonify({'restaurant_id': restaurant.restaurant_id,
                     'name': restaurant.name,
@@ -133,7 +135,7 @@ def show_restaurant_information():
                     'zipcode': restaurant.zipcode,
                     'rating': rating.score,
                     'photo': photos.photo_url,
-                    'reviews': reviews})
+                    'reviews': reviews_dict})
 
 
 # CATEGORIES RELATED ROUTES-------------------------------------

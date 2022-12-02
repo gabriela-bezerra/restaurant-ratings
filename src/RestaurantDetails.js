@@ -20,6 +20,7 @@ function RestaurantDetails(props) {
             .then((data) => setRestaurant(data));
     }, [restaurant_id]);
 
+
     return (
         <div>
             <h1> Restaurant Details</h1>
@@ -28,7 +29,13 @@ function RestaurantDetails(props) {
                 <h3>{restaurant.name}</h3>
                 <p> {restaurant.address} {restaurant.city} {restaurant.zipcode}</p>
                 <p> Rating : {restaurant.rating} </p>
-                <p> Reviews: {restaurant.reviews}</p>
+                <div>
+                    Reviews:
+                    {restaurant.reviews}, {restaurant.reviews}
+                    {restaurant.reviews}
+
+
+                </div>
 
             </div>
 

@@ -1,7 +1,5 @@
-import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { useState } from 'react';
-// import { useHistory } from 'react-router-dom';
 import './App.css';
 import Homepage from './Homepage';
 import Navbar from './Navbar'
@@ -21,33 +19,9 @@ function App() {
 
   const [user, setUser] = useState({ firstName: "", lastName: "", email: "", password: "" });
 
-  const [statusMessage, setStatusMessage] = useState("");
-
-  // const history = useHistory();
-
-  // SIGN UP PAGE -------------------------
-
-  const handleCreateSubmit = (e) => {
-    e.preventDefault();
-    fetch('/api/create', {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setLoggedIn(true)
-        setStatusMessage(result.message)
-      }, []);
-  };
-  console.log('app page---------')
-  console.log(user)
-  console.log(loggedIn)
 
   return (
-    <BrowserRouter>
+    <>
       <Navbar loggedIn={loggedIn} user={user} />
       <div className="container-fluid">
         <Route exact path="/">
@@ -60,12 +34,13 @@ function App() {
         </Route>
 
         <Route exact path="/sign-up">
-          <SignUpForm handleSubmit={handleCreateSubmit}
+          <SignUpForm
             setFirstName={(e) => setUser({ ...user, firstName: e.target.value })}
             setLastName={(e) => setUser({ ...user, lastName: e.target.value })}
             setEmail={(e) => setUser({ ...user, email: e.target.value })}
             setPassword={(e) => setUser({ ...user, password: e.target.value })}
-            statusMessage={statusMessage} />
+            setLoggedIn={setLoggedIn}
+            user={user} />
         </Route>
 
         <Route exact path="/add-restaurant">
@@ -84,8 +59,7 @@ function App() {
           <UserProfile user={user} />
         </Route>
       </div>
-    </BrowserRouter>
-
+    </>
   );
 }
 

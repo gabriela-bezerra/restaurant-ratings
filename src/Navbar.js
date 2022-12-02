@@ -3,11 +3,8 @@ import logo from '/Users/gabrielabezerra/src/react-project/restaurant-ratings/sr
 
 
 
-function Navbar(loggedIn, user) {
+function Navbar({ loggedIn, user }) {
 
-    console.log('nav page---------')
-    console.log(loggedIn)
-    console.log(user)
 
     if (loggedIn === true) {
         return (
@@ -24,7 +21,7 @@ function Navbar(loggedIn, user) {
                     <Link to="/add-restaurant" className="nav-link nav-item" >Add Restaurant
                     </Link>
 
-                    <Link to={`/user-profile/${user.user_id}`} className="nav-link nav-item" >Profile
+                    <Link to="/user-profile" className="nav-link nav-item" >Profile
                     </Link>
                 </section>
             </nav>
