@@ -122,7 +122,6 @@ def show_restaurant_information():
     reviews = crud.get_reviews_by_restaurant(restaurant_id)
 
     reviews_dict = []
-    print(reviews_dict)
 
     for review in reviews:
         reviews_dict.append(review.to_dict())
