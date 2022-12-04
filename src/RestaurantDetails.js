@@ -6,7 +6,7 @@ function RestaurantDetails(props) {
 
     const { restaurant_id } = useParams();
 
-    const [restaurant, setRestaurant] = useState([]);
+    const [restaurant, setRestaurant] = useState(null);
 
 
     useEffect(() => {
@@ -20,8 +20,12 @@ function RestaurantDetails(props) {
             .then((data) => setRestaurant(data));
     }, [restaurant_id]);
 
-    console.log(restaurant)
 
+    if (!restaurant) {
+        return (
+            <div> Loading...</div>
+        )
+    }
     return (
         <div>
             <h1> Restaurant Details</h1>

@@ -1,5 +1,5 @@
 import { Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Homepage from './Homepage';
 import Navbar from './Navbar'
@@ -20,9 +20,20 @@ function App() {
   const [user, setUser] = useState({ firstName: "", lastName: "", email: "", password: "" });
 
 
+  useEffect(() => {
+    fetch('/api/login-status')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === '200') {
+          setLoggedIn(true)
+        }
+        console.log(data.message)
+      })
+  })
+
   return (
     <>
-      <Navbar loggedIn={loggedIn} user={user} />
+      <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} user={user} setUser={setUser} />
       <div className="container-fluid">
         <Route exact path="/">
           <Homepage />

@@ -24,9 +24,9 @@ function LoginForm({ user, setUser, setLoggedIn }) {
             .then(data => {
                 if (data.status === '200') {
                     toast("Logged in successfuly!")
-                    setErrorMessage("")
-                    setLoggedIn(true)
-                    history.push('/')
+                    setErrorMessage("");
+                    setLoggedIn(true);
+                    history.push('/');
                 } else {
                     setErrorMessage(data.message)
 
@@ -34,7 +34,6 @@ function LoginForm({ user, setUser, setLoggedIn }) {
 
             }, []);
     };
-
 
 
     return (

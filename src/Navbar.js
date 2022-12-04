@@ -1,9 +1,30 @@
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import logo from '/Users/gabrielabezerra/src/react-project/restaurant-ratings/src/logo.png'
 
 
 
-function Navbar({ loggedIn, user }) {
+function Navbar({ loggedIn, setLoggedIn, user, setUser }) {
+
+    let history = useHistory();
+
+    const handleLogout = (e) => {
+        e.preventDefault()
+        fetch('/api/logout', {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(result => result.json())
+            .then(data => {
+                if (data.status === '200') {
+                    setUser("")
+                    setLoggedIn(false)
+                    history.push('/');
+                }
+            });
+    };
 
 
     if (loggedIn === true) {
@@ -23,6 +44,9 @@ function Navbar({ loggedIn, user }) {
 
                     <Link to="/user-profile" className="nav-link nav-item" >Profile
                     </Link>
+
+                    <button className='logout' type='button' onClick={handleLogout}> Log Out</button>
+
                 </section>
             </nav>
         );

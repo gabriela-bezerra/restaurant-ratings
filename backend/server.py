@@ -75,6 +75,26 @@ def login_user():
         return jsonify({'status': '400', 'message': 'Incorret password'})
 
 
+# route with the login status
+@app.route('/api/login-status')
+def login_status():
+
+    if 'user_id' in session:
+        return jsonify({'status': '200', 'message': 'User logged in!'})
+    else:
+        return jsonify({'status': '400', 'message': 'Session is empty.'})
+
+
+@app.route('/api/logout',  methods=['POST'])
+def logout():
+
+    logout_req = request.get_json()
+
+    if logout_req:
+        session.clear()
+        return jsonify({'status': '200', 'message': 'Logedout sucessfully!'})
+
+
 # RESTAURANTS RELATED ROUTES-------------------------------------
 
 @app.route('/api/restaurants')
