@@ -18,6 +18,12 @@ def get_all_users():
     return User.query.all()
 
 
+def get_user_by_id(user_id):
+    """Gives us user by given email."""
+
+    return User.query.filter(User.user_id == user_id).first()
+
+
 def get_user_by_email(email):
     """Gives us user by given email."""
 

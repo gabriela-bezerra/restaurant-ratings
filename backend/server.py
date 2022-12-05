@@ -75,12 +75,11 @@ def login_user():
         return jsonify({'status': '400', 'message': 'Incorret password'})
 
 
-# route with the login status
 @app.route('/api/login-status')
 def login_status():
 
     if 'user_id' in session:
-        return jsonify({'status': '200', 'message': 'User logged in!'})
+        return jsonify({'status': '200', 'message': 'User logged in!', 'user_id': session['user_id']})
     else:
         return jsonify({'status': '400', 'message': 'Session is empty.'})
 
@@ -95,7 +94,37 @@ def logout():
         return jsonify({'status': '200', 'message': 'Logedout sucessfully!'})
 
 
+@app.route('/api/user/details', methods=['POST'])
+def get_user_information():
+    """ Shows details for individual restaurant """
+
+    user_id_req = request.get_json()
+
+    print('---------- user front end')
+    print(user_id_req)
+
+    user = crud.get_user_by_id(user_id_req)
+
+    # rating = crud.get_ratings_by_user(user_id_req)
+
+    # photos = crud.filter_photos_by_user(user_id_req)
+
+    # reviews = crud.filter_reviews_by_user(user_id_req)
+
+    # reviews_dict = []
+
+    # for review in reviews:
+    #     reviews_dict.append(review.to_dict())
+
+    return jsonify({'user_id': user.user_id,
+                    'email': user.email,
+                    'fname': user.fname,
+                    'lname': user.lname,
+                    })
+
+
 # RESTAURANTS RELATED ROUTES-------------------------------------
+
 
 @app.route('/api/restaurants')
 def get_all_restaurants():

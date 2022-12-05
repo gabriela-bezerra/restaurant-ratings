@@ -19,6 +19,7 @@ function App() {
 
   const [user, setUser] = useState({ firstName: "", lastName: "", email: "", password: "" });
 
+  const [currentUser, setCurrentUser] = useState({ user_id: "" })
 
   useEffect(() => {
     fetch('/api/login-status')
@@ -26,6 +27,7 @@ function App() {
       .then((data) => {
         if (data.status === '200') {
           setLoggedIn(true)
+          setCurrentUser(data.user_id)
         }
         console.log(data.message)
       })
@@ -66,8 +68,8 @@ function App() {
           <RestaurantDetails />
         </Route>
 
-        <Route exact path="/user-profile/:user_id">
-          <UserProfile user={user} />
+        <Route exact path="/user-profile">
+          <UserProfile user={currentUser} />
         </Route>
       </div>
     </>

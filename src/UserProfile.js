@@ -1,30 +1,51 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom'
 
 function UserProfile({ user }) {
 
-    const { user_id } = useParams();
-
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState(null);
 
 
     useEffect(() => {
-        fetch('/api/restaurant/details', {
+        fetch('/api/user/details', {
             method: 'POST',
-            body: JSON.stringify(user_id),
+            body: JSON.stringify(user),
             headers: {
                 'Content-Type': 'application/json',
             }
         }).then(result => result.json())
             .then((data) => setUserInfo(data));
-    }, [user_id]);
+    }, [user]);
+
+
+    console.log(user)
+    console.log(userInfo)
+
+    if (!userInfo) {
+        return (
+            <div> Loading...</div>
+        )
+    }
+
     return (
-        <h1> Welcome {userInfo.name} </h1>
+        <div>
+            <h1> Welcome {userInfo.fname} </h1>
+            <div>
+
+                <p> User name : {userInfo.fname} {userInfo.lname}</p>
+                <p> Email : {userInfo.email} </p>
+                <div>
+                    {/* <h4> Given Reviews: </h4>
+                    <p>Restaurant ID : {userInfo.reviews[0].restaurant_id}, date: {userInfo.reviews[0].date} </p>
+                    <p>{userInfo.reviews[0].review}</p> */}
 
 
+                </div>
 
-
+            </div>
+        </div>
     )
+
 }
+
 export default UserProfile;
