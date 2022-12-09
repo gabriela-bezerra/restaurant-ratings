@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Restaurant, Category, RestaurantCategory, Rating, Review, Photo, connect_to_db
+from model import db, Favorite, User, Restaurant, Category, RestaurantCategory, Rating, Review, Photo, connect_to_db
 from sqlalchemy.sql import func
 
 # Users ------------
@@ -41,7 +41,7 @@ def get_user_password_and_user_id(email):
         return [None, None]
 
 
-def random_user():
+def get_random_user():
 
     return User.query.order_by(func.random()).first()
 
@@ -71,6 +71,10 @@ def get_restaurant_by_zipcode(restaurant_zipcode):
 
     return Restaurant.query.filter(Restaurant.zipcode == restaurant_zipcode).all()
 
+
+def get_random_restaurant():
+
+    return Restaurant.query.order_by(func.random()).first()
 
 # Categories ------------
 
@@ -121,6 +125,20 @@ def add_a_restaurant_to_a_category(restaurant_id, category_id):
 
     return RestaurantCategory(restaurant_id=restaurant_id, category_id=category_id)
 
+
+# Favorites ------------
+
+
+def add_a_restaurant_to_favorites(restaurant_id, user_id):
+    """Creates a relationship restaurant-category"""
+
+    return Favorite(restaurant_id=restaurant_id, user_id=user_id)
+
+
+def get_user_favorites_restaurants(user_id):
+    """Gives all ratings attributed to a user."""
+
+    return Favorite.query.filter(Favorite.user_id == user_id).first()
 
 # Ratings ------------
 

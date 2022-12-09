@@ -100,9 +100,6 @@ def get_user_information():
 
     user_id_req = request.get_json()
 
-    print('---------- user front end')
-    print(user_id_req)
-
     user = crud.get_user_by_id(user_id_req)
 
     # rating = crud.get_ratings_by_user(user_id_req)

@@ -110,7 +110,7 @@ model.db.session.commit()
 # creates a review
 
 restaurants = crud.get_all_restaurants()
-user = crud.random_user()
+user = crud.get_random_user()
 
 for restaurant in restaurants:
     review = fake.text()
@@ -123,6 +123,23 @@ for restaurant in restaurants:
         date=date)
 
     model.db.session.add(review)
+    model.db.session.flush()
+
+model.db.session.commit()
+
+# creates a list of favorites
+
+restaurant = crud.get_random_restaurant()
+users = crud.get_all_users()
+
+for user in users:
+    restaurant_id = restaurant.restaurant_id
+    user_id = user.user_id
+    favorites = crud.add_a_restaurant_to_favorites(
+        restaurant_id=restaurant_id,
+        user_id=user_id)
+
+    model.db.session.add(favorites)
     model.db.session.flush()
 
 

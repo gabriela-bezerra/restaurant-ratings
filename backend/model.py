@@ -20,6 +20,7 @@ class User(db.Model):
     ratings = db.relationship("Rating", back_populates="user")
     reviews = db.relationship("Review", back_populates="user")
     photos = db.relationship("Photo", back_populates="user")
+    favorites = db.relationship("Favorite", back_populates="user")
 
     def __repr__(self):
         return f'<User user_id={self.user_id}, name={self.fname} {self.lname}, email={self.email}>'
@@ -42,6 +43,7 @@ class Restaurant(db.Model):
     ratings = db.relationship("Rating", back_populates="restaurant")
     reviews = db.relationship("Review", back_populates="restaurant")
     photos = db.relationship("Photo", back_populates="restaurant")
+    favorites = db.relationship("Favorite", back_populates="restaurant")
 
     categories = db.relationship(
         "Category", secondary="restaurantsCategories", back_populates="restaurants")
@@ -91,6 +93,24 @@ class RestaurantCategory(db.Model):
 
     def __repr__(self):
         return f'<Restaurants Categories id={self.restaurant_category_id}, restaurant_id={self.restaurant_id}, category_id={self.category_id} >'
+
+
+class Favorite(db.Model):
+    """A favorite restaurant."""
+
+    __tablename__ = 'favorites'
+
+    favorite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey(
+        "restaurants.restaurant_id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(
+        "users.user_id"), nullable=False)
+
+    restaurant = db.relationship("Restaurant", back_populates="favorites")
+    user = db.relationship("User", back_populates="favorites")
+
+    def __repr__(self):
+        return f'<Favorites id={self.favorite_id}, restaurant_id={self.restaurant_id}, category_id={self.user_id} >'
 
 
 class Rating(db.Model):
