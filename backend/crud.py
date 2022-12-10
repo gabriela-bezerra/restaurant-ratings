@@ -144,10 +144,6 @@ def get_ratings_by_restaurant(restaurant_id):
 
     return Rating.query.filter(Rating.restaurant_id == restaurant_id).first()
 
-# def delete_specific_rating(restaurant_id):
-
-#     return Restaurant.query.get(restaurant_id=restaurant_id).delete()
-
 
 # Favorites ------------
 

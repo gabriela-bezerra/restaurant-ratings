@@ -137,24 +137,26 @@ def get_users_favorites():
     return jsonify(results)
 
 
+# RESTAURANTS RELATED ROUTES-------------------------------------
+
 @app.route('/api/favorites', methods=['POST'])
 def add_restaurant_to_favorites():
 
     restaurant_id_req = request.get_json()
 
     if 'user_id' in session:
-        add_to_favorites = crud.add_a_restaurant_to_favorites(
-            restaurant_id=restaurant_id_req, user_id=session['user_id'])
+        if crud.check_restaurant_in_favorites(restaurant_id=restaurant_id_req, user_id=session['user_id']) == None:
+            add_to_favorites = crud.add_a_restaurant_to_favorites(
+                restaurant_id=restaurant_id_req, user_id=session['user_id'])
+            db.session.add(add_to_favorites)
+            db.session.commit()
 
-        db.session.add(add_to_favorites)
-        db.session.commit()
-
-        return jsonify({'status': '200', 'message': 'Restaurant added to your favorites'})
+            return jsonify({'status': '200', 'message': 'Restaurant added to your favorites'})
+        else:
+            return jsonify({'status': '400', 'message': 'Restaurant already in the list'})
 
     else:
         return jsonify({'status': '400', 'message': 'Please, log in!'})
-
-# RESTAURANTS RELATED ROUTES-------------------------------------
 
 
 @app.route('/api/restaurants')
