@@ -3,8 +3,8 @@
 from model import db, Favorite, User, Restaurant, Category, RestaurantCategory, Rating, Review, Photo, connect_to_db
 from sqlalchemy.sql import func
 
-# Users ------------
 
+# Users ------------
 
 def create_user(email, password, fname, lname):
     """Create and return a new user."""
@@ -76,8 +76,8 @@ def get_random_restaurant():
 
     return Restaurant.query.order_by(func.random()).first()
 
-# Categories ------------
 
+# Categories ------------
 
 def create_a_category(name):
     """Create and return a new category"""
@@ -119,7 +119,6 @@ def get_restaurants_by_category(category_name):
 
 # Restaurants categories ------------
 
-
 def add_a_restaurant_to_a_category(restaurant_id, category_id):
     """Creates a relationship restaurant-category"""
 
@@ -127,7 +126,6 @@ def add_a_restaurant_to_a_category(restaurant_id, category_id):
 
 
 # Ratings ------------
-
 
 def create_rating(restaurant_id, user_id, score):
     """Create a rating."""
@@ -153,7 +151,6 @@ def get_ratings_by_restaurant(restaurant_id):
 
 # Favorites ------------
 
-
 def add_a_restaurant_to_favorites(restaurant_id, user_id):
 
     return Favorite(restaurant_id=restaurant_id, user_id=user_id)
@@ -162,6 +159,11 @@ def add_a_restaurant_to_favorites(restaurant_id, user_id):
 def filter_favorites_by_user(user_id):
 
     return Favorite.query.filter(Favorite.user_id == user_id).all()
+
+
+def check_restaurant_in_favorites(restaurant_id, user_id):
+
+    return Favorite.query.filter((Favorite.restaurant_id == restaurant_id) & (Favorite.user_id == user_id)).first()
 
 
 # Reviews ------------

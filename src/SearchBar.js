@@ -33,8 +33,6 @@ function SearchBar(props) {
 
     const handleSubmitZipcode = (e) => {
         e.preventDefault()
-        console.log(zipcode)
-        console.log(restaurants)
         fetch('/api/restaurants/zipcode', {
             method: 'POST',
             body: JSON.stringify(zipcode),

@@ -65,7 +65,7 @@ function App() {
         </Route>
 
         <Route exact path="/restaurant-details/:restaurant_id">
-          <RestaurantDetails />
+          <RestaurantDetails loggedIn={loggedIn} />
         </Route>
 
         <Route exact path="/user-profile">

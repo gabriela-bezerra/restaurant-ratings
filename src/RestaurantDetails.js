@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react';
 
-function RestaurantDetails(props) {
+function RestaurantDetails({ loggedIn }) {
 
     const { restaurant_id } = useParams();
 
@@ -21,6 +21,22 @@ function RestaurantDetails(props) {
     }, [restaurant_id]);
 
 
+    const handleFavorites = (e) => {
+        e.preventDefault()
+        fetch('/api/favorites', {
+            method: 'POST',
+            body: JSON.stringify(restaurant_id),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(result => result.json())
+            .then(data => {
+                console.log(data.message)
+            });
+    };
+
+
+
     if (!restaurant) {
         return (
             <div> Loading...</div>
@@ -35,12 +51,14 @@ function RestaurantDetails(props) {
                 <p> {restaurant.address} {restaurant.city} {restaurant.zipcode}</p>
                 <p> Rating : {restaurant.rating} </p>
                 <div>
+                    <button className='fav-btn' type='button' onClick={handleFavorites}> Add to Your Favorites</button>
+                </div>
+                <div>
                     <h4> Recent Reviews: </h4>
                     <p>User ID : {restaurant.reviews[0].user_id}, date: {restaurant.reviews[0].date} </p>
                     <p>{restaurant.reviews[0].review}</p>
-
-
                 </div>
+
 
             </div>
 

@@ -32,9 +32,6 @@ function UserProfile({ user }) {
     }, [user]);
 
 
-    console.log(favorites)
-
-
     if (!userInfo) {
         return (
             <div> Loading...</div>
