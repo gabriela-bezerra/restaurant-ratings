@@ -126,20 +126,6 @@ def add_a_restaurant_to_a_category(restaurant_id, category_id):
     return RestaurantCategory(restaurant_id=restaurant_id, category_id=category_id)
 
 
-# Favorites ------------
-
-
-def add_a_restaurant_to_favorites(restaurant_id, user_id):
-    """Creates a relationship restaurant-category"""
-
-    return Favorite(restaurant_id=restaurant_id, user_id=user_id)
-
-
-def get_user_favorites_restaurants(user_id):
-    """Gives all ratings attributed to a user."""
-
-    return Favorite.query.filter(Favorite.user_id == user_id).first()
-
 # Ratings ------------
 
 
@@ -163,6 +149,19 @@ def get_ratings_by_restaurant(restaurant_id):
 # def delete_specific_rating(restaurant_id):
 
 #     return Restaurant.query.get(restaurant_id=restaurant_id).delete()
+
+
+# Favorites ------------
+
+
+def add_a_restaurant_to_favorites(restaurant_id, user_id):
+
+    return Favorite(restaurant_id=restaurant_id, user_id=user_id)
+
+
+def filter_favorites_by_user(user_id):
+
+    return Favorite.query.filter(Favorite.user_id == user_id).all()
 
 
 # Reviews ------------

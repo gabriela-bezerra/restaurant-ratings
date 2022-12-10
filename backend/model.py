@@ -110,7 +110,13 @@ class Favorite(db.Model):
     user = db.relationship("User", back_populates="favorites")
 
     def __repr__(self):
-        return f'<Favorites id={self.favorite_id}, restaurant_id={self.restaurant_id}, category_id={self.user_id} >'
+        return f'<Favorites id={self.favorite_id}, restaurant_id={self.restaurant_id}, user_id={self.user_id} >'
+
+    def to_dict(self):
+        return {
+            'favorite_id': self.favorite_id,
+            'restaurant_id': self.restaurant_id,
+            'user_id': self.user_id}
 
 
 class Rating(db.Model):

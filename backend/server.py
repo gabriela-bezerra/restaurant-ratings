@@ -116,9 +116,25 @@ def get_user_information():
     return jsonify({'user_id': user.user_id,
                     'email': user.email,
                     'fname': user.fname,
-                    'lname': user.lname,
+                    'lname': user.lname
                     })
 
+
+@app.route('/api/user/favorites', methods=['POST'])
+def get_users_favorites():
+
+    user_id_req = request.get_json()
+
+    favorites = crud.filter_favorites_by_user(user_id_req)
+
+    results = []
+
+    for favorite in favorites:
+        restaurant_id = favorite.restaurant_id
+        restaurant = crud.get_restaurant_by_id(restaurant_id)
+        results.append(restaurant.to_dict())
+
+    return jsonify(results)
 
 # RESTAURANTS RELATED ROUTES-------------------------------------
 
