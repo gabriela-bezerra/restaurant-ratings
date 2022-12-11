@@ -4,7 +4,7 @@ from faker import Faker
 from faker.providers import person
 import os
 import json
-import datetime
+from datetime import datetime
 from random import choice
 
 import crud
@@ -113,8 +113,9 @@ restaurants = crud.get_all_restaurants()
 user = crud.get_random_user()
 
 for restaurant in restaurants:
+    now = datetime.now()
+    date = now.strftime("%d %B, %Y")
     review = fake.text()
-    date = datetime.date.today()
     restaurant_id = restaurant.restaurant_id
     review = crud.create_review(
         restaurant_id=restaurant_id,

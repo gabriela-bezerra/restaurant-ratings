@@ -7,10 +7,9 @@ import SearchBar from './SearchBar'
 import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
 import AddNewRestaurant from './AddNewRestaurant'
-import SearchResult from './SearchResult'
 import RestaurantDetails from './RestaurantDetails'
 import UserProfile from './UserProfile'
-
+import ReviewModal from './ReviewModal'
 
 
 function App() {
@@ -29,7 +28,6 @@ function App() {
           setLoggedIn(true)
           setCurrentUser(data.user_id)
         }
-        console.log(data.message)
       })
   })
 
@@ -60,12 +58,9 @@ function App() {
           <AddNewRestaurant />
         </Route>
 
-        <Route exact path="/search-results">
-          <SearchResult />
-        </Route>
-
         <Route exact path="/restaurant-details/:restaurant_id">
           <RestaurantDetails loggedIn={loggedIn} />
+          <ReviewModal />
         </Route>
 
         <Route exact path="/user-profile">

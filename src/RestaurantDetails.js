@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react';
 
-function RestaurantDetails({ loggedIn }) {
+function RestaurantDetails(props) {
 
     const { restaurant_id } = useParams();
 
@@ -34,6 +34,21 @@ function RestaurantDetails({ loggedIn }) {
                 console.log(data.message)
             });
     };
+
+    // const handleAddReview = (e) => {
+    //     e.preventDefault()
+    //     // fetch('/api/favorites', {
+    //     //     method: 'POST',
+    //     //     body: JSON.stringify(restaurant_id),
+    //     //     headers: {
+    //     //         'Content-Type': 'application/json',
+    //     //     }
+    //     // }).then(result => result.json())
+    //     //     .then(data => {
+    //     //         console.log(data.message)
+    //     //     });
+
+    // };
 
 
 
