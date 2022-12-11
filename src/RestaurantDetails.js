@@ -35,23 +35,6 @@ function RestaurantDetails(props) {
             });
     };
 
-    // const handleAddReview = (e) => {
-    //     e.preventDefault()
-    //     // fetch('/api/favorites', {
-    //     //     method: 'POST',
-    //     //     body: JSON.stringify(restaurant_id),
-    //     //     headers: {
-    //     //         'Content-Type': 'application/json',
-    //     //     }
-    //     // }).then(result => result.json())
-    //     //     .then(data => {
-    //     //         console.log(data.message)
-    //     //     });
-
-    // };
-
-
-
     if (!restaurant) {
         return (
             <div> Loading...</div>

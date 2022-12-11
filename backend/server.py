@@ -5,6 +5,7 @@ from model import connect_to_db, db, User
 import crud
 import json
 from jinja2 import StrictUndefined
+import datetime
 
 
 app = Flask(__name__)
@@ -155,6 +156,25 @@ def add_restaurant_to_favorites():
         else:
             return jsonify({'status': '400', 'message': 'Restaurant already in the list'})
 
+    else:
+        return jsonify({'status': '400', 'message': 'Please, log in!'})
+
+
+@app.route('/api/reviews', methods=['POST'])
+def add_a_restaurant_review():
+
+    review_info = request.get_json()
+    restaurant_id = review_info[1]
+    review = review_info[0]['review']
+
+    date = datetime.datetime.today()
+
+    if 'user_id' in session:
+        new_review = crud.create_review(
+            restaurant_id=restaurant_id, user_id=session['user_id'], review=review, date=date)
+        db.session.add(new_review)
+        db.session.commit()
+        return jsonify({'status': '200', 'message': 'Review added!'})
     else:
         return jsonify({'status': '400', 'message': 'Please, log in!'})
 
