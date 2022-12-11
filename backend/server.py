@@ -97,27 +97,17 @@ def logout():
 
 @app.route('/api/user/details', methods=['POST'])
 def get_user_information():
-    """ Shows details for individual restaurant """
+    """ Shows details of a user """
 
     user_id_req = request.get_json()
 
     user = crud.get_user_by_id(user_id_req)
 
-    # rating = crud.get_ratings_by_user(user_id_req)
-
-    # photos = crud.filter_photos_by_user(user_id_req)
-
-    # reviews = crud.filter_reviews_by_user(user_id_req)
-
-    # reviews_dict = []
-
-    # for review in reviews:
-    #     reviews_dict.append(review.to_dict())
-
     return jsonify({'user_id': user.user_id,
                     'email': user.email,
                     'fname': user.fname,
-                    'lname': user.lname
+                    'lname': user.lname,
+                    'profile_photo': user.profile_photo
                     })
 
 

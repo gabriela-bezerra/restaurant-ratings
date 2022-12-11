@@ -6,10 +6,10 @@ from sqlalchemy.sql import func
 
 # Users ------------
 
-def create_user(email, password, fname, lname):
+def create_user(email, password, fname, lname, profile_photo):
     """Create and return a new user."""
 
-    return User(email=email, password=password, fname=fname, lname=lname)
+    return User(email=email, password=password, fname=fname, lname=lname, profile_photo=profile_photo)
 
 
 def get_all_users():

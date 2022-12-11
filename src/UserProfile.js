@@ -7,7 +7,6 @@ function UserProfile({ user }) {
     const [userInfo, setUserInfo] = useState(null);
     const [favorites, setFavorites] = useState([]);
 
-
     useEffect(() => {
         fetch('/api/user/details', {
             method: 'POST',
@@ -42,7 +41,7 @@ function UserProfile({ user }) {
         <div>
             <h1> Welcome {userInfo.fname} </h1>
             <div>
-
+                <img style={{ width: "20%", margin: "30px 0" }} src={userInfo.profile_photo} alt="Profile Photo" />
                 <p> User name : {userInfo.fname} {userInfo.lname}</p>
                 <p> Email : {userInfo.email} </p>
                 <div>
