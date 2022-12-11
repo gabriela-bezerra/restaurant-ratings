@@ -20,6 +20,8 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({ user_id: "" })
 
+  const [reviews, setReviews] = useState(null)
+
   useEffect(() => {
     fetch('/api/login-status')
       .then((response) => response.json())
@@ -30,6 +32,8 @@ function App() {
         }
       })
   })
+
+
 
   return (
     <>
@@ -59,8 +63,8 @@ function App() {
         </Route>
 
         <Route exact path="/restaurant-details/:restaurant_id">
-          <RestaurantDetails loggedIn={loggedIn} />
-          <ReviewModal />
+          <RestaurantDetails reviews={reviews} setReviews={setReviews} />
+          <ReviewModal reviews={reviews} setReviews={setReviews} />
         </Route>
 
         <Route exact path="/user-profile">

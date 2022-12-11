@@ -4,13 +4,13 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom'
 
-function ReviewModal(props) {
+function ReviewModal({ reviews, setReviews }) {
 
     const { restaurant_id } = useParams();
 
     const [show, setShow] = useState(false);
 
-    const [review, setReview] = useState(null);
+    const [addReview, setAddReview] = useState(null);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -19,18 +19,18 @@ function ReviewModal(props) {
         e.preventDefault()
         fetch('/api/reviews', {
             method: 'POST',
-            body: JSON.stringify([review, restaurant_id]),
+            body: JSON.stringify([addReview, restaurant_id]),
             headers: {
                 'Content-Type': 'application/json',
             }
         }).then(result => result.json())
             .then(data => {
-                console.log(data.message)
+                setReviews(data)
+                console.log(data)
             });
         handleClose()
 
     };
-
 
 
     return (
@@ -50,7 +50,7 @@ function ReviewModal(props) {
                             controlId="exampleForm.ControlTextarea1"
                         >
                             <Form.Label>Your review here ... </Form.Label>
-                            <Form.Control as="textarea" rows={3} onChange={(e) => setReview({ ...review, review: e.target.value })} />
+                            <Form.Control as="textarea" rows={3} onChange={(e) => setAddReview({ ...addReview, review: e.target.value })} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>

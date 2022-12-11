@@ -169,14 +169,36 @@ def add_a_restaurant_review():
 
     date = datetime.datetime.today()
 
+    reviews_dict = []
+
     if 'user_id' in session:
         new_review = crud.create_review(
             restaurant_id=restaurant_id, user_id=session['user_id'], review=review, date=date)
         db.session.add(new_review)
         db.session.commit()
-        return jsonify({'status': '200', 'message': 'Review added!'})
+
+        reviews = crud.get_reviews_by_restaurant(restaurant_id)
+
+        for review in reviews:
+            reviews_dict.append(review.to_dict())
+        return jsonify(reviews_dict)
     else:
         return jsonify({'status': '400', 'message': 'Please, log in!'})
+
+
+@app.route('/api/show-reviews', methods=['POST'])
+def show_restaurant_reviews():
+
+    restaurant_id = request.get_json()
+
+    reviews = crud.get_reviews_by_restaurant(restaurant_id)
+
+    reviews_dict = []
+
+    for review in reviews:
+        reviews_dict.append(review.to_dict())
+
+    return jsonify(reviews_dict)
 
 
 @app.route('/api/restaurants')
@@ -221,13 +243,6 @@ def show_restaurant_information():
 
     photos = crud.filter_photos_by_restaurant(restaurant_id)
 
-    reviews = crud.get_reviews_by_restaurant(restaurant_id)
-
-    reviews_dict = []
-
-    for review in reviews:
-        reviews_dict.append(review.to_dict())
-
     return jsonify({'restaurant_id': restaurant.restaurant_id,
                     'name': restaurant.name,
                     'address': restaurant.address,
@@ -235,8 +250,7 @@ def show_restaurant_information():
                     'state': restaurant.state,
                     'zipcode': restaurant.zipcode,
                     'rating': rating.score,
-                    'photo': photos.photo_url,
-                    'reviews': reviews_dict})
+                    'photo': photos.photo_url})
 
 
 # CATEGORIES RELATED ROUTES-------------------------------------
