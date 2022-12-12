@@ -45,9 +45,8 @@ function RestaurantDetails({ reviews, setReviews }) {
         }).then(result => result.json())
             .then(data => {
                 setReviews(data)
-                console.log(data)
             });
-    }, [restaurant_id]);
+    }, [restaurant_id, setReviews]);
 
 
     if (!restaurant || !reviews) {

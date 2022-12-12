@@ -41,7 +41,7 @@ function UserProfile({ user }) {
         <div>
             <h1> Welcome {userInfo.fname} </h1>
             <div>
-                <img style={{ width: "30%", margin: "30px 0" }} src={userInfo.profile_photo} alt="Profile Photo" />
+                <img style={{ width: "30%", margin: "30px 0" }} src={userInfo.profile_photo} alt="Face" />
                 <p> User name : {userInfo.fname} {userInfo.lname}</p>
                 <p> Email : {userInfo.email} </p>
                 <div>

@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom'
+import ReactStars from "react-rating-stars-component";
 
 function ReviewModal({ reviews, setReviews }) {
 
@@ -12,12 +13,18 @@ function ReviewModal({ reviews, setReviews }) {
 
     const [addReview, setAddReview] = useState(null);
 
+    const ratingChanged = (newRating) => {
+        setAddReview({ ...addReview, rating_score: newRating })
+        console.log(newRating);
+    };
+
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const handleAddReview = (e) => {
         e.preventDefault()
-        fetch('/api/reviews', {
+        fetch('/api/add-reviews', {
             method: 'POST',
             body: JSON.stringify([addReview, restaurant_id]),
             headers: {
@@ -29,12 +36,14 @@ function ReviewModal({ reviews, setReviews }) {
                 console.log(data)
             });
         handleClose()
+        window.location.reload()
 
     };
 
 
     return (
         <>
+
             <Button variant="primary" onClick={handleShow}>
                 Add A Review
             </Button>
@@ -44,12 +53,22 @@ function ReviewModal({ reviews, setReviews }) {
                     <Modal.Title>Review</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <ReactStars
+                        count={5}
+                        onChange={ratingChanged}
+                        size={24}
+                        isHalf={true}
+                        emptyIcon={<i className="far fa-star"></i>}
+                        halfIcon={<i className="fa fa-star-half-alt"></i>}
+                        fullIcon={<i className="fa fa-star"></i>}
+                        activeColor="#ffd700"
+                    />
                     <Form>
                         <Form.Group
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
                         >
-                            <Form.Label>Your review here ... </Form.Label>
+                            <Form.Label>Write a review... </Form.Label>
                             <Form.Control as="textarea" rows={3} onChange={(e) => setAddReview({ ...addReview, review: e.target.value })} />
                         </Form.Group>
                     </Form>

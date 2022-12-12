@@ -5,7 +5,7 @@ from model import connect_to_db, db, User
 import crud
 import json
 from jinja2 import StrictUndefined
-import datetime
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -150,14 +150,16 @@ def add_restaurant_to_favorites():
         return jsonify({'status': '400', 'message': 'Please, log in!'})
 
 
-@app.route('/api/reviews', methods=['POST'])
+@app.route('/api/add-reviews', methods=['POST'])
 def add_a_restaurant_review():
 
     review_info = request.get_json()
     restaurant_id = review_info[1]
     review = review_info[0]['review']
+    rating = review_info[0]['rating_score']
 
-    date = datetime.datetime.today()
+    now = datetime.now()
+    date = now.strftime("%d %B, %Y")
 
     reviews_dict = []
 
@@ -167,11 +169,17 @@ def add_a_restaurant_review():
         db.session.add(new_review)
         db.session.commit()
 
-        reviews = crud.get_reviews_by_restaurant(restaurant_id)
+        new_rating = crud.create_rating(
+            restaurant_id=restaurant_id, user_id=session['user_id'], score=rating)
+        db.session.add(new_rating)
+        db.session.commit()
 
+        reviews = crud.get_reviews_by_restaurant(restaurant_id)
         for review in reviews:
             reviews_dict.append(review.to_dict())
+
         return jsonify(reviews_dict)
+
     else:
         return jsonify({'status': '400', 'message': 'Please, log in!'})
 
@@ -251,6 +259,47 @@ def create_new_restaurant():
         return jsonify({'status': '400', 'message': 'This restaurant already exists!'})
 
 
+@app.route('/api/restaurant/details', methods=['POST'])
+def show_restaurant_information():
+    """ Shows details for individual restaurant """
+
+    restaurant_id = request.get_json()
+
+    restaurant = crud.get_restaurant_by_id(restaurant_id)
+
+    rating = crud.get_ratings_by_restaurant(restaurant_id)
+
+    for row in rating[0]:
+        score = round(row, 2)
+
+    photos = crud.filter_photos_by_restaurant(restaurant_id)
+
+    return jsonify({'restaurant_id': restaurant.restaurant_id,
+                    'name': restaurant.name,
+                    'address': restaurant.address,
+                    'city': restaurant.city,
+                    'state': restaurant.state,
+                    'zipcode': restaurant.zipcode,
+                    'rating': score,
+                    'photo': photos.photo_url})
+
+
+# SEARCH RELATED ROUTES-------------------------------------
+
+@app.route('/api/categories')
+def get_all_categories():
+    """ Return a list with all categories. """
+
+    categories = crud.get_all_categories()
+
+    results = []
+
+    for obj in categories:
+        results.append(obj.name)
+
+    return jsonify(sorted(results))
+
+
 @app.route('/api/restaurants')
 def get_all_restaurants():
     """ Return all restaurants. """
@@ -260,6 +309,22 @@ def get_all_restaurants():
     results = []
 
     for restaurant in restaurants:
+        results.append(restaurant.to_dict())
+
+    return jsonify(results)
+
+
+@app.route('/api/categories/results', methods=['POST'])
+def get_search_results():
+    """ Return a list with all restaurants by category """
+
+    category = request.get_json()
+
+    get_restaurants = crud.get_restaurants_by_category(category)
+
+    results = []
+
+    for restaurant in get_restaurants:
         results.append(restaurant.to_dict())
 
     return jsonify(results)
@@ -279,64 +344,6 @@ def get_restaurants_by_zipcode():
         results.append(restaurant.to_dict())
 
     return jsonify(results)
-
-
-@app.route('/api/restaurant/details', methods=['POST'])
-def show_restaurant_information():
-    """ Shows details for individual restaurant """
-
-    restaurant_id = request.get_json()
-
-    restaurant = crud.get_restaurant_by_id(restaurant_id)
-
-    rating = crud.get_ratings_by_restaurant(restaurant_id)
-
-    for row in rating[0]:
-        score = row
-
-    photos = crud.filter_photos_by_restaurant(restaurant_id)
-
-    return jsonify({'restaurant_id': restaurant.restaurant_id,
-                    'name': restaurant.name,
-                    'address': restaurant.address,
-                    'city': restaurant.city,
-                    'state': restaurant.state,
-                    'zipcode': restaurant.zipcode,
-                    'rating': score,
-                    'photo': photos.photo_url})
-
-
-# CATEGORIES RELATED ROUTES-------------------------------------
-
-@app.route('/api/categories')
-def get_all_categories():
-    """ Return a list with all categories. """
-
-    categories = crud.get_all_categories()
-
-    results = []
-
-    for obj in categories:
-        results.append(obj.name)
-
-    return jsonify(sorted(results))
-
-
-@app.route('/api/categories/results', methods=['POST'])
-def get_search_results():
-    """ Return a list with all restaurants by category """
-
-    category = request.get_json()
-
-    get_restaurants = crud.get_restaurants_by_category(category)
-
-    results = []
-
-    for restaurant in get_restaurants:
-        results.append(restaurant.to_dict())
-
-    return jsonify(results)
-
 
 # @app.route('api/search-results', methods=['POST'])
 # def get_search():
