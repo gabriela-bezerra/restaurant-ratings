@@ -6,7 +6,7 @@ from sqlalchemy.sql import func
 
 # Users ------------
 
-def create_user(email, password, fname, lname, profile_photo):
+def create_user(email, password, fname, lname, profile_photo=None):
     """Create and return a new user."""
 
     return User(email=email, password=password, fname=fname, lname=lname, profile_photo=profile_photo)
@@ -48,7 +48,7 @@ def get_random_user():
 
 # Restaurants ------------
 
-def create_restaurant(name, address, city, state, zipcode, latitude, longitude):
+def create_restaurant(name, address, city, state, zipcode, latitude=None, longitude=None):
     """Create and return a new restaurante."""
 
     return Restaurant(name=name, address=address, city=city, state=state, zipcode=zipcode, latitude=latitude, longitude=longitude)
@@ -64,6 +64,12 @@ def get_restaurant_by_id(restaurant_id):
     """Gives restaurant of choice."""
 
     return Restaurant.query.filter(Restaurant.restaurant_id == restaurant_id).first()
+
+
+def get_restaurant_by_name(restaurant_name):
+    """Gives restaurant of choice."""
+
+    return Restaurant.query.filter(Restaurant.name == restaurant_name).first()
 
 
 def get_restaurant_by_zipcode(restaurant_zipcode):
@@ -142,7 +148,7 @@ def get_ratings_by_user(user_id):
 def get_ratings_by_restaurant(restaurant_id):
     """Gives all ratings attributed to a restaurant."""
 
-    return Rating.query.filter(Rating.restaurant_id == restaurant_id).first()
+    return Rating.query.with_entities(func.avg(Rating.score)).filter(Rating.restaurant_id == restaurant_id).all()
 
 
 # Favorites ------------
@@ -170,16 +176,10 @@ def create_review(restaurant_id, user_id, review, date):
     return Review(restaurant_id=restaurant_id, user_id=user_id, review=review, date=date)
 
 
-def filter_reviews_by_user(user_id):
+def get_reviews_by_user(user_id):
     """Gives all reviews attributed to a user."""
 
-    return Review.query.filter(Review.user_id == user_id).first()
-
-
-def filter_ratings_by_restaurant(restaurant_id):
-    """Gives all reviews attributed to a restaurant."""
-
-    return Review.query.filter(Review.restaurant_id == restaurant_id).first()
+    return Review.query.filter(Review.user_id == user_id).all()
 
 
 def get_reviews_by_restaurant(restaurant_id):

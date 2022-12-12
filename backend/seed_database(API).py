@@ -5,7 +5,7 @@ from faker.providers import person
 import os
 import json
 from datetime import datetime
-from random import choice
+import random
 
 import crud
 import model
@@ -21,28 +21,29 @@ model.db.create_all()
 fake = Faker()
 fake.add_provider(person)
 
-PROFILE_PHOTOS = ['https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-                  'https://images.pexels.com/photos/1310522/pexels-photo-1310522.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/697509/pexels-photo-697509.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/38554/girl-people-landscape-sun-38554.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/532220/pexels-photo-532220.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/718978/pexels-photo-718978.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/2709388/pexels-photo-2709388.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/1102341/pexels-photo-1102341.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/1006227/pexels-photo-1006227.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/774095/pexels-photo-774095.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/773371/pexels-photo-773371.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&w=800'
-                  'https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=800'
-                  ]
+PROFILE_PHOTOS = [
+    'https://images.pexels.com/photos/1310522/pexels-photo-1310522.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/38554/girl-people-landscape-sun-38554.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/718978/pexels-photo-718978.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/2709388/pexels-photo-2709388.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/1102341/pexels-photo-1102341.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/1006227/pexels-photo-1006227.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/774095/pexels-photo-774095.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/773371/pexels-photo-773371.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/3779853/pexels-photo-3779853.png?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/14634924/pexels-photo-14634924.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/871495/pexels-photo-871495.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/1757281/pexels-photo-1757281.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/1764564/pexels-photo-1764564.jpeg?auto=compress&cs=tinysrgb&w=800',
+    'https://images.pexels.com/photos/936007/pexels-photo-936007.jpeg?auto=compress&cs=tinysrgb&w=800'
+]
 
 # Load restaurant data from JSON file
 with open('./response.json') as f:
@@ -99,28 +100,25 @@ for restaurant in restaurant_data:
     model.db.session.add(db_photo)
     model.db.session.flush()
 
-    # add a rating
-    db_rating = crud.create_rating(
-        restaurant_id=db_restaurant.restaurant_id,
-        score=rating,
-        user_id=None)
+    # # add a rating
+    # db_rating = crud.create_rating(
+    #     restaurant_id=db_restaurant.restaurant_id,
+    #     score=rating,
+    #     user_id=None)
 
-    model.db.session.add(db_rating)
-    model.db.session.flush()
-
+    # model.db.session.add(db_rating)
+    # model.db.session.flush()
 
 model.db.session.commit()
 
 
 # creates a user
-
 for n in range(20):
     password = 'test'
-    fname = fake.first_name()
+    fname = fake.first_name_female()
     lname = fake.last_name()
     email = f'{fname.lower()}{lname.lower()}@example.com'
-    profile_photo = choice(PROFILE_PHOTOS)
-
+    profile_photo = random.choice(PROFILE_PHOTOS)
     user = crud.create_user(
         email=email,
         password=password,
@@ -135,7 +133,6 @@ model.db.session.commit()
 
 
 # creates a review
-
 restaurants = crud.get_all_restaurants()
 user = crud.get_random_user()
 
@@ -155,8 +152,8 @@ for restaurant in restaurants:
 
 model.db.session.commit()
 
-# creates a list of favorites
 
+# creates a list of favorites and add ratings
 users = crud.get_all_users()
 
 for user in users:
@@ -171,5 +168,15 @@ for user in users:
         model.db.session.add(favorites)
         model.db.session.flush()
 
+    # add ratings
+    for restaurant in crud.get_all_restaurants():
+        db_rating = crud.create_rating(
+            restaurant_id=restaurant.restaurant_id,
+            score=random.choice([1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]),
+            user_id=user_id)
+        print(db_rating)
+
+        model.db.session.add(db_rating)
+        model.db.session.flush()
 
 model.db.session.commit()

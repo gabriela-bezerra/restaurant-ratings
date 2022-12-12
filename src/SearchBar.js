@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-function SearchBar(props) {
+function SearchBar({ categories }) {
 
-    const [categories, setCategorires] = useState([]);
+    // const [categories, setCategorires] = useState([]);
 
     const [selected, setSelected] = useState(categories[0]);
 
@@ -13,11 +13,11 @@ function SearchBar(props) {
     const [restaurants, setRestaurants] = useState([]);
 
 
-    useEffect(() => {
-        fetch('/api/categories')
-            .then((response) => response.json())
-            .then((data) => setCategorires(data));
-    }, []);
+    // useEffect(() => {
+    //     fetch('/api/categories')
+    //         .then((response) => response.json())
+    //         .then((data) => setCategorires(data));
+    // }, []);
 
     const handleSubmitCategory = (e) => {
         e.preventDefault()

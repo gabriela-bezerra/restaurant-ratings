@@ -20,7 +20,9 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({ user_id: "" })
 
-  const [reviews, setReviews] = useState(null)
+  const [reviews, setReviews] = useState(null);
+
+  const [categories, setCategorires] = useState([]);
 
   useEffect(() => {
     fetch('/api/login-status')
@@ -33,6 +35,11 @@ function App() {
       })
   })
 
+  useEffect(() => {
+    fetch('/api/categories')
+      .then((response) => response.json())
+      .then((data) => setCategorires(data));
+  }, []);
 
 
   return (
@@ -41,7 +48,7 @@ function App() {
       <div className="container-fluid">
         <Route exact path="/">
           <Homepage />
-          <SearchBar />
+          <SearchBar categories={categories} />
         </Route>
 
         <Route exact path="/login">
@@ -59,7 +66,7 @@ function App() {
         </Route>
 
         <Route exact path="/add-restaurant">
-          <AddNewRestaurant />
+          <AddNewRestaurant categories={categories} />
         </Route>
 
         <Route exact path="/restaurant-details/:restaurant_id">

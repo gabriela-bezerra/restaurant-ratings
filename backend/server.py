@@ -191,6 +191,66 @@ def show_restaurant_reviews():
     return jsonify(reviews_dict)
 
 
+@app.route('/api/create-restaurant', methods=['POST'])
+def create_new_restaurant():
+    """ Creates a new restaurant. """
+
+    data = request.get_json()
+
+    name = data.get('name')
+    address = data.get('address')
+    city = data.get('city')
+    state = data.get('state')
+    zipcode = data.get('zipcode')
+    category = data.get('category')
+    photo_url = data.get('photo_url')
+    rating = 1
+
+    if crud.get_restaurant_by_name(name) == None:
+        # add new restaurant to db
+        new_restaurant = crud.create_restaurant(
+            name=name, address=address, city=city, state=state, zipcode=zipcode)
+
+        db.session.add(new_restaurant)
+        db.session.flush()
+
+        # get category ID
+        db_category = crud.get_categoryId_by_name(name=category)
+
+        # creates a relationship Restaurant-Category
+        db_restaurantsCategories = crud.add_a_restaurant_to_a_category(
+            restaurant_id=new_restaurant.restaurant_id,
+            category_id=db_category[0].category_id)
+
+        db.session.add(db_restaurantsCategories)
+        db.session.flush()
+
+        # add an initial rating
+        db_rating = crud.create_rating(
+            restaurant_id=new_restaurant.restaurant_id,
+            score=rating,
+            user_id=None)
+
+        db.session.add(db_rating)
+        db.session.flush()
+
+        # add a photo
+        db_photo = crud.add_photo(
+            photo_url=photo_url,
+            restaurant_id=new_restaurant.restaurant_id,
+            user_id=None)
+
+        db.session.add(db_photo)
+        db.session.flush()
+
+        db.session.commit()
+
+        return jsonify({'status': '200', 'message': 'Restaurant added successfuly!'})
+
+    else:
+        return jsonify({'status': '400', 'message': 'This restaurant already exists!'})
+
+
 @app.route('/api/restaurants')
 def get_all_restaurants():
     """ Return all restaurants. """
@@ -231,6 +291,9 @@ def show_restaurant_information():
 
     rating = crud.get_ratings_by_restaurant(restaurant_id)
 
+    for row in rating[0]:
+        score = row
+
     photos = crud.filter_photos_by_restaurant(restaurant_id)
 
     return jsonify({'restaurant_id': restaurant.restaurant_id,
@@ -239,7 +302,7 @@ def show_restaurant_information():
                     'city': restaurant.city,
                     'state': restaurant.state,
                     'zipcode': restaurant.zipcode,
-                    'rating': rating.score,
+                    'rating': score,
                     'photo': photos.photo_url})
 
 

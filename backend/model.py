@@ -2,6 +2,7 @@
 
 from platform import release
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import func
 
 
 db = SQLAlchemy()
@@ -139,6 +140,14 @@ class Rating(db.Model):
     def __repr__(self):
         return f'<Rating rating_id={self.rating_id} restaurant_id={self.restaurant_id} score={self.score} user_id={self.user_id}>'
 
+    def to_dict(self):
+
+        return {
+            'rating_id': self.rating_id,
+            'restaurant_id': self.restaurant_id,
+            'user_id': self.user_id,
+            'score': self.score}
+
 
 class Review(db.Model):
     """A review."""
@@ -151,14 +160,10 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         "users.user_id"), nullable=True)
     review = db.Column(db.Text)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.String)
 
     restaurant = db.relationship("Restaurant", back_populates="reviews")
     user = db.relationship("User", back_populates="reviews")
-
-    @property
-    def formatted_date(self):
-        return self.date.strftime("%m/%d/%Y")
 
     def __repr__(self):
         return f'<Reviews review_id={self.review_id} restaurant_id={self.restaurant_id} user_id={self.user_id}, review={self.review}>'

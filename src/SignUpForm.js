@@ -19,7 +19,6 @@ function SignUpForm({ setFirstName, setLastName, setEmail, setPassword, setLogge
             .then((response) => response.json())
             .then((result) => {
                 if (result.status === '200') {
-                    localStorage.setItem('token-info', JSON.stringify(user));
                     setLoggedIn(true)
                     setStatusMessage(result.message)
                     history.push('/')
