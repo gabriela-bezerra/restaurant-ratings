@@ -10,6 +10,7 @@ import AddNewRestaurant from './AddNewRestaurant'
 import RestaurantDetails from './RestaurantDetails'
 import UserProfile from './UserProfile'
 import ReviewModal from './ReviewModal'
+import ProfilePhoto from './ProfilePhoto'
 
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
   const [reviews, setReviews] = useState(null);
 
   const [categories, setCategorires] = useState([]);
+
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
     fetch('/api/login-status')
@@ -75,7 +78,8 @@ function App() {
         </Route>
 
         <Route exact path="/user-profile">
-          <UserProfile user={currentUser} />
+          <UserProfile user={currentUser} userInfo={userInfo} setUserInfo={setUserInfo} />
+          <ProfilePhoto userInfo={userInfo} setUserInfo={setUserInfo} />
         </Route>
       </div>
     </>

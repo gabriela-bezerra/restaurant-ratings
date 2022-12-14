@@ -2,7 +2,7 @@
 
 from platform import release
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql import func
+from sqlalchemy.sql import func, insert, update, delete
 
 
 db = SQLAlchemy()
@@ -26,7 +26,7 @@ class User(db.Model):
     favorites = db.relationship("Favorite", back_populates="user")
 
     def __repr__(self):
-        return f'<User user_id={self.user_id}, name={self.fname} {self.lname}, email={self.email}>'
+        return f'<User user_id={self.user_id}, name={self.fname} {self.lname}, email={self.email}, photo = {self.profile_photo}>'
 
 
 class Restaurant(db.Model):
