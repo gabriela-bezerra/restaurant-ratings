@@ -5,30 +5,38 @@ function CloudinaryWidget({ userInfo, setUserInfo }) {
 
     const [images, setImages] = useState({});
 
-    function successCallBack(result) {
+    // function successCallBack(result) {
+    const successCallBack = (result) => {
         console.log('Done! Here is the image info: ', result.info)
         const profilePicture = {}
         profilePicture['profile_picture'] = result.info.url
         setImages(profilePicture)
-    }
+        console.log('--------before fetch')
+        console.log(images)
 
-    useEffect(() => {
-        // console.log(images)
-        if (!userInfo.profile_photo) {
-            fetch('/api/profile-photo', {
-                method: 'POST',
-                body: JSON.stringify(images),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    setUserInfo({ ...userInfo, profile_photo: responseJson.photo_url })
-                    // alert(responseJson.status);
-                });
-        }
-    }, [images]);
+        // useEffect(() => {
+        // if (!userInfo.profile_photo) {
+        fetch('/api/profile-photo', {
+            method: 'POST',
+            body: JSON.stringify(profilePicture),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson)
+                setUserInfo({ ...userInfo, profile_photo: responseJson.photo_url })
+                console.log(userInfo.profile_photo)
+                setImages('200')
+            });
+        // }
+        console.log('--------after fetch')
+        console.log(images)
+    }
+    // }, [])
+
+    console.log(userInfo);
 
     function failureCallBack(result) {
         console.log("failure")
