@@ -104,7 +104,7 @@ def logout():
 
 
 @app.route('/api/profile-photo', methods=['POST'])
-def process_photo_uploading():
+def profile_photo_uploading():
     """Gets user request for photo upload"""
 
     user_upload = request.json.get("profile_picture")
@@ -224,6 +224,24 @@ def show_restaurant_reviews():
     return jsonify(reviews_dict)
 
 
+@app.route('/api/add-restaurant-photo', methods=['POST'])
+def restaurant_photo_uploading():
+    """Gets user request for photo upload"""
+
+    user_upload = request.json.get("restaurant_picture")
+    restaurant_id = None
+    print('---------------')
+    print(user_upload)
+
+    if user_upload:
+        db_new_restaurant_photo = crud.add_photo(
+            user_id=session['user_id'], restaurant_id=restaurant_id, photo_url=user_upload)
+        db.session.add(db_new_restaurant_photo)
+        db.session.commit()
+
+        return jsonify({'status': '200', 'message': 'Photo uploded!', 'photo_url':  user_upload})
+
+
 @app.route('/api/create-restaurant', methods=['POST'])
 def create_new_restaurant():
     """ Creates a new restaurant. """
@@ -236,13 +254,13 @@ def create_new_restaurant():
     state = data.get('state')
     zipcode = data.get('zipcode')
     category = data.get('category')
-    photo_url = data.get('photo_url')
+    photo_cover = data.get('photo_url')
     rating = 1
 
     if crud.get_restaurant_by_name(name) == None:
         # add new restaurant to db
         new_restaurant = crud.create_restaurant(
-            name=name, address=address, city=city, state=state, zipcode=zipcode)
+            name=name, address=address, city=city, state=state, zipcode=zipcode, photo_cover=photo_cover)
 
         db.session.add(new_restaurant)
         db.session.flush()
@@ -267,14 +285,14 @@ def create_new_restaurant():
         db.session.add(db_rating)
         db.session.flush()
 
-        # add a photo
-        db_photo = crud.add_photo(
-            photo_url=photo_url,
-            restaurant_id=new_restaurant.restaurant_id,
-            user_id=None)
+        # # add a photo
+        # db_photo = crud.add_photo(
+        #     photo_url=photo_url,
+        #     restaurant_id=new_restaurant.restaurant_id,
+        #     user_id=None)
 
-        db.session.add(db_photo)
-        db.session.flush()
+        # db.session.add(db_photo)
+        # db.session.flush()
 
         db.session.commit()
 
@@ -297,7 +315,9 @@ def show_restaurant_information():
     for row in rating[0]:
         score = round(row, 2)
 
-    photos = crud.filter_photos_by_restaurant(restaurant_id)
+    # photos = crud.filter_photos_by_restaurant(restaurant_id)
+    # print('------------------')
+    # print(photos)
 
     return jsonify({'restaurant_id': restaurant.restaurant_id,
                     'name': restaurant.name,
@@ -306,7 +326,7 @@ def show_restaurant_information():
                     'state': restaurant.state,
                     'zipcode': restaurant.zipcode,
                     'rating': score,
-                    'photo': photos.photo_url})
+                    'photo_cover': restaurant.photo_cover})
 
 
 # SEARCH RELATED ROUTES-------------------------------------

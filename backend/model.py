@@ -42,6 +42,7 @@ class Restaurant(db.Model):
     zipcode = db.Column(db.String(50))
     latitude = db.Column(db.String(50))
     longitude = db.Column(db.String(50))
+    photo_cover = db.Column(db.Text, nullable=False)
 
     ratings = db.relationship("Rating", back_populates="restaurant")
     reviews = db.relationship("Review", back_populates="restaurant")

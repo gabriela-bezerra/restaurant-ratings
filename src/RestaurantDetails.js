@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react';
 
-function RestaurantDetails({ reviews, setReviews }) {
+function RestaurantDetails({ reviews, setReviews, restaurant, setRestaurant }) {
 
     const { restaurant_id } = useParams();
 
-    const [restaurant, setRestaurant] = useState(null);
-
+    // const [restaurant, setRestaurant] = useState(null);
 
     useEffect(() => {
         fetch('/api/restaurant/details', {
@@ -59,7 +58,7 @@ function RestaurantDetails({ reviews, setReviews }) {
             <div>
                 <h1> Restaurant Details</h1>
                 <div>
-                    <img src={restaurant.photo} alt='Restaurant cover' width="300" height="300" />
+                    <img src={restaurant.photo_cover} alt='Restaurant cover' width="300" height="300" />
                     <h3>{restaurant.name}</h3>
                     <p> {restaurant.address} {restaurant.city} {restaurant.zipcode}</p>
                     <p> Rating : {restaurant.rating} </p>

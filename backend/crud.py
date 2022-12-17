@@ -48,8 +48,6 @@ def get_random_user():
 
 def add_profile_photo(user_id, photo_url):
 
-    # return User.execute(update(User).where(User.user_id == user_id).values(profile_photo=photo_url))
-
     user = User.query.get(user_id)
 
     user.profile_photo = photo_url
@@ -57,17 +55,13 @@ def add_profile_photo(user_id, photo_url):
     db.session.flush()
     db.session.commit()
 
-    print('-----------------')
-    print(user)
-    print(photo_url)
-
 # Restaurants ------------
 
 
-def create_restaurant(name, address, city, state, zipcode, latitude=None, longitude=None):
+def create_restaurant(name, address, city, state, zipcode, photo_cover, latitude=None, longitude=None):
     """Create and return a new restaurante."""
 
-    return Restaurant(name=name, address=address, city=city, state=state, zipcode=zipcode, latitude=latitude, longitude=longitude)
+    return Restaurant(name=name, address=address, city=city, state=state, zipcode=zipcode, photo_cover=photo_cover, latitude=latitude, longitude=longitude)
 
 
 def get_all_restaurants():

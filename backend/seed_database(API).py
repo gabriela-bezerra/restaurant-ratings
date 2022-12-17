@@ -62,7 +62,7 @@ for restaurant in restaurant_data:
 
     category = restaurant["categories"][0]["title"]
     rating = restaurant["rating"]
-    photo_url = restaurant["image_url"]
+    photo_cover = restaurant["image_url"]
 
     # creates a restaurant
     db_restaurant = crud.create_restaurant(
@@ -72,7 +72,8 @@ for restaurant in restaurant_data:
         state=state,
         zipcode=zipcode,
         latitude=latitude,
-        longitude=longitude)
+        longitude=longitude,
+        photo_cover=photo_cover)
 
     model.db.session.add(db_restaurant)
     model.db.session.flush()
@@ -91,14 +92,14 @@ for restaurant in restaurant_data:
     model.db.session.add(db_restaurantsCategories)
     model.db.session.flush()
 
-    # creates a photo
-    db_photo = crud.add_photo(
-        photo_url=photo_url,
-        restaurant_id=db_restaurant.restaurant_id,
-        user_id=None)
+    # # creates a photo
+    # db_photo = crud.add_photo(
+    #     photo_url=photo_url,
+    #     restaurant_id=db_restaurant.restaurant_id,
+    #     user_id=None)
 
-    model.db.session.add(db_photo)
-    model.db.session.flush()
+    # model.db.session.add(db_photo)
+    # model.db.session.flush()
 
     # # add a rating
     # db_rating = crud.create_rating(
@@ -174,7 +175,6 @@ for user in users:
             restaurant_id=restaurant.restaurant_id,
             score=random.choice([1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]),
             user_id=user_id)
-        print(db_rating)
 
         model.db.session.add(db_rating)
         model.db.session.flush()

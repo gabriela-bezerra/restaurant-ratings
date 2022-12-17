@@ -1,21 +1,13 @@
-import { useState, React, useEffect } from 'react';
+import { React } from 'react';
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 
 function CloudinaryWidget({ userInfo, setUserInfo }) {
 
-    const [images, setImages] = useState({});
-
-    // function successCallBack(result) {
     const successCallBack = (result) => {
         console.log('Done! Here is the image info: ', result.info)
         const profilePicture = {}
         profilePicture['profile_picture'] = result.info.url
-        setImages(profilePicture)
-        console.log('--------before fetch')
-        console.log(images)
 
-        // useEffect(() => {
-        // if (!userInfo.profile_photo) {
         fetch('/api/profile-photo', {
             method: 'POST',
             body: JSON.stringify(profilePicture),
@@ -27,14 +19,9 @@ function CloudinaryWidget({ userInfo, setUserInfo }) {
             .then((responseJson) => {
                 console.log(responseJson)
                 setUserInfo({ ...userInfo, profile_photo: responseJson.photo_url })
-                console.log(userInfo.profile_photo)
-                setImages('200')
             });
-        // }
-        console.log('--------after fetch')
-        console.log(images)
     }
-    // }, [])
+
 
     console.log(userInfo);
 

@@ -4,8 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom'
 import ReactStars from "react-rating-stars-component";
+import RestaurantPhotos from './RestaurantPhotos'
 
-function ReviewModal({ reviews, setReviews }) {
+function ReviewModal({ restaurant, setRestaurant, reviews, setReviews }) {
 
     const { restaurant_id } = useParams();
 
@@ -63,6 +64,7 @@ function ReviewModal({ reviews, setReviews }) {
                         fullIcon={<i className="fa fa-star"></i>}
                         activeColor="#ffd700"
                     />
+                    <RestaurantPhotos restaurant={restaurant} setRestaurant={setRestaurant} />
                     <Form>
                         <Form.Group
                             className="mb-3"
