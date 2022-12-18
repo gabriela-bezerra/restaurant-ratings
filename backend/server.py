@@ -254,9 +254,6 @@ def show_restaurant_photos():
     for photo in photos:
         photos_dict.append(photo.to_dict())
 
-    print('--------show photos')
-    print(photos_dict)
-
     return jsonify(photos_dict)
 
 
@@ -274,6 +271,10 @@ def create_new_restaurant():
     category = data.get('category')
     photo_cover = data.get('photo_url')
     rating = 1
+
+    print('----------- new restaurant')
+    print(f'requet {data}')
+    print(f'photo{photo_cover}')
 
     if crud.get_restaurant_by_name(name) == None:
         # add new restaurant to db

@@ -1,6 +1,7 @@
 import { useState } from "react";
+import RestaurantCover from './RestaurantCover'
 
-function AddNewRestaurant({ categories }) {
+function AddNewRestaurant({ coverPhoto, setCoverPhoto, categories }) {
 
     const [newRestaurant, setNewRestaurant] = useState("");
     const [statusMessage, setStatusMessage] = useState("");
@@ -9,7 +10,7 @@ function AddNewRestaurant({ categories }) {
         e.preventDefault();
         fetch('/api/create-restaurant', {
             method: 'POST',
-            body: JSON.stringify(newRestaurant),
+            body: JSON.stringify({ ...newRestaurant, photo_url: coverPhoto }),
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -34,7 +35,9 @@ function AddNewRestaurant({ categories }) {
                 City <input type="text" name="city" onChange={(e) => setNewRestaurant({ ...newRestaurant, city: e.target.value })} value={newRestaurant.city} />
                 State <input type="text" name="state" onChange={(e) => setNewRestaurant({ ...newRestaurant, state: e.target.value })} value={newRestaurant.state} />
                 Zipcode <input type="text" name="zipcode" onChange={(e) => setNewRestaurant({ ...newRestaurant, zipcode: e.target.value })} value={newRestaurant.zipcode} />
-                Upload a photo URL <input type="text" name="photo" onChange={(e) => setNewRestaurant({ ...newRestaurant, photo_url: e.target.value })} value={newRestaurant.photo_url} />
+                Upload a photo
+                <RestaurantCover setCoverPhoto={setCoverPhoto} />
+                {/* <input type="text" name="photo" onChange={(e) => setNewRestaurant({ ...newRestaurant, photo_url: e.target.value })} value={newRestaurant.photo_url} /> */}
                 <label className='categories-dropdown'> Category</label>
                 <select onChange={(e) => setNewRestaurant({ ...newRestaurant, category: e.target.value })} value={newRestaurant.category}>
                     {categories.map((category) => (

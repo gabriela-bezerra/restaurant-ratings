@@ -31,6 +31,8 @@ function App() {
 
   const [restaurant, setRestaurant] = useState(null);
 
+  const [coverPhoto, setCoverPhoto] = useState(null);
+
   useEffect(() => {
     fetch('/api/login-status')
       .then((response) => response.json())
@@ -73,7 +75,7 @@ function App() {
         </Route>
 
         <Route exact path="/add-restaurant">
-          <AddNewRestaurant categories={categories} />
+          <AddNewRestaurant categories={categories} coverPhoto={coverPhoto} setCoverPhoto={setCoverPhoto} />
         </Route>
 
         <Route exact path="/restaurant-details/:restaurant_id">
