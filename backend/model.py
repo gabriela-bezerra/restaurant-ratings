@@ -195,6 +195,16 @@ class Photo(db.Model):
     restaurant = db.relationship("Restaurant", back_populates="photos")
     user = db.relationship("User", back_populates="photos")
 
+    def to_dict(self):
+
+        return {
+            'photo_id': self.photo_id,
+            'photo_url': self.photo_url,
+            'restaurant_id': self.restaurant_id,
+            'user_id': self.user_id,
+
+        }
+
     def __repr__(self):
         return f'<Photo photo_id={self.photo_id} photo_url={self.photo_url}>'
 

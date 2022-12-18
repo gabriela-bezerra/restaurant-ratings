@@ -23,6 +23,8 @@ function App() {
 
   const [reviews, setReviews] = useState(null);
 
+  const [restaurantPhotos, setRestaurantPhotos] = useState(null);
+
   const [categories, setCategorires] = useState([]);
 
   const [userInfo, setUserInfo] = useState(null);
@@ -75,8 +77,8 @@ function App() {
         </Route>
 
         <Route exact path="/restaurant-details/:restaurant_id">
-          <RestaurantDetails reviews={reviews} setReviews={setReviews} restaurant={restaurant} setRestaurant={setRestaurant} />
-          <ReviewModal restaurant={restaurant} setRestaurant={setRestaurant} reviews={reviews} setReviews={setReviews} />
+          <RestaurantDetails reviews={reviews} setReviews={setReviews} restaurant={restaurant} setRestaurant={setRestaurant} photos={restaurantPhotos} setPhotos={setRestaurantPhotos} />
+          <ReviewModal restaurant={restaurant} setRestaurant={setRestaurant} reviews={reviews} setReviews={setReviews} photos={restaurantPhotos} setPhotos={setRestaurantPhotos} />
         </Route>
 
         <Route exact path="/user-profile">

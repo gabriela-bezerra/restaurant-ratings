@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import ReactStars from "react-rating-stars-component";
 import RestaurantPhotos from './RestaurantPhotos'
 
-function ReviewModal({ restaurant, setRestaurant, reviews, setReviews }) {
+function ReviewModal({ photos, setPhotos, restaurant, setRestaurant, reviews, setReviews }) {
 
     const { restaurant_id } = useParams();
 
@@ -34,7 +34,6 @@ function ReviewModal({ restaurant, setRestaurant, reviews, setReviews }) {
         }).then(result => result.json())
             .then(data => {
                 setReviews(data)
-                console.log(data)
             });
         handleClose()
         window.location.reload()
@@ -64,15 +63,16 @@ function ReviewModal({ restaurant, setRestaurant, reviews, setReviews }) {
                         fullIcon={<i className="fa fa-star"></i>}
                         activeColor="#ffd700"
                     />
-                    <RestaurantPhotos restaurant={restaurant} setRestaurant={setRestaurant} />
                     <Form>
                         <Form.Group
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
                         >
+
                             <Form.Label>Write a review... </Form.Label>
                             <Form.Control as="textarea" rows={3} onChange={(e) => setAddReview({ ...addReview, review: e.target.value })} />
                         </Form.Group>
+                        <RestaurantPhotos restaurant={restaurant} setRestaurant={setRestaurant} />
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

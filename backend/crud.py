@@ -216,7 +216,7 @@ def filter_photos_by_user(user_id):
 def filter_photos_by_restaurant(restaurant_id):
     """Gives all ratings attributed to a user."""
 
-    return Photo.query.filter(Photo.restaurant_id == restaurant_id).first()
+    return Photo.query.filter(Photo.restaurant_id == restaurant_id).all()
 
 
 if __name__ == '__main__':

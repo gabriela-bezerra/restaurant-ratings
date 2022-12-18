@@ -17,13 +17,10 @@ function CloudinaryWidget({ userInfo, setUserInfo }) {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson)
                 setUserInfo({ ...userInfo, profile_photo: responseJson.photo_url })
             });
     }
 
-
-    console.log(userInfo);
 
     function failureCallBack(result) {
         console.log("failure")
