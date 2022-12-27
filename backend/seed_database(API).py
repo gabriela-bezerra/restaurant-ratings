@@ -65,7 +65,7 @@ for restaurant in restaurant_data:
     photo_cover = restaurant["image_url"]
 
     # creates a restaurant
-    db_restaurant = crud.create_restaurant(
+    db_restaurant = crud.create_new_restaurant(
         name=name,
         address=address,
         city=city,
@@ -93,7 +93,7 @@ for restaurant in restaurant_data:
     model.db.session.flush()
 
     # # creates a photo
-    # db_photo = crud.add_photo(
+    # db_photo = crud.add_restaurant_photo(
     #     photo_url=photo_url,
     #     restaurant_id=db_restaurant.restaurant_id,
     #     user_id=None)
@@ -120,7 +120,7 @@ for n in range(20):
     lname = fake.last_name()
     email = f'{fname.lower()}{lname.lower()}@example.com'
     profile_photo = random.choice(PROFILE_PHOTOS)
-    user = crud.create_user(
+    user = crud.create_new_user(
         email=email,
         password=password,
         fname=fname,
@@ -135,7 +135,7 @@ model.db.session.commit()
 
 # creates a review
 restaurants = crud.get_all_restaurants()
-user = crud.get_random_user()
+user = crud.get_random_user_from_db()
 
 for restaurant in restaurants:
     now = datetime.now()
@@ -159,7 +159,7 @@ users = crud.get_all_users()
 
 for user in users:
     for i in range(5):
-        restaurant = crud.get_random_restaurant()
+        restaurant = crud.get_random_restaurant_from_db()
         restaurant_id = restaurant.restaurant_id
         user_id = user.user_id
         favorites = crud.add_a_restaurant_to_favorites(

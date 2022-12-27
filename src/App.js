@@ -58,6 +58,7 @@ function App() {
         <Route exact path="/">
           <Homepage />
           <SearchBar categories={categories} />
+          <Toast />
         </Route>
 
         <Route exact path="/login">

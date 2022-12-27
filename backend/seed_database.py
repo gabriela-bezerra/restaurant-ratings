@@ -51,7 +51,7 @@ for _ in range(20):
     photo_url = fake.image_url()
 
     # creates a restaurant
-    db_restaurant = crud.create_restaurant(
+    db_restaurant = crud.create_new_restaurant(
         name=name,
         address=address,
         city=city,
@@ -65,7 +65,7 @@ for _ in range(20):
     model.db.session.add(db_restaurant)
     model.db.session.flush()
 
-    category = crud.random_category()
+    category = crud.get_random_category_from_db()
     print('------random category-------')
     print(category)
 
@@ -79,7 +79,7 @@ for _ in range(20):
     model.db.session.flush()
 
     # creates a photo
-    db_photo = crud.add_photo(
+    db_photo = crud.add_restaurant_photo(
         photo_url=photo_url,
         restaurant_id=db_restaurant.restaurant_id,
         user_id=None)
@@ -107,7 +107,7 @@ for n in range(10):
     lname = fake.last_name()
     email = f'{fname.lower()}{lname.lower()}@example.com'
 
-    user = crud.create_user(
+    user = crud.create_new_user(
         email=email,
         password=password,
         fname=fname,

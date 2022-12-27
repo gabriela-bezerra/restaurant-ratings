@@ -6,32 +6,32 @@ from sqlalchemy.sql import func, insert, update
 
 # Users ------------
 
-def create_user(email, password, fname, lname, profile_photo=None):
-    """Create and return a new user."""
+def create_new_user(email, password, fname, lname, profile_photo=None):
+    """Creates and returns a new user."""
 
     return User(email=email, password=password, fname=fname, lname=lname, profile_photo=profile_photo)
 
 
 def get_all_users():
-    """Gives all users."""
+    """Retrieves all users from the database."""
 
     return User.query.all()
 
 
 def get_user_by_id(user_id):
-    """Gives us user by given email."""
+    """Retrieves a user by their ID."""
 
     return User.query.filter(User.user_id == user_id).first()
 
 
 def get_user_by_email(email):
-    """Gives us user by given email."""
+    """Retrieves a user by their email address."""
 
     return User.query.filter(User.email == email).first()
 
 
 def get_user_password_and_user_id(email):
-    """Gives us user password and user_id."""
+    """Retrieves the password and user ID of a user by their email address."""
 
     user = User.query.filter(User.email == email).first()
 
@@ -41,12 +41,14 @@ def get_user_password_and_user_id(email):
         return [None, None]
 
 
-def get_random_user():
+def get_random_user_from_db():
+    """Retrieves a random user from the database."""
 
     return User.query.order_by(func.random()).first()
 
 
 def add_profile_photo(user_id, photo_url):
+    """Adds a profile photo to a user."""
 
     user = User.query.get(user_id)
 
@@ -58,37 +60,38 @@ def add_profile_photo(user_id, photo_url):
 # Restaurants ------------
 
 
-def create_restaurant(name, address, city, state, zipcode, photo_cover, latitude=None, longitude=None):
-    """Create and return a new restaurante."""
+def create_new_restaurant(name, address, city, state, zipcode, photo_cover, latitude=None, longitude=None):
+    """Creates and returns a new restaurant."""
 
     return Restaurant(name=name, address=address, city=city, state=state, zipcode=zipcode, photo_cover=photo_cover, latitude=latitude, longitude=longitude)
 
 
 def get_all_restaurants():
-    """Gives all restaurants."""
+    """ Retrieves all restaurants from the database."""
 
     return Restaurant.query.all()
 
 
 def get_restaurant_by_id(restaurant_id):
-    """Gives restaurant of choice."""
+    """Retrieves a restaurant by its ID."""
 
     return Restaurant.query.filter(Restaurant.restaurant_id == restaurant_id).first()
 
 
 def get_restaurant_by_name(restaurant_name):
-    """Gives restaurant of choice."""
+    """Retrieves a restaurant by its name"""
 
     return Restaurant.query.filter(Restaurant.name == restaurant_name).first()
 
 
 def get_restaurant_by_zipcode(restaurant_zipcode):
-    """Gives restaurant of choice."""
+    """Retrieves restaurants by their zip code."""
 
     return Restaurant.query.filter(Restaurant.zipcode == restaurant_zipcode).all()
 
 
-def get_random_restaurant():
+def get_random_restaurant_from_db():
+    """Retrieves a random restaurant from the database."""
 
     return Restaurant.query.order_by(func.random()).first()
 
@@ -96,7 +99,7 @@ def get_random_restaurant():
 # Categories ------------
 
 def create_a_category(name):
-    """Create and return a new category"""
+    """Creates and returns a new category."""
 
     checking_categories = Category.query.filter(Category.name == name).first()
 
@@ -107,24 +110,25 @@ def create_a_category(name):
 
 
 def get_all_categories():
-    """Gives all categories."""
+    """Retrieves all categories from the database."""
 
     return Category.query.all()
 
 
 def get_categoryId_by_name(name):
-    """Get category_id by category name"""
+    """Retrieves categories by their name"""
 
     return Category.query.filter(Category.name == name).all()
 
 
-def random_category():
+def get_random_category_from_db():
+    """Retrieves a random category from the database."""
 
     return Category.query.order_by(func.random()).first()
 
 
 def get_restaurants_by_category(category_name):
-    """Gives all restaurants by category."""
+    """Retrieves all restaurants in a given category.."""
 
     get_category = Category.query.filter(
         Category.name == category_name).all()
@@ -136,7 +140,7 @@ def get_restaurants_by_category(category_name):
 # Restaurants categories ------------
 
 def add_a_restaurant_to_a_category(restaurant_id, category_id):
-    """Creates a relationship restaurant-category"""
+    """Creates a relationship between a restaurant and a category."""
 
     return RestaurantCategory(restaurant_id=restaurant_id, category_id=category_id)
 
@@ -144,19 +148,19 @@ def add_a_restaurant_to_a_category(restaurant_id, category_id):
 # Ratings ------------
 
 def create_rating(restaurant_id, user_id, score):
-    """Create a rating."""
+    """Creates a rating for a restaurant by a user."""
 
     return Rating(restaurant_id=restaurant_id, user_id=user_id, score=score)
 
 
 def get_ratings_by_user(user_id):
-    """Gives all ratings attributed to a user."""
+    """Retrieves all ratings made by a specific user."""
 
     return Rating.query.filter(Rating.user_id == user_id).first()
 
 
 def get_ratings_by_restaurant(restaurant_id):
-    """Gives all ratings attributed to a restaurant."""
+    """Retrieves the average rating of a specific restaurant."""
 
     return Rating.query.with_entities(func.avg(Rating.score)).filter(Rating.restaurant_id == restaurant_id).all()
 
@@ -164,16 +168,19 @@ def get_ratings_by_restaurant(restaurant_id):
 # Favorites ------------
 
 def add_a_restaurant_to_favorites(restaurant_id, user_id):
+    """Adds a restaurant to a user's favorites."""
 
     return Favorite(restaurant_id=restaurant_id, user_id=user_id)
 
 
 def filter_favorites_by_user(user_id):
+    """ Retrieves all restaurants in a user's favorites."""
 
     return Favorite.query.filter(Favorite.user_id == user_id).all()
 
 
 def check_restaurant_in_favorites(restaurant_id, user_id):
+    """Checks if a restaurant is in a user's favorites."""
 
     return Favorite.query.filter((Favorite.restaurant_id == restaurant_id) & (Favorite.user_id == user_id)).first()
 
@@ -181,19 +188,19 @@ def check_restaurant_in_favorites(restaurant_id, user_id):
 # Reviews ------------
 
 def create_review(restaurant_id, user_id, review, date):
-    """Create a rating."""
+    """Creates a review for a restaurant by a user."""
 
     return Review(restaurant_id=restaurant_id, user_id=user_id, review=review, date=date)
 
 
 def get_reviews_by_user(user_id):
-    """Gives all reviews attributed to a user."""
+    """Retrieves all reviews made by a specific user."""
 
     return Review.query.filter(Review.user_id == user_id).all()
 
 
 def get_reviews_by_restaurant(restaurant_id):
-    """Gives all restaurants by category."""
+    """Retrieves all reviews for a specific restaurant."""
 
     return Review.query.filter(
         Review.restaurant_id == restaurant_id).all()
@@ -201,20 +208,20 @@ def get_reviews_by_restaurant(restaurant_id):
 # Photos ------------
 
 
-def add_photo(photo_url, restaurant_id, user_id):
-    """Create a rating."""
+def add_restaurant_photo(photo_url, restaurant_id, user_id):
+    """Adds a photo to a restaurant."""
 
     return Photo(photo_url=photo_url, restaurant_id=restaurant_id, user_id=user_id)
 
 
 def filter_photos_by_user(user_id):
-    """Gives all ratings attributed to a user."""
+    """Retrieves all photos added by a specific user."""
 
     return Photo.query.filter(Photo.user_id == user_id)
 
 
 def filter_photos_by_restaurant(restaurant_id):
-    """Gives all ratings attributed to a user."""
+    """Retrieves all photos by a specific restaurant."""
 
     return Photo.query.filter(Photo.restaurant_id == restaurant_id).all()
 

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import Toast from './Toast';
 import logo from '/Users/gabrielabezerra/src/react-project/restaurant-ratings/src/logo.png'
 
 
@@ -21,7 +22,10 @@ function Navbar({ loggedIn, setLoggedIn, user, setUser }) {
                 if (data.status === '200') {
                     setUser("")
                     setLoggedIn(false)
-                    history.push('/');
+                    Toast({ message: data.message, type: 'success' })
+                    setTimeout(() => {
+                        history.push('/')
+                    }, 2000)
                 }
             });
     };

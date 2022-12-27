@@ -29,7 +29,7 @@ def show_homepage():
 # USER RELATED ROUTES-------------------------------------
 
 @app.route('/api/create-account', methods=['POST'])
-def create_user_account():
+def create_new_user_account():
     """ Creates user account. """
 
     data = request.get_json()
@@ -40,10 +40,10 @@ def create_user_account():
     password = data.get('password')
 
     if crud.get_user_by_email(email) == None:
-        new_user = crud.create_user(fname=first_name,
-                                    lname=last_name,
-                                    email=email,
-                                    password=password)
+        new_user = crud.create_new_user(fname=first_name,
+                                        lname=last_name,
+                                        email=email,
+                                        password=password)
 
         db.session.add(new_user)
         db.session.commit()
@@ -233,7 +233,7 @@ def restaurant_photo_uploading():
     restaurant_id = request_json['restaurant_id']
 
     if photo_url:
-        db_new_restaurant_photo = crud.add_photo(
+        db_new_restaurant_photo = crud.add_restaurant_photo(
             user_id=session['user_id'], restaurant_id=restaurant_id, photo_url=photo_url)
         db.session.add(db_new_restaurant_photo)
         db.session.commit()
@@ -278,7 +278,7 @@ def create_new_restaurant():
 
     if crud.get_restaurant_by_name(name) == None:
         # add new restaurant to db
-        new_restaurant = crud.create_restaurant(
+        new_restaurant = crud.create_new_restaurant(
             name=name, address=address, city=city, state=state, zipcode=zipcode, photo_cover=photo_cover)
 
         db.session.add(new_restaurant)
@@ -305,7 +305,7 @@ def create_new_restaurant():
         db.session.flush()
 
         # # add a photo
-        # db_photo = crud.add_photo(
+        # db_photo = crud.add_restaurant_photo(
         #     photo_url=photo_url,
         #     restaurant_id=new_restaurant.restaurant_id,
         #     user_id=None)
