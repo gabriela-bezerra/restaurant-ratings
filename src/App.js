@@ -62,6 +62,7 @@ function App() {
 
         <Route exact path="/login">
           <LoginForm user={user} setUser={setUser} setLoggedIn={setLoggedIn} />
+          <Toast />
         </Route>
 
         <Route exact path="/sign-up">

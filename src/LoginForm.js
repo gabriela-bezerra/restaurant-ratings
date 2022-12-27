@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import Toast from './Toast';
 
 
 function LoginForm({ user, setUser, setLoggedIn }) {
@@ -24,12 +24,10 @@ function LoginForm({ user, setUser, setLoggedIn }) {
                 if (data.status === '200') {
                     setErrorMessage("");
                     setLoggedIn(true);
-                    toast.success(data.message, {
-                        position: toast.POSITION.TOP_RIGHT
-                    });
+                    Toast({ message: data.message, type: 'success' })
                     setTimeout(() => {
                         history.push('/')
-                    }, 3000)
+                    }, 2500)
                 } else {
                     setErrorMessage(data.message)
 
