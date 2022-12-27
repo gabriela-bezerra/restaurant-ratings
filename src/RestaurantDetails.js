@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react';
+import Toast from './Toast';
 
 function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant, setRestaurant }) {
 
@@ -28,7 +29,7 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
             }
         }).then(result => result.json())
             .then(data => {
-                console.log(data.message)
+                Toast({ message: data.message, type: data.type })
             });
     };
 

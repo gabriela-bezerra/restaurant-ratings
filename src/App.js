@@ -80,16 +80,19 @@ function App() {
 
         <Route exact path="/add-restaurant">
           <AddNewRestaurant categories={categories} coverPhoto={coverPhoto} setCoverPhoto={setCoverPhoto} />
+          <Toast />
         </Route>
 
         <Route exact path="/restaurant-details/:restaurant_id">
           <RestaurantDetails reviews={reviews} setReviews={setReviews} restaurant={restaurant} setRestaurant={setRestaurant} photos={restaurantPhotos} setPhotos={setRestaurantPhotos} />
           <ReviewModal restaurant={restaurant} setRestaurant={setRestaurant} reviews={reviews} setReviews={setReviews} photos={restaurantPhotos} setPhotos={setRestaurantPhotos} />
+          <Toast />
         </Route>
 
         <Route exact path="/user-profile">
           <UserProfile user={currentUser} userInfo={userInfo} setUserInfo={setUserInfo} />
           <ProfilePhoto userInfo={userInfo} setUserInfo={setUserInfo} />
+          <Toast />
         </Route>
       </div>
     </>

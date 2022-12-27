@@ -165,12 +165,12 @@ def add_restaurant_to_favorites():
             db.session.add(add_to_favorites)
             db.session.commit()
 
-            return jsonify({'status': '200', 'message': 'Restaurant added to your favorites'})
+            return jsonify({'status': '200', 'message': 'Restaurant added to your favorites', 'type': 'success'})
         else:
-            return jsonify({'status': '400', 'message': 'Restaurant already in the list'})
+            return jsonify({'status': '400', 'message': 'Restaurant already in the list', 'type': 'warning'})
 
     else:
-        return jsonify({'status': '400', 'message': 'Please, log in!'})
+        return jsonify({'status': '400', 'message': 'Please, log in!', 'type': 'error'})
 
 
 @app.route('/api/add-reviews', methods=['POST'])
