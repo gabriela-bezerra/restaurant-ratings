@@ -205,7 +205,7 @@ def add_a_restaurant_review():
         return jsonify(reviews_dict)
 
     else:
-        return jsonify({'status': '400', 'message': 'Please, log in!'})
+        return jsonify({'status': '400', 'message': 'Please, log in!', 'type': 'error'})
 
 
 @app.route('/api/show-reviews', methods=['POST'])
@@ -304,21 +304,12 @@ def create_new_restaurant():
         db.session.add(db_rating)
         db.session.flush()
 
-        # # add a photo
-        # db_photo = crud.add_restaurant_photo(
-        #     photo_url=photo_url,
-        #     restaurant_id=new_restaurant.restaurant_id,
-        #     user_id=None)
-
-        # db.session.add(db_photo)
-        # db.session.flush()
-
         db.session.commit()
 
-        return jsonify({'status': '200', 'message': 'Restaurant added successfuly!'})
+        return jsonify({'status': '200', 'message': 'Restaurant added successfuly!', 'type': 'success'})
 
     else:
-        return jsonify({'status': '400', 'message': 'This restaurant already exists!'})
+        return jsonify({'status': '400', 'message': 'This restaurant already exists!', 'type': 'warning'})
 
 
 @app.route('/api/restaurant/details', methods=['POST'])

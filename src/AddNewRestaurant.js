@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import RestaurantCover from './RestaurantCover'
+import Toast from './Toast';
 
 function AddNewRestaurant({ coverPhoto, setCoverPhoto, categories }) {
 
     const [newRestaurant, setNewRestaurant] = useState("");
     const [statusMessage, setStatusMessage] = useState("");
+
+    let history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,7 +22,11 @@ function AddNewRestaurant({ coverPhoto, setCoverPhoto, categories }) {
             .then((response) => response.json())
             .then((result) => {
                 if (result.status === '200') {
-                    setStatusMessage(result.message)
+                    setStatusMessage("")
+                    Toast({ message: result.message, type: 'success' })
+                    setTimeout(() => {
+                        history.push('/')
+                    }, 2500)
                 } else {
                     setStatusMessage(result.message)
                 }

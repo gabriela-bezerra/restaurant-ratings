@@ -22,7 +22,7 @@ function SignUpForm({ setFirstName, setLastName, setEmail, setPassword, setLogge
             .then((result) => {
                 if (result.status === '200') {
                     setLoggedIn(true)
-                    setStatusMessage(result.message)
+                    setStatusMessage("")
                     Toast({ message: result.message, type: 'success' })
                     setTimeout(() => {
                         history.push('/')
