@@ -11,7 +11,7 @@ import RestaurantDetails from './RestaurantDetails'
 import UserProfile from './UserProfile'
 import ReviewModal from './ReviewModal'
 import ProfilePhoto from './ProfilePhoto'
-
+import Toast from './Toast';
 
 function App() {
 
@@ -71,7 +71,9 @@ function App() {
             setEmail={(e) => setUser({ ...user, email: e.target.value })}
             setPassword={(e) => setUser({ ...user, password: e.target.value })}
             setLoggedIn={setLoggedIn}
-            user={user} />
+            user={user}
+          />
+          <Toast />
         </Route>
 
         <Route exact path="/add-restaurant">

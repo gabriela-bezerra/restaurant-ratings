@@ -1,8 +1,7 @@
 import React from 'react';
-import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css'
+import { toast } from 'react-toastify';
 
 
 function LoginForm({ user, setUser, setLoggedIn }) {
@@ -23,10 +22,14 @@ function LoginForm({ user, setUser, setLoggedIn }) {
         }).then(result => result.json())
             .then(data => {
                 if (data.status === '200') {
-                    toast("Logged in successfuly!")
                     setErrorMessage("");
                     setLoggedIn(true);
-                    history.push('/');
+                    toast.success(data.message, {
+                        position: toast.POSITION.TOP_RIGHT
+                    });
+                    setTimeout(() => {
+                        history.push('/')
+                    }, 3000)
                 } else {
                     setErrorMessage(data.message)
 

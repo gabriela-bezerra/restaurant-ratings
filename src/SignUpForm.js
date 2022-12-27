@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Toast from './Toast';
+
 
 function SignUpForm({ setFirstName, setLastName, setEmail, setPassword, setLoggedIn, user }) {
 
@@ -9,7 +11,7 @@ function SignUpForm({ setFirstName, setLastName, setEmail, setPassword, setLogge
 
     const handleCreateSubmit = (e) => {
         e.preventDefault();
-        fetch('/api/create', {
+        fetch('/api/create-account', {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {
@@ -21,12 +23,16 @@ function SignUpForm({ setFirstName, setLastName, setEmail, setPassword, setLogge
                 if (result.status === '200') {
                     setLoggedIn(true)
                     setStatusMessage(result.message)
-                    history.push('/')
+                    Toast({ message: result.message, type: 'success' })
+                    setTimeout(() => {
+                        history.push('/')
+                    }, 2000)
                 } else {
                     setStatusMessage(result.message)
                 }
             }, []);
     };
+
 
 
     return (

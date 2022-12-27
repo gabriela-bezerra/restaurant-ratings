@@ -28,7 +28,7 @@ def show_homepage():
 
 # USER RELATED ROUTES-------------------------------------
 
-@app.route('/api/create', methods=['POST'])
+@app.route('/api/create-account', methods=['POST'])
 def create_user_account():
     """ Creates user account. """
 
@@ -51,7 +51,7 @@ def create_user_account():
         session['user_id'] = new_user.user_id
 
         return jsonify({'status': '200',
-                        'message': 'Account created successfuly!',
+                        'message': 'Account created successfully!',
                         'firstName': first_name,
                         'lastName': last_name,
                         'email': email,
@@ -77,7 +77,7 @@ def login_user():
         return jsonify({'status': '420', 'message': ' User not found, please sign up.'})
     elif password == user_password:
         session['user_id'] = user_id
-        return jsonify({'status': '200', 'message': 'Logged in!'})
+        return jsonify({'status': '200', 'message': 'Logged in successfuly!!'})
     else:
         return jsonify({'status': '400', 'message': 'Incorret password'})
 
