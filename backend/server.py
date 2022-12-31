@@ -178,7 +178,6 @@ def add_a_restaurant_review():
     """ Adds a restaurant review"""
 
     request_data = request.get_json()
-    print(f'request_data{request_data}')
     restaurant_id = request_data[1]
     review = request_data[0]['review']
     rating = request_data[0]['rating_score']
@@ -188,8 +187,6 @@ def add_a_restaurant_review():
     date = now.strftime("%d %B, %Y")
 
     reviews_dict = []
-
-    print(f'line 192 -- {reviews_dict}')
 
     if 'user_id' in session:
         new_review = crud.create_review(
@@ -227,9 +224,6 @@ def show_restaurant_reviews():
     reviews = crud.get_reviews_by_restaurant(restaurant_id)
 
     reviews_data = [review.to_dict() for review in reviews]
-
-    print('-----++--------------')
-    print(f'line 232{reviews_data}')
 
     return jsonify(reviews_data)
 
@@ -282,10 +276,6 @@ def create_new_restaurant():
     photo_cover = data.get('photo_url')
     rating = 1
 
-    print('----------- new restaurant')
-    print(f'requet {data}')
-    print(f'photo{photo_cover}')
-
     if crud.get_restaurant_by_name(name) == None:
         # add new restaurant to db
         new_restaurant = crud.create_new_restaurant(
@@ -334,10 +324,6 @@ def show_restaurant_information():
 
     for row in rating[0]:
         score = round(row, 2)
-
-    # photos = crud.filter_photos_by_restaurant(restaurant_id)
-    # print('------------------')
-    # print(photos)
 
     return jsonify({'restaurant_id': restaurant.restaurant_id,
                     'name': restaurant.name,

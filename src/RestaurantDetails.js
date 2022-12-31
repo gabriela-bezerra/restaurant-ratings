@@ -1,14 +1,16 @@
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Toast from './Toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-modal';
 
 
 function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant, setRestaurant }) {
 
     const { restaurant_id } = useParams();
-
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
         fetch('/api/restaurant/details', {
@@ -61,11 +63,32 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
     }
 
 
+    const openModal = (index) => {
+        setModalIsOpen(true);
+        setCurrentImageIndex(index);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const previousImage = () => {
+        setCurrentImageIndex(currentImageIndex - 1);
+    };
+
+    const nextImage = () => {
+        setCurrentImageIndex(currentImageIndex + 1);
+    };
+
+
+
     if (!restaurant || !reviews) {
         return (
             <div> Loading...</div>
         )
     }
+
+
     return (
         <>
             <div>
@@ -84,9 +107,24 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
                             reviews.map(({ photos, date, review, review_id, user_id, user_name }) => (
                                 <>
                                     <p key={review_id}> User: {user_name} | Date posted: {date} </p><p> {review} </p>
-                                    {photos.map(({ photo_id, photo_url }) => (
-                                        <img key={photo_id} src={photo_url} alt={photo_id} width="100" height="100" />
+                                    {photos.map(({ photo_id, photo_url }, index) => (
+                                        <img
+                                            key={photo_id}
+                                            src={photo_url}
+                                            alt={photo_id}
+                                            width="100"
+                                            height="100"
+                                            onClick={() => openModal(index)}
+                                            style={{ cursor: 'pointer' }}
+                                        />
                                     ))}
+                                    <Modal isOpen={modalIsOpen} >
+                                        <img src={photos[currentImageIndex].photo_url} alt="Expanded" className="modal-image" />
+                                        <button onClick={previousImage} disabled={currentImageIndex === 0}>Previous</button>
+                                        <button onClick={nextImage} disabled={currentImageIndex === photos.length - 1}>Next</button>
+                                        <button onClick={closeModal}>Close</button>
+                                    </Modal>
+
                                 </>
                             )) :
                             <p>There are no reviews for this restaurant yet.</p>

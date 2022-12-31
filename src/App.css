@@ -213,3 +213,8 @@ input :focus {
   border-radius: 50%;
   line-height: 2.5em;
 }
+
+.modal-image {
+  width: 400px;
+  height: 400px;
+}
