@@ -203,3 +203,13 @@ input :focus {
   font-weight: bold;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
+
+.initials-placeholder {
+  width: 20%;
+  margin: 30px 0;
+  text-align: center;
+  background-color: #ccc;
+  font-size: 3em;
+  border-radius: 50%;
+  line-height: 2.5em;
+}

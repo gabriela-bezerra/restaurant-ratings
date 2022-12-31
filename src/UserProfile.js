@@ -6,6 +6,18 @@ function UserProfile({ user, userInfo, setUserInfo }) {
 
     const [favorites, setFavorites] = useState([]);
 
+    const [initials, setInitials] = useState('');
+
+    useEffect(() => {
+        if (userInfo) {
+            if (!userInfo.profile_photo) {
+                const firstInitial = userInfo.fname[0];
+                const lastInitial = userInfo.lname[0];
+                setInitials(`${firstInitial}${lastInitial}`);
+            }
+        }
+    }, [userInfo])
+
     useEffect(() => {
         fetch('/api/user/details', {
             method: 'POST',
@@ -40,8 +52,15 @@ function UserProfile({ user, userInfo, setUserInfo }) {
         <div>
             <h1> Welcome {userInfo.fname} </h1>
             <div>
-                <img style={{ width: "30%", margin: "30px 0" }} src={userInfo.profile_photo} alt="Face" />
-
+                {userInfo.profile_photo ? (
+                    <img
+                        style={{ width: "30%", margin: "30px 0" }}
+                        src={userInfo.profile_photo}
+                        alt="Face"
+                    />
+                ) : (
+                    <div className="initials-placeholder">{initials}</div>
+                )}
                 <p> User name : {userInfo.fname} {userInfo.lname}</p>
                 <p> Email : {userInfo.email} </p>
                 <div className="fav-lst">

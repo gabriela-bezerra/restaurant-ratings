@@ -1,7 +1,10 @@
 import { React } from 'react';
+import { useState } from 'react';
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 
 function CloudinaryWidget({ userInfo, setUserInfo }) {
+
+    const [buttonText, setButtonText] = useState('');
 
     const successCallBack = (result) => {
         console.log('Done! Here is the image info: ', result.info)
@@ -18,6 +21,7 @@ function CloudinaryWidget({ userInfo, setUserInfo }) {
             .then((response) => response.json())
             .then((responseJson) => {
                 setUserInfo({ ...userInfo, profile_photo: responseJson.photo_url })
+                setButtonText('Update Profile Photo')
             });
     }
 
@@ -35,7 +39,7 @@ function CloudinaryWidget({ userInfo, setUserInfo }) {
                 resourceType={'image'}
                 cloudName={'di0sy25ru'}
                 uploadPreset={'e8rqpxxs'}
-                buttonText={'Upload / Update Profile Photo'}
+                buttonText={buttonText || 'Upload Profile Photo'}
                 style={{
                     color: 'white',
                     border: 'none',
