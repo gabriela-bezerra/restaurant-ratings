@@ -1,29 +1,19 @@
 import { React } from 'react';
+import { useState } from 'react';
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
-// import { useParams } from 'react-router-dom'
+
 
 function CloudinaryWidget({ addReview, setAddReview }) {
 
-    // const { restaurant_id } = useParams();
+    const [fileName, setFileName] = useState('');
 
     const successCallBack = (result) => {
         console.log('Done! Here is the image info: ', result.info)
         const restaurantPicture = {}
         restaurantPicture['restaurant_picture'] = result.info.url
         setAddReview({ ...addReview, photo_url: restaurantPicture['restaurant_picture'] })
+        setFileName(result.info.original_filename);
 
-
-        // fetch('/api/add-reviews', {
-        //     method: 'POST',
-        //     body: JSON.stringify({ restaurantPicture }),
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
-        // .then((response) => response.json())
-        // .then((responseJson) => {
-
-        // });
     }
 
     function failureCallBack(result) {
@@ -39,7 +29,7 @@ function CloudinaryWidget({ addReview, setAddReview }) {
                 resourceType={'image'}
                 cloudName={'di0sy25ru'}
                 uploadPreset={'e8rqpxxs'}
-                buttonText={'Upload a Photo'}
+                buttonText={fileName || 'Upload a Photo'}
                 style={{
                     color: 'white',
                     border: 'none',
