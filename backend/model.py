@@ -165,6 +165,7 @@ class Review(db.Model):
 
     restaurant = db.relationship("Restaurant", back_populates="reviews")
     user = db.relationship("User", back_populates="reviews")
+    photos = db.relationship("Photo", back_populates="reviews")
 
     def __repr__(self):
         return f'<Reviews review_id={self.review_id} restaurant_id={self.restaurant_id} user_id={self.user_id}, review={self.review}>'
@@ -176,7 +177,8 @@ class Review(db.Model):
             'restaurant_id': self.restaurant_id,
             'user_id': self.user_id,
             'review': self.review,
-            'date': self.date
+            'date': self.date,
+            'photos': [photo.to_dict() for photo in self.photos]
         }
 
 
@@ -189,11 +191,14 @@ class Photo(db.Model):
     photo_url = db.Column(db.Text)
     restaurant_id = db.Column(
         db.Integer, db.ForeignKey("restaurants.restaurant_id"))
+    review_id = db.Column(db.Integer, db.ForeignKey(
+        "reviews.review_id"))
     user_id = db.Column(db.Integer, db.ForeignKey(
         "users.user_id"), nullable=True)
 
     restaurant = db.relationship("Restaurant", back_populates="photos")
     user = db.relationship("User", back_populates="photos")
+    reviews = db.relationship("Review", back_populates="photos")
 
     def to_dict(self):
 
@@ -201,6 +206,7 @@ class Photo(db.Model):
             'photo_id': self.photo_id,
             'photo_url': self.photo_url,
             'restaurant_id': self.restaurant_id,
+            'review_id': self.review_id,
             'user_id': self.user_id,
 
         }

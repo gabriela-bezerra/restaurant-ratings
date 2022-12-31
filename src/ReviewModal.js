@@ -17,6 +17,7 @@ function ReviewModal({ photos, setPhotos, restaurant, setRestaurant, reviews, se
     const ratingChanged = (newRating) => {
         setAddReview({ ...addReview, rating_score: newRating })
         console.log(newRating);
+        console.log(addReview)
     };
 
 
@@ -72,7 +73,7 @@ function ReviewModal({ photos, setPhotos, restaurant, setRestaurant, reviews, se
                             <Form.Label>Write a review... </Form.Label>
                             <Form.Control as="textarea" rows={3} onChange={(e) => setAddReview({ ...addReview, review: e.target.value })} />
                         </Form.Group>
-                        <RestaurantPhotos restaurant={restaurant} setRestaurant={setRestaurant} />
+                        <RestaurantPhotos addReview={addReview} setAddReview={setAddReview} />
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

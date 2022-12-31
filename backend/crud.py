@@ -205,13 +205,33 @@ def get_reviews_by_restaurant(restaurant_id):
     return Review.query.filter(
         Review.restaurant_id == restaurant_id).all()
 
+
+def get_review_photos(review_id):
+    """Retrieves all photos related to a review"""
+
+    photos = []
+
+    query = (
+        db.session.query(Photo, Review)
+        .join(Review, Review.review_id == Photo.review_id)
+        .filter(Review.review_id == review_id)
+    )
+    results = query.all()
+
+    for photo, review in results:
+        photos.append({'Photo_id': photo.photo_id,
+                      'Photo_url': photo.photo_url})
+
+    return photos
+
+
 # Photos ------------
 
 
-def add_restaurant_photo(photo_url, restaurant_id, user_id):
+def add_restaurant_photo(photo_url, restaurant_id, user_id, review_id):
     """Adds a photo to a restaurant."""
 
-    return Photo(photo_url=photo_url, restaurant_id=restaurant_id, user_id=user_id)
+    return Photo(photo_url=photo_url, restaurant_id=restaurant_id, user_id=user_id, review_id=review_id)
 
 
 def filter_photos_by_user(user_id):

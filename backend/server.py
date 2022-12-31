@@ -177,15 +177,19 @@ def add_restaurant_to_favorites():
 def add_a_restaurant_review():
     """ Adds a restaurant review"""
 
-    review_info = request.get_json()
-    restaurant_id = review_info[1]
-    review = review_info[0]['review']
-    rating = review_info[0]['rating_score']
+    request_data = request.get_json()
+    print(f'request_data{request_data}')
+    restaurant_id = request_data[1]
+    review = request_data[0]['review']
+    rating = request_data[0]['rating_score']
+    photo_url = request_data[0]['photo_url']
 
     now = datetime.now()
     date = now.strftime("%d %B, %Y")
 
     reviews_dict = []
+
+    print(f'line 192 -- {reviews_dict}')
 
     if 'user_id' in session:
         new_review = crud.create_review(
@@ -197,6 +201,12 @@ def add_a_restaurant_review():
             restaurant_id=restaurant_id, user_id=session['user_id'], score=rating)
         db.session.add(new_rating)
         db.session.commit()
+
+        if photo_url:
+            new_review_photo = crud.add_restaurant_photo(
+                user_id=session['user_id'], restaurant_id=restaurant_id, photo_url=photo_url, review_id=new_review.review_id)
+            db.session.add(new_review_photo)
+            db.session.commit()
 
         reviews = crud.get_reviews_by_restaurant(restaurant_id)
         for review in reviews:
@@ -216,45 +226,45 @@ def show_restaurant_reviews():
 
     reviews = crud.get_reviews_by_restaurant(restaurant_id)
 
-    reviews_dict = []
+    reviews_data = [review.to_dict() for review in reviews]
 
-    for review in reviews:
-        reviews_dict.append(review.to_dict())
+    print('-----++--------------')
+    print(f'line 232{reviews_data}')
 
-    return jsonify(reviews_dict)
-
-
-@app.route('/api/add-restaurant-photo', methods=['POST'])
-def restaurant_photo_uploading():
-    """Gets user request for photo upload"""
-
-    request_json = request.get_json()
-    photo_url = request_json['restaurantPicture']['restaurant_picture']
-    restaurant_id = request_json['restaurant_id']
-
-    if photo_url:
-        db_new_restaurant_photo = crud.add_restaurant_photo(
-            user_id=session['user_id'], restaurant_id=restaurant_id, photo_url=photo_url)
-        db.session.add(db_new_restaurant_photo)
-        db.session.commit()
-
-    return jsonify({'status': '200', 'message': 'Photo uploded!'})
+    return jsonify(reviews_data)
 
 
-@app.route('/api/show-photos', methods=['POST'])
-def show_restaurant_photos():
-    """ Shows photos of a specific restaurant"""
+# @app.route('/api/add-restaurant-photo', methods=['POST'])
+# def restaurant_photo_uploading():
+#     """Gets user request for photo upload"""
 
-    restaurant_id = request.get_json()
+#     request_json = request.get_json()
+#     photo_url = request_json['restaurantPicture']['restaurant_picture']
+#     restaurant_id = request_json['restaurant_id']
 
-    photos = crud.filter_photos_by_restaurant(restaurant_id)
+#     if photo_url:
+#         db_new_restaurant_photo = crud.add_restaurant_photo(
+#             user_id=session['user_id'], restaurant_id=restaurant_id, photo_url=photo_url)
+#         db.session.add(db_new_restaurant_photo)
+#         db.session.commit()
 
-    photos_dict = []
+#     return jsonify({'status': '200', 'message': 'Photo uploded!'})
 
-    for photo in photos:
-        photos_dict.append(photo.to_dict())
 
-    return jsonify(photos_dict)
+# @app.route('/api/show-photos', methods=['POST'])
+# def show_restaurant_photos():
+#     """ Shows photos of a specific restaurant"""
+
+#     restaurant_id = request.get_json()
+
+#     photos = crud.filter_photos_by_restaurant(restaurant_id)
+
+#     photos_dict = []
+
+#     for photo in photos:
+#         photos_dict.append(photo.to_dict())
+
+#     return jsonify(photos_dict)
 
 
 @app.route('/api/create-restaurant', methods=['POST'])

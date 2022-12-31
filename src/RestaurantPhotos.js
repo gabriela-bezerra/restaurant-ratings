@@ -1,27 +1,29 @@
 import { React } from 'react';
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
-import { useParams } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
 
-function CloudinaryWidget(props) {
+function CloudinaryWidget({ addReview, setAddReview }) {
 
-    const { restaurant_id } = useParams();
+    // const { restaurant_id } = useParams();
 
     const successCallBack = (result) => {
         console.log('Done! Here is the image info: ', result.info)
         const restaurantPicture = {}
         restaurantPicture['restaurant_picture'] = result.info.url
+        setAddReview({ ...addReview, photo_url: restaurantPicture['restaurant_picture'] })
 
-        fetch('/api/add-restaurant-photo', {
-            method: 'POST',
-            body: JSON.stringify({ restaurantPicture, restaurant_id }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson)
-            });
+
+        // fetch('/api/add-reviews', {
+        //     method: 'POST',
+        //     body: JSON.stringify({ restaurantPicture }),
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
+        // .then((response) => response.json())
+        // .then((responseJson) => {
+
+        // });
     }
 
     function failureCallBack(result) {
