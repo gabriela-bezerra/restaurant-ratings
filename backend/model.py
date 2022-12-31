@@ -176,6 +176,7 @@ class Review(db.Model):
             'review_id': self.review_id,
             'restaurant_id': self.restaurant_id,
             'user_id': self.user_id,
+            'user_name': f'{self.user.fname} {self.user.lname}',
             'review': self.review,
             'date': self.date,
             'photos': [photo.to_dict() for photo in self.photos]

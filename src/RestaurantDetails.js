@@ -65,9 +65,9 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
                     </div>
                     <div>
                         <h3> Reviews: </h3>
-                        {reviews.map(({ photos, date, review, review_id, user_id }) => (
+                        {reviews.map(({ photos, date, review, review_id, user_id, user_name }) => (
                             <>
-                                <p key={review_id}>User ID: {user_id} Date posted: {date} </p><p> {review} </p>
+                                <p key={review_id}> User: {user_name} | Date posted: {date} </p><p> {review} </p>
                                 {photos.map(({ photo_id, photo_url }) => (
                                     <img key={photo_id} src={photo_url} alt={photo_id} width="100" height="100" />
                                 ))}
