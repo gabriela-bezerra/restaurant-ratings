@@ -80,14 +80,18 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
                     </div>
                     <div>
                         <h3> Reviews: </h3>
-                        {reviews.map(({ photos, date, review, review_id, user_id, user_name }) => (
-                            <>
-                                <p key={review_id}> User: {user_name} | Date posted: {date} </p><p> {review} </p>
-                                {photos.map(({ photo_id, photo_url }) => (
-                                    <img key={photo_id} src={photo_url} alt={photo_id} width="100" height="100" />
-                                ))}
-                            </>
-                        ))}
+                        {reviews.length > 0 ?
+                            reviews.map(({ photos, date, review, review_id, user_id, user_name }) => (
+                                <>
+                                    <p key={review_id}> User: {user_name} | Date posted: {date} </p><p> {review} </p>
+                                    {photos.map(({ photo_id, photo_url }) => (
+                                        <img key={photo_id} src={photo_url} alt={photo_id} width="100" height="100" />
+                                    ))}
+                                </>
+                            )) :
+                            <p>There are no reviews for this restaurant yet.</p>
+                        }
+
                     </div>
 
 
