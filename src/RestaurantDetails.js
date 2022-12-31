@@ -1,6 +1,9 @@
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react';
 import Toast from './Toast';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons';
+
 
 function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant, setRestaurant }) {
 
@@ -19,6 +22,19 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
     }, [restaurant_id, setRestaurant]);
 
 
+    useEffect(() => {
+        fetch('/api/show-reviews', {
+            method: 'POST',
+            body: JSON.stringify(restaurant_id),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(result => result.json())
+            .then(data => {
+                setReviews(data)
+            });
+    }, [restaurant_id, setReviews]);
+
     const handleFavorites = (e) => {
         e.preventDefault()
         fetch('/api/favorites', {
@@ -33,18 +49,17 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
             });
     };
 
-    useEffect(() => {
-        fetch('/api/show-reviews', {
-            method: 'POST',
-            body: JSON.stringify(restaurant_id),
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then(result => result.json())
-            .then(data => {
-                setReviews(data)
-            });
-    }, [restaurant_id, setReviews]);
+    function getStarIcons(rating) {
+        const icons = [];
+        for (let i = 0; i < Math.floor(rating); i++) {
+            icons.push(<FontAwesomeIcon key={i} icon={faStar} className="yellow-star" />);
+        }
+        if (rating % 1 !== 0) {
+            icons.push(<FontAwesomeIcon key={rating} icon={faStarHalf} className="yellow-star" />);
+        }
+        return icons;
+    }
+
 
     if (!restaurant || !reviews) {
         return (
@@ -59,7 +74,7 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
                     <img src={restaurant.photo_cover} alt='Restaurant cover' width="300" height="300" />
                     <h2>{restaurant.name}</h2>
                     <p> {restaurant.address} {restaurant.city} {restaurant.zipcode}</p>
-                    <p> Rating : {restaurant.rating} </p>
+                    <p> Overall rating : {getStarIcons(restaurant.rating)} </p>
                     <div>
                         <button className='fav-btn' type='button' onClick={handleFavorites}> Add to Your Favorites</button>
                     </div>
