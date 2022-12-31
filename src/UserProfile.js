@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 
 function UserProfile({ user, userInfo, setUserInfo }) {
 
-    // const [userInfo, setUserInfo] = useState(null);
     const [favorites, setFavorites] = useState([]);
-    // const [photo, setPhoto] = useState("");
 
     useEffect(() => {
         fetch('/api/user/details', {
@@ -32,20 +30,6 @@ function UserProfile({ user, userInfo, setUserInfo }) {
     }, [user]);
 
 
-    // const handlePhotoUpload = (e) => {
-    //     e.preventDefault()
-    //     fetch('/api/profile-photo', {
-    //         method: 'POST',
-    //         body: JSON.stringify(photo),
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         }
-    //     }).then(result => result.json())
-    //         .then(data => setUserInfo(`{ ...userInfo, photo_url: ${data.photo_url} }`)) // ask about the value
-    // }
-
-    // console.log(photo)
-
     if (!userInfo) {
         return (
             <div> Loading...</div>
@@ -58,18 +42,8 @@ function UserProfile({ user, userInfo, setUserInfo }) {
             <div>
                 <img style={{ width: "30%", margin: "30px 0" }} src={userInfo.profile_photo} alt="Face" />
 
-                {/* <form className="photo-upload" onSubmit={handlePhotoUpload}>
-                    <input type="file" name="user-upload" onChange={(e) => { setPhoto(e.target.files) }} />
-                    <input type="submit" className="login-btn" />
-                </form > */}
-
                 <p> User name : {userInfo.fname} {userInfo.lname}</p>
                 <p> Email : {userInfo.email} </p>
-                <div>
-                    {/* <h4> Given Reviews: </h4>
-                    <p>Restaurant ID : {userInfo.reviews[0].restaurant_id}, date: {userInfo.reviews[0].date} </p>
-                    <p>{userInfo.reviews[0].review}</p> */}
-                </div>
                 <div className="fav-lst">
                     <h3> Favorites Restaurants </h3>
                     {favorites.map((restaurant) => (

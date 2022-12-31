@@ -1,15 +1,18 @@
 import { React } from 'react';
+import { useState } from 'react';
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 
 
 function CloudinaryWidget({ setCoverPhoto }) {
 
+    const [fileName, setFileName] = useState('');
 
     const successCallBack = (result) => {
         console.log('Done! Here is the image info: ', result.info)
         const restaurantPicture = {}
         restaurantPicture['restaurant_picture'] = result.info.url
         setCoverPhoto(restaurantPicture['restaurant_picture'])
+        setFileName(result.info.original_filename);
     }
 
     function failureCallBack(result) {
@@ -25,7 +28,7 @@ function CloudinaryWidget({ setCoverPhoto }) {
                 resourceType={'image'}
                 cloudName={'di0sy25ru'}
                 uploadPreset={'e8rqpxxs'}
-                buttonText={'Choose a file'}
+                buttonText={fileName || 'Add a photo'}
                 style={{
                     color: 'white',
                     border: 'none',

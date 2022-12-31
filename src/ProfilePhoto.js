@@ -35,7 +35,7 @@ function CloudinaryWidget({ userInfo, setUserInfo }) {
                 resourceType={'image'}
                 cloudName={'di0sy25ru'}
                 uploadPreset={'e8rqpxxs'}
-                buttonText={'Upload Profile Photo'}
+                buttonText={'Upload / Update Profile Photo'}
                 style={{
                     color: 'white',
                     border: 'none',

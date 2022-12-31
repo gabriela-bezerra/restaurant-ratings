@@ -45,7 +45,6 @@ function AddNewRestaurant({ coverPhoto, setCoverPhoto, categories }) {
                 Zipcode <input type="text" name="zipcode" onChange={(e) => setNewRestaurant({ ...newRestaurant, zipcode: e.target.value })} value={newRestaurant.zipcode} />
                 Upload a photo
                 <RestaurantCover setCoverPhoto={setCoverPhoto} />
-                {/* <input type="text" name="photo" onChange={(e) => setNewRestaurant({ ...newRestaurant, photo_url: e.target.value })} value={newRestaurant.photo_url} /> */}
                 <label className='categories-dropdown'> Category</label>
                 <select onChange={(e) => setNewRestaurant({ ...newRestaurant, category: e.target.value })} value={newRestaurant.category}>
                     {categories.map((category) => (
