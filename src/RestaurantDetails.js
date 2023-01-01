@@ -81,7 +81,6 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
     };
 
 
-
     if (!restaurant || !reviews) {
         return (
             <div> Loading...</div>
@@ -107,21 +106,27 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
                             reviews.map(({ photos, date, review, review_id, user_id, user_name }) => (
                                 <>
                                     <p key={review_id}> User: {user_name} | Date posted: {date} </p><p> {review} </p>
-                                    {photos.map(({ photo_id, photo_url }, index) => (
-                                        <img
-                                            key={photo_id}
-                                            src={photo_url}
-                                            alt={photo_id}
-                                            width="100"
-                                            height="100"
-                                            onClick={() => openModal(index)}
-                                            style={{ cursor: 'pointer' }}
-                                        />
-                                    ))}
-                                    <Modal isOpen={modalIsOpen} >
-                                        <img src={photos[currentImageIndex].photo_url} alt="Expanded" className="modal-image" />
-                                        <button onClick={previousImage} disabled={currentImageIndex === 0}>Previous</button>
-                                        <button onClick={nextImage} disabled={currentImageIndex === photos.length - 1}>Next</button>
+                                    {photos && photos.length > 0 && (
+                                        photos.map(({ photo_id, photo_url }, index) => (
+                                            <img
+                                                key={photo_id}
+                                                src={photo_url}
+                                                alt={photo_id}
+                                                width="100"
+                                                height="100"
+                                                onClick={() => openModal(index)}
+                                                style={{ cursor: 'pointer' }}
+                                            />
+                                        ))
+                                    )}
+                                    <Modal isOpen={modalIsOpen}>
+                                        {photos && photos.length > 0 && (
+                                            <>
+                                                <img src={photos[currentImageIndex].photo_url} alt="Expanded" className="modal-image" />
+                                                <button onClick={previousImage} disabled={currentImageIndex === 0}>Previous</button>
+                                                <button onClick={nextImage} disabled={currentImageIndex === photos.length - 1}>Next</button>
+                                            </>
+                                        )}
                                         <button onClick={closeModal}>Close</button>
                                     </Modal>
 
