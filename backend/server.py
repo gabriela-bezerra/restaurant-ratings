@@ -4,7 +4,6 @@ from flask import (Flask, jsonify, render_template, request, session,)
 from model import connect_to_db, db, User
 from jinja2 import StrictUndefined
 from datetime import datetime
-import cloudinary.uploader
 import os
 import crud
 import json
@@ -13,10 +12,6 @@ import json
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
-
-CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
-CLOUDINARY_SECRET = os.environ['CLOUDINARY_SECRET']
-CLOUD_NAME = 'di0sy25ru'
 
 
 @app.route('/')
@@ -30,10 +25,9 @@ def show_homepage():
 
 @app.route('/api/create-account', methods=['POST'])
 def create_new_user_account():
-    """ Creates user account. """
+    """ Creates a new user account. """
 
     data = request.get_json()
-
     first_name = data.get('firstName')
     last_name = data.get('lastName')
     email = data.get('email')
@@ -65,7 +59,6 @@ def login_user():
     """ Checks user in the data base for login. """
 
     data = request.get_json()
-
     email = data.get('email')
     password = data.get('password')
 
@@ -84,7 +77,7 @@ def login_user():
 
 @app.route('/api/login-status')
 def login_status():
-    """ Checks if a user is logged in."""
+    """ Returns the login status of the current user."""
 
     if 'user_id' in session:
         return jsonify({'status': '200', 'message': 'User logged in!', 'user_id': session['user_id']})
@@ -94,7 +87,7 @@ def login_status():
 
 @app.route('/api/logout',  methods=['POST'])
 def logout():
-    """ Clean the session for log out"""
+    """Logs out the current user."""
 
     logout_req = request.get_json()
 
@@ -105,7 +98,7 @@ def logout():
 
 @app.route('/api/profile-photo', methods=['POST'])
 def profile_photo_uploading():
-    """Gets user request for photo upload"""
+    """Accepts a user's request to upload a profile photo."""
 
     user_upload = request.json.get("profile_picture")
 
@@ -118,7 +111,7 @@ def profile_photo_uploading():
 
 @app.route('/api/user/details', methods=['POST'])
 def get_user_information():
-    """ Shows details of a user """
+    """ Returns details of a user."""
 
     user_id_req = request.get_json()
 
@@ -134,27 +127,20 @@ def get_user_information():
 
 @app.route('/api/user/favorites', methods=['POST'])
 def get_users_favorites():
-    """ Shows a list of user's favorites restaurants """
+    """ Returns a list of a user's favorite restaurants. """
 
     user_id_req = request.get_json()
-
     favorites = crud.filter_favorites_by_user(user_id_req)
 
-    results = []
-
-    for favorite in favorites:
-        restaurant_id = favorite.restaurant_id
-        restaurant = crud.get_restaurant_by_id(restaurant_id)
-        results.append(restaurant.to_dict())
-
-    return jsonify(results)
+    return jsonify([crud.get_restaurant_by_id(
+        favorite.restaurant_id).to_dict() for favorite in favorites])
 
 
 # RESTAURANTS RELATED ROUTES-------------------------------------
 
 @app.route('/api/favorites', methods=['POST'])
 def add_restaurant_to_favorites():
-    """ Adds a restaurant to the user's favorite list"""
+    """ Adds a restaurant to the current user's favorites list."""
 
     restaurant_id_req = request.get_json()
 
@@ -175,7 +161,7 @@ def add_restaurant_to_favorites():
 
 @app.route('/api/add-reviews', methods=['POST'])
 def add_a_restaurant_review():
-    """ Adds a restaurant review"""
+    """ Adds a review and rating for a restaurant. Optionally adds a photo."""
 
     request_data = request.get_json()
     restaurant_id = request_data[1]
@@ -217,53 +203,18 @@ def add_a_restaurant_review():
 
 @app.route('/api/show-reviews', methods=['POST'])
 def show_restaurant_reviews():
-    """ Shows the reviews for a specific restaurant"""
+    """ Shows reviews for a specific restaurant."""
 
     restaurant_id = request.get_json()
 
     reviews = crud.get_reviews_by_restaurant(restaurant_id)
 
-    reviews_data = [review.to_dict() for review in reviews]
-
-    return jsonify(reviews_data)
-
-
-# @app.route('/api/add-restaurant-photo', methods=['POST'])
-# def restaurant_photo_uploading():
-#     """Gets user request for photo upload"""
-
-#     request_json = request.get_json()
-#     photo_url = request_json['restaurantPicture']['restaurant_picture']
-#     restaurant_id = request_json['restaurant_id']
-
-#     if photo_url:
-#         db_new_restaurant_photo = crud.add_restaurant_photo(
-#             user_id=session['user_id'], restaurant_id=restaurant_id, photo_url=photo_url)
-#         db.session.add(db_new_restaurant_photo)
-#         db.session.commit()
-
-#     return jsonify({'status': '200', 'message': 'Photo uploded!'})
-
-
-# @app.route('/api/show-photos', methods=['POST'])
-# def show_restaurant_photos():
-#     """ Shows photos of a specific restaurant"""
-
-#     restaurant_id = request.get_json()
-
-#     photos = crud.filter_photos_by_restaurant(restaurant_id)
-
-#     photos_dict = []
-
-#     for photo in photos:
-#         photos_dict.append(photo.to_dict())
-
-#     return jsonify(photos_dict)
+    return jsonify([review.to_dict() for review in reviews])
 
 
 @app.route('/api/create-restaurant', methods=['POST'])
 def create_new_restaurant():
-    """ Creates a new restaurant. """
+    """ Create a new restaurant. """
 
     data = request.get_json()
 
@@ -319,11 +270,8 @@ def show_restaurant_information():
     restaurant_id = request.get_json()
 
     restaurant = crud.get_restaurant_by_id(restaurant_id)
-
     rating = crud.get_ratings_by_restaurant(restaurant_id)
-
-    for row in rating[0]:
-        score = round(row, 2)
+    score = round(rating[0][0], 2)
 
     return jsonify({'restaurant_id': restaurant.restaurant_id,
                     'name': restaurant.name,
@@ -343,12 +291,7 @@ def get_all_categories():
 
     categories = crud.get_all_categories()
 
-    results = []
-
-    for obj in categories:
-        results.append(obj.name)
-
-    return jsonify(sorted(results))
+    return jsonify(sorted([category.name for category in categories]))
 
 
 @app.route('/api/restaurants')
@@ -357,44 +300,29 @@ def get_all_restaurants():
 
     restaurants = crud.get_all_restaurants()
 
-    results = []
-
-    for restaurant in restaurants:
-        results.append(restaurant.to_dict())
-
-    return jsonify(results)
+    return jsonify([restaurant.to_dict() for restaurant in restaurants])
 
 
 @app.route('/api/categories/results', methods=['POST'])
 def get_search_results():
-    """ Return a list with all restaurants by category """
+    """ Return a list with all restaurants in the given category."""
 
     category = request.get_json()
 
     get_restaurants = crud.get_restaurants_by_category(category)
 
-    results = []
-
-    for restaurant in get_restaurants:
-        results.append(restaurant.to_dict())
-
-    return jsonify(results)
+    return jsonify([restaurant.to_dict() for restaurant in get_restaurants])
 
 
 @app.route('/api/restaurants/zipcode',  methods=['POST'])
 def get_restaurants_by_zipcode():
-    """ Return restaurants by zipcode """
+    """Return a list of restaurants in the given zipcode. """
 
     zipcode = request.get_json()
 
     get_restaurants = crud.get_restaurant_by_zipcode(zipcode)
 
-    results = []
-
-    for restaurant in get_restaurants:
-        results.append(restaurant.to_dict())
-
-    return jsonify(results)
+    return jsonify([restaurant.to_dict() for restaurant in get_restaurants])
 
 
 if __name__ == "__main__":
