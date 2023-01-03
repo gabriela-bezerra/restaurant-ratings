@@ -33,46 +33,42 @@ function Navbar({ loggedIn, setLoggedIn, user, setUser }) {
 
     if (loggedIn === true) {
         return (
-            <nav>
+            <nav className="navbar">
                 <Link to="/" className="navbar-brand d-flex justify-content-start">
-                    <img src={logo} height="60" alt="logo" />
-                    <span> Restaurants Finder</span>
+                    <img src={logo} className="logo" alt="logo" />
+                    <span className="navbar-title"> Restaurant Finder</span>
                 </Link>
 
-                <section className="nav-items d-flex justify-content-end">
-                    <Link to="/" className="nav-link nav-item" > Home
+                <section className="nav-items">
+                    <Link to="/" className="nav-link" > Home
                     </Link>
 
-                    <Link to="/add-restaurant" className="nav-link nav-item" >Add Restaurant
+                    <Link to="/add-restaurant" className="nav-link" >Add Restaurant
                     </Link>
 
-                    <Link to="/user-profile" className="nav-link nav-item" >Profile
+                    <Link to="/user-profile" className="nav-link" >Profile
                     </Link>
 
                     <button className='logout' type='button' onClick={handleLogout}> Log Out</button>
-
                 </section>
             </nav>
         );
     } else {
         return (
-            <nav>
+            <nav className="navbar">
                 <Link to="/" className="navbar-brand d-flex justify-content-start">
-                    <img src={logo} height="60" alt="logo" />
-                    <span> Restaurants Finder</span>
+                    <img src={logo} className="logo" alt="logo" />
+                    <span className="navbar-title"> Restaurant Finder</span>
                 </Link>
 
-                <section className="nav-items d-flex justify-content-end">
-                    <Link to="/" className="nav-link nav-item" > Home
+                <section className="nav-items">
+                    <Link to="/" className="nav-link" > Home
                     </Link>
 
-                    <Link to="/sign-up" className="nav-link nav-item"> Sign up
+                    <Link to="/sign-up" className="nav-link"> Sign up
                     </Link>
 
-                    <Link to="/login" className="nav-link nav-item"> Login
-                    </Link>
-
-                    <Link to="/add-restaurant" className="nav-link nav-item">Add Restaurant
+                    <Link to="/login" className="nav-link"> Login
                     </Link>
                 </section>
             </nav>

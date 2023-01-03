@@ -65,7 +65,8 @@ class Restaurant(db.Model):
             'state': self.state,
             'zipcode': self.zipcode,
             'latitude': self.latitude,
-            'longitude': self.longitude}
+            'longitude': self.longitude,
+            'photo_cover': self.photo_cover}
 
 
 class Category(db.Model):

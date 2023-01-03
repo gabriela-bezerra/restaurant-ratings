@@ -36,10 +36,11 @@ function SignUpForm({ setFirstName, setLastName, setEmail, setPassword, setLogge
 
 
     return (
-        <div>
-            <h1> Create An Account</h1>
+        <div className='back-ground'>
+
             <form className="sign-up-page" onSubmit={handleCreateSubmit}>
                 <div className="cover-sign-up">
+                    <h1 className='title-sign-up-page'> Create An Account</h1>
                     <label htmlFor="first-name">First Name</label>
                     <input className="input-sign-up" type="text" id="first-name" onChange={setFirstName}></input>
                     <label htmlFor="last-name">Last Name</label>

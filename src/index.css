@@ -1,4 +1,4 @@
-.cover {
+/* .cover {
   margin: 0;
   box-sizing: border-box;
   font-family: 'Courier New', Courier, monospace
@@ -43,15 +43,6 @@
   cursor: pointer;
 }
 
-/* 
-.google {
-  background-image: url("../img/google.png");
-}
-
-.facebook {
-  background-image: url("../img/facebook.png");
-} */
-
 input {
   border: none;
   background-color: rgb(229, 226, 226);
@@ -85,10 +76,10 @@ input :focus {
 .text {
   position: relative;
   bottom: -2em;
-}
+} */
 
 
-
+/* 
 .search-inputs {
   margin: 0;
   box-sizing: border-box;
@@ -205,3 +196,5 @@ input :focus {
   text-align: center;
   padding: 2em;
 }
+
+*/
