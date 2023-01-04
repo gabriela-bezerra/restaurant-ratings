@@ -7,38 +7,90 @@
   align-items: center;
 }
 
+.logo {
+  height: 40px;
+  padding-left: 10px;
+}
+
 .navbar span {
   display: flex;
+  margin-inline: 20px;
   justify-content: space-between;
   align-items: center;
   color: rgb(255, 164, 10);
   font-family: monospace;
 }
 
-.logo {
-  height: 40px;
-  margin: 10px 10px;
-}
-
 .nav-items {
+  margin: 0;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: #ff9a3c;
-  padding: 10 20px;
+  width: 400px;
+  font-family: 'Courier', monospace;
+
+
 }
 
 .nav-items a:hover {
   transform: scale(1.25);
 }
 
-.nav-items {
+.toggle-button {
   position: absolute;
-  right: 0px;
-  width: 300px;
-  padding: 10px;
+  top: .75rem;
+  right: 1rem;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 31px;
+  height: 21px;
 }
 
+.toggle-button .bar {
+  height: 3px;
+  width: 100%;
+  background-color: #ff9a3c;
+  border-radius: 10px;
+}
+
+@media (max-width: 800px) {
+  .toggle-button {
+    display: flex;
+  }
+
+  .nav-items {
+    display: none;
+  }
+
+  .nav-items {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .nav-items.active {
+    display: flex;
+  }
+
+  /* .search-inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 340px;
+    height: 370px;
+    background-color: #d9b382;
+    border-radius: 20px;
+    padding: 20px;
+    position: flex;
+    top: 130px;
+    right: 250px;
+  } */
+
+}
 
 .logout {
   color: #ff9a3c;
@@ -47,16 +99,6 @@
   cursor: pointer;
 }
 
-.back-ground {
-  background-image: url("/Users/gabrielabezerra/src/react-project/restaurant-ratings/src/background.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 
 
 /* --------------------SEARCH BAR PAGE */
@@ -70,8 +112,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* clip-path: polygon(0 0, 100% 0, 100% calc(100% - 150px), 0 calc(100% - 150px)); */
-
 }
 
 
@@ -80,23 +120,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 370px;
+  width: 340px;
   height: 370px;
-  background-color: whitesmoke;
-  border-radius: 10px;
-  /* box-shadow: 0 0.18em 0.5em #be6c02; */
+  background-color: #d9b382;
+  border-radius: 20px;
   padding: 20px;
   position: absolute;
   top: 130px;
-  right: 200px;
+  right: 250px;
 }
 
 .search-page label {
   display: flex;
-  margin: 5px;
   margin: 10px 0px;
   text-align: left;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Courier', monospace;
 
 }
 
@@ -104,13 +142,14 @@
 .search-page input,
 .search-page select {
   width: 100%;
-  padding: 5px 20px;
+  padding: 5px 40px;
   margin-bottom: 10px;
   box-sizing: border-box;
   border: 1px solid #ff9a3c;
-  ;
+  background-color: white;
   border-radius: 4px;
   text-align: center;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .search-page input[type="submit"] {
@@ -125,6 +164,12 @@
   text-align: left;
 }
 
+.search-title {
+  font-family: monospace;
+  font-size: 20px;
+  font-style: italic;
+  margin-top: 0px;
+}
 
 .myButton {
   width: 40%;
@@ -156,21 +201,27 @@
   margin-top: 20px;
 }
 
-/* 
-.search-page input,
-.search-page select,
-.myButton {
-  display: inline-block;
-  width: 30%;
-} */
+.input-wrapper {
+  display: flex;
+  align-items: auto;
+}
 
+.categories-city {
+  max-width: 40%px;
+  height: 2em;
+}
+
+/* 
+.categories-city label {
+  margin-bottom: 0;
+} */
 
 .dataResult {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   width: 100%;
-  height: auto;
+  min-height: 120px;
   background-color: whitesmoke;
   border-radius: 10px;
   padding: 20px;
@@ -288,6 +339,7 @@ input :focus {
   align-items: center;
   transition: 0.5s;
   border-radius: 0.25em;
+  border: none;
   cursor: pointer;
 }
 
@@ -319,8 +371,12 @@ input :focus {
   font-family: 'Courier New', Courier, monospace
 }
 
+.title-sign-up-page {
+  margin-top: 15px;
+}
+
 .cover-sign-up {
-  background-color: white;
+  background-color: #d9b382;
   width: 30em;
   height: 35em;
   position: relative;
@@ -347,17 +403,151 @@ input :focus {
 
 /* -------------------- RESTAURANT DETAILS */
 
+.container-rest-dtls {
+  background-image: url("/Users/gabrielabezerra/src/react-project/restaurant-ratings/src/background.jpg");
+  background-size: cover;
+  background-position: center;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.restaurant-details {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #d9b382c4;
+  ;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  width: 70%;
+  height: auto;
+  position: relative;
+  margin-top: 20px;
+}
+
+.rest-dtls-title {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.restaurant-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.rest-dtls-cover {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.rest-dtls-address {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.rest-dtls-ratings {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
 .yellow-star {
-  color: #ffd700;
+  color: #FFC107;
   font-size: 20px;
   font-weight: bold;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
 
+.fav-btn {
+  background-color: #FFC107;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.fav-btn:hover {
+  background-color: #FFA000;
+}
+
+.rest-dtls-rev-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.rest-dtls-reviews {
+  margin-top: 2rem;
+}
+
+.rest-dtls-rev-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .modal-image {
-  width: 400px;
-  height: 400px;
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  width: 700px;
+  height: 500px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-btn {
+  background-color: #FFC107;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.modal-btn[disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+/* -------------------- ALL COMPONENTS */
+
+.back-ground {
+  background-image: url("/Users/gabrielabezerra/src/react-project/restaurant-ratings/src/background.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 

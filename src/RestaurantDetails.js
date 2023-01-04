@@ -90,58 +90,58 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
 
     return (
         <>
-            <div>
-                <h1> Restaurant Details</h1>
-                <div>
-                    <img src={restaurant.photo_cover} alt='Restaurant cover' width="300" height="300" />
-                    <h2>{restaurant.name}</h2>
-                    <p> {restaurant.address} {restaurant.city} {restaurant.zipcode}</p>
-                    <p> Overall rating : {getStarIcons(restaurant.rating)} </p>
+            <div className='container-rest-dtls'>
+                <div className='restaurant-details'>
+                    <h1 className='rest-dtls-title'>{restaurant.name}</h1>
                     <div>
-                        <button className='fav-btn' type='button' onClick={handleFavorites}> Add to Your Favorites</button>
+                        <img className='rest-dtls-cover' src={restaurant.photo_cover} alt='Restaurant cover' width="300" height="300" />
+                        <p className='rest-dtls-address'> {restaurant.address} {restaurant.city} {restaurant.zipcode}</p>
+                        <p className='rest-dtls-ratings'> Overall rating : {getStarIcons(restaurant.rating)} </p>
+                        <div>
+                            <button className='fav-btn' type='button' onClick={handleFavorites}> Add to Your Favorites</button>
+                        </div>
+                        <div className='rest-dtls-reviews'>
+                            <h3 className='rest-dtls-rev-title'> Reviews: </h3>
+                            <div className='rest-dtls-rev-lst'>
+                                {reviews.length > 0 ?
+                                    reviews.map(({ photos, date, review, review_id, user_id, user_name }) => (
+                                        <>
+                                            <p className='rest-dtls-rev-itm' key={review_id}> User: {user_name} | Date posted: {date} </p><p> {review} </p>
+                                            {photos && photos.length > 0 && (
+                                                photos.map(({ photo_id, photo_url }, index) => (
+                                                    <img className='rest-dtls-rev-img'
+                                                        key={photo_id}
+                                                        src={photo_url}
+                                                        alt={photo_id}
+                                                        onClick={() => openModal(index)}
+                                                        style={{ cursor: 'pointer' }}
+                                                    />
+                                                ))
+                                            )}
+                                            <Modal className='rest-dtls-modal' isOpen={modalIsOpen}>
+                                                {photos && photos.length > 0 && (
+                                                    <>
+                                                        <img src={photos[currentImageIndex].photo_url} alt="Expanded" className="modal-image" />
+                                                        <button className='modal-btn' onClick={previousImage} disabled={currentImageIndex === 0}>Previous</button>
+                                                        <button className='modal-btn' onClick={nextImage} disabled={currentImageIndex === photos.length - 1}>Next</button>
+                                                    </>
+                                                )}
+                                                <button className='modal-btn' onClick={closeModal}>Close</button>
+                                            </Modal>
+
+                                        </>
+                                    )) :
+                                    <p>There are no reviews for this restaurant yet.</p>
+                                }
+                            </div>
+                        </div>
+
+
                     </div>
-                    <div>
-                        <h3> Reviews: </h3>
-                        {reviews.length > 0 ?
-                            reviews.map(({ photos, date, review, review_id, user_id, user_name }) => (
-                                <>
-                                    <p key={review_id}> User: {user_name} | Date posted: {date} </p><p> {review} </p>
-                                    {photos && photos.length > 0 && (
-                                        photos.map(({ photo_id, photo_url }, index) => (
-                                            <img
-                                                key={photo_id}
-                                                src={photo_url}
-                                                alt={photo_id}
-                                                width="100"
-                                                height="100"
-                                                onClick={() => openModal(index)}
-                                                style={{ cursor: 'pointer' }}
-                                            />
-                                        ))
-                                    )}
-                                    <Modal isOpen={modalIsOpen}>
-                                        {photos && photos.length > 0 && (
-                                            <>
-                                                <img src={photos[currentImageIndex].photo_url} alt="Expanded" className="modal-image" />
-                                                <button onClick={previousImage} disabled={currentImageIndex === 0}>Previous</button>
-                                                <button onClick={nextImage} disabled={currentImageIndex === photos.length - 1}>Next</button>
-                                            </>
-                                        )}
-                                        <button onClick={closeModal}>Close</button>
-                                    </Modal>
-
-                                </>
-                            )) :
-                            <p>There are no reviews for this restaurant yet.</p>
-                        }
-
-                    </div>
 
 
-                </div>
-
-
-            </div >
+                </div >
+            </div>
         </>
     );
 };

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 function SearchBar({ categories }) {
 
@@ -41,14 +43,14 @@ function SearchBar({ categories }) {
 
     }
 
-    console.log(restaurants)
 
     return (
         <section className="search-page">
             <div className="search-inputs">
+                <label className='search-title'> Find your next favorite restaurant</label>
                 <form className='search-form'>
-                    <div>
-                        <label className='categories-dropdown'> Search by category</label>
+                    <label className='categories-dropdown'> Search by category</label>
+                    <div className='input-wrapper'>
                         <select value={selected} onChange={(e) => setSelected(e.target.value)}>
                             {categories.map((category) => (
                                 <option value={category} key={category}>
@@ -56,12 +58,13 @@ function SearchBar({ categories }) {
                                 </option>
                             ))}
                         </select>
-                        <button type='button' className='myButton' onClick={handleSubmitCategory}> Submit </button>
+                        <button type='button' className='myButton' onClick={handleSubmitCategory}> <FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
                     </div>
-                    <div>
-                        <label className='categories-city'> Search by zipcode</label>
+                    <label className='categories-city'> Search by zipcode</label>
+                    <div className='input-wrapper'>
+
                         <input type="text" className='categories-city' value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
-                        <button type='button' className='myButton' onClick={handleSubmitZipcode}> Submit </button>
+                        <button type='button' className='myButton' onClick={handleSubmitZipcode}><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
                     </div>
                     <div>
                         <button type='button' className='myButton all-rest-btn' onClick={handleSubmitAll} > All Restaurants</button>

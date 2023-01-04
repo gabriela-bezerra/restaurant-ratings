@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
 import Toast from './Toast';
 import logo from '/Users/gabrielabezerra/src/react-project/restaurant-ratings/src/logo.png'
 
@@ -8,6 +9,10 @@ import logo from '/Users/gabrielabezerra/src/react-project/restaurant-ratings/sr
 function Navbar({ loggedIn, setLoggedIn, user, setUser }) {
 
     let history = useHistory();
+
+    const [menuVisible, setMenuVisible] = useState(false);
+
+    const toggleMenu = () => { setMenuVisible(!menuVisible) };
 
     const handleLogout = (e) => {
         e.preventDefault()
@@ -60,6 +65,11 @@ function Navbar({ loggedIn, setLoggedIn, user, setUser }) {
                     <img src={logo} className="logo" alt="logo" />
                     <span className="navbar-title"> Restaurant Finder</span>
                 </Link>
+                <a href='#' className='toggle-button' onClick={toggleMenu}>
+                    <span className='bar'></span>
+                    <span className='bar'></span>
+                    <span className='bar'></span>
+                </a>
 
                 <section className="nav-items">
                     <Link to="/" className="nav-link" > Home
