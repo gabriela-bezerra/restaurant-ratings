@@ -44,10 +44,7 @@ function ReviewModal({ photos, setPhotos, restaurant, setRestaurant, reviews, se
 
     return (
         <>
-
-            <Button variant="primary" onClick={handleShow}>
-                Add A Review
-            </Button>
+            <button className='review-btn' type='button' onClick={handleShow}> Add A Review</button>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

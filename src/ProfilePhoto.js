@@ -1,6 +1,9 @@
 import { React } from 'react';
 import { useState } from 'react';
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { auto } from '@cloudinary/url-gen/qualifiers/quality';
 
 function CloudinaryWidget({ userInfo, setUserInfo }) {
 
@@ -39,14 +42,15 @@ function CloudinaryWidget({ userInfo, setUserInfo }) {
                 resourceType={'image'}
                 cloudName={'di0sy25ru'}
                 uploadPreset={'e8rqpxxs'}
-                buttonText={buttonText || 'Upload Profile Photo'}
+                buttonText={buttonText || <FontAwesomeIcon icon={faCamera} />}
                 style={{
                     color: 'white',
                     border: 'none',
                     width: '200px',
                     backgroundColor: 'gray',
-                    borderRadius: '4px',
-                    height: '25px'
+                    borderRadius: '50px',
+                    height: '30px',
+                    width: '32px'
                 }}
                 folder={'my_folder'}
                 cropping={false}

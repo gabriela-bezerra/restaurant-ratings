@@ -9,8 +9,6 @@ import SignUpForm from './SignUpForm'
 import AddNewRestaurant from './AddNewRestaurant'
 import RestaurantDetails from './RestaurantDetails'
 import UserProfile from './UserProfile'
-import ReviewModal from './ReviewModal'
-import ProfilePhoto from './ProfilePhoto'
 import Toast from './Toast';
 
 function App() {
@@ -84,13 +82,12 @@ function App() {
 
       <Route exact path="/restaurant-details/:restaurant_id">
         <RestaurantDetails reviews={reviews} setReviews={setReviews} restaurant={restaurant} setRestaurant={setRestaurant} photos={restaurantPhotos} setPhotos={setRestaurantPhotos} />
-        <ReviewModal restaurant={restaurant} setRestaurant={setRestaurant} reviews={reviews} setReviews={setReviews} photos={restaurantPhotos} setPhotos={setRestaurantPhotos} />
+        {/* <ReviewModal restaurant={restaurant} setRestaurant={setRestaurant} reviews={reviews} setReviews={setReviews} photos={restaurantPhotos} setPhotos={setRestaurantPhotos} /> */}
         <Toast />
       </Route>
 
       <Route exact path="/user-profile">
         <UserProfile user={currentUser} userInfo={userInfo} setUserInfo={setUserInfo} />
-        <ProfilePhoto userInfo={userInfo} setUserInfo={setUserInfo} />
         <Toast />
       </Route>
     </>

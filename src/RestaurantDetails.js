@@ -4,6 +4,7 @@ import Toast from './Toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
+import ReviewModal from './ReviewModal'
 
 
 function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant, setRestaurant }) {
@@ -93,20 +94,21 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
             <div className='container-rest-dtls'>
                 <div className='restaurant-details'>
                     <h1 className='rest-dtls-title'>{restaurant.name}</h1>
-                    <div>
-                        <img className='rest-dtls-cover' src={restaurant.photo_cover} alt='Restaurant cover' width="300" height="300" />
-                        <p className='rest-dtls-address'> {restaurant.address} {restaurant.city} {restaurant.zipcode}</p>
-                        <p className='rest-dtls-ratings'> Overall rating : {getStarIcons(restaurant.rating)} </p>
-                        <div>
-                            <button className='fav-btn' type='button' onClick={handleFavorites}> Add to Your Favorites</button>
-                        </div>
-                        <div className='rest-dtls-reviews'>
-                            <h3 className='rest-dtls-rev-title'> Reviews: </h3>
-                            <div className='rest-dtls-rev-lst'>
-                                {reviews.length > 0 ?
-                                    reviews.map(({ photos, date, review, review_id, user_id, user_name }) => (
-                                        <>
-                                            <p className='rest-dtls-rev-itm' key={review_id}> User: {user_name} | Date posted: {date} </p><p> {review} </p>
+                    <img className='rest-dtls-cover' src={restaurant.photo_cover} alt='Restaurant cover' width="300" height="300" />
+                    <p className='rest-dtls-address'> {restaurant.address} {restaurant.city} {restaurant.zipcode}</p>
+                    <p className='rest-dtls-ratings'> Overall rating : {getStarIcons(restaurant.rating)} </p>
+                    <div className='rest-dtls-fav'>
+                        <button className='fav-btn' type='button' onClick={handleFavorites}> Add to Your Favorites</button>
+                    </div>
+                    <div className='rest-dtls-reviews'>
+                        <h3 className='rest-dtls-rev-title'> Reviews: </h3>
+                        <div className='rest-dtls-rev-lst'>
+                            {reviews.length > 0 ?
+                                reviews.map(({ photos, date, review, review_id, user_id, user_name }) => (
+                                    <>
+                                        <div className='rest-dtls-rev-itm'>
+                                            <p className='rest-dtls-rev-info' key={review_id}> User: {user_name} | Date posted: {date} </p>
+                                            <p>{review} </p>
                                             {photos && photos.length > 0 && (
                                                 photos.map(({ photo_id, photo_url }, index) => (
                                                     <img className='rest-dtls-rev-img'
@@ -118,6 +120,10 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
                                                     />
                                                 ))
                                             )}
+
+                                            <div class="hr-container">
+                                                <hr />
+                                            </div>
                                             <Modal className='rest-dtls-modal' isOpen={modalIsOpen}>
                                                 {photos && photos.length > 0 && (
                                                     <>
@@ -128,20 +134,23 @@ function RestaurantDetails({ photos, setPhotos, reviews, setReviews, restaurant,
                                                 )}
                                                 <button className='modal-btn' onClick={closeModal}>Close</button>
                                             </Modal>
+                                        </div>
+                                    </>
 
-                                        </>
-                                    )) :
-                                    <p>There are no reviews for this restaurant yet.</p>
-                                }
-                            </div>
+                                )) :
+                                <p>There are no reviews for this restaurant yet.</p>
+                            }
                         </div>
-
-
+                        <div className='review-modal'>
+                            <ReviewModal restaurant={restaurant} setRestaurant={setRestaurant} reviews={reviews} setReviews={setReviews} photos={photos} setPhotos={setPhotos} />
+                        </div>
                     </div>
 
 
-                </div >
-            </div>
+                </div>
+
+
+            </div >
         </>
     );
 };

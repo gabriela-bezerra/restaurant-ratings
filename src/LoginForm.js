@@ -38,17 +38,15 @@ function LoginForm({ user, setUser, setLoggedIn }) {
 
 
     return (
-        <div className='back-ground'>
+        <div className='background'>
             <form className="login-page" onSubmit={handleSubmit}>
                 <div className="cover">
                     <h1>Login</h1>
                     <input type="text" placeholder="email" onChange={(e) => setUser({ ...user, email: e.target.value })} value={user.email} />
                     <input type="password" placeholder="password" onChange={(e) => setUser({ ...user, password: e.target.value })} value={user.password} />
-                    {errorMessage}
-                    <input type="submit" className="login-btn" value="Login" />
-
+                    <div style={{ color: 'red' }} className='error-message'>{errorMessage} </div>
+                    <button className="login-btn"> Submit </button>
                     <p className="text">Or Login Using</p>
-
                     <div className="alt-login">
                         <div className="facebook"></div>
                         <div className="google"></div>

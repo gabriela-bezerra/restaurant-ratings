@@ -36,11 +36,11 @@ function SignUpForm({ setFirstName, setLastName, setEmail, setPassword, setLogge
 
 
     return (
-        <div className='back-ground'>
+        <div className='background'>
 
             <form className="sign-up-page" onSubmit={handleCreateSubmit}>
                 <div className="cover-sign-up">
-                    <h1 className='title-sign-up-page'> Create An Account</h1>
+                    <h1> Create An Account</h1>
                     <label htmlFor="first-name">First Name</label>
                     <input className="input-sign-up" type="text" id="first-name" onChange={setFirstName}></input>
                     <label htmlFor="last-name">Last Name</label>
@@ -49,8 +49,8 @@ function SignUpForm({ setFirstName, setLastName, setEmail, setPassword, setLogge
                     <input className="input-sign-up" type="text" id="email" onChange={setEmail}></input>
                     <label htmlFor="password"> Password</label>
                     <input className="input-sign-up" type="password" id='password' onChange={setPassword}></input>
-                    {statusMessage}
-                    <button className="login-btn" type="submit">Create Account </button>
+                    <div style={{ color: 'red' }} className='error-message'>{statusMessage} </div>
+                    <button className="login-btn" type="submit">Submit </button>
                 </div>
             </form>
         </div>

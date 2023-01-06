@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ProfilePhoto from './ProfilePhoto'
 
 function UserProfile({ user, userInfo, setUserInfo }) {
 
@@ -49,27 +50,31 @@ function UserProfile({ user, userInfo, setUserInfo }) {
     }
 
     return (
-        <div>
-            <h1> Welcome {userInfo.fname} </h1>
-            <div>
-                {userInfo.profile_photo ? (
-                    <img
-                        style={{ width: "30%", margin: "30px 0" }}
-                        src={userInfo.profile_photo}
-                        alt="Face"
-                    />
-                ) : (
-                    <div className="initials-placeholder">{initials}</div>
-                )}
-                <p> User name : {userInfo.fname} {userInfo.lname}</p>
-                <p> Email : {userInfo.email} </p>
-                <div className="fav-lst">
-                    <h3> Favorites Restaurants </h3>
-                    {favorites.map((restaurant) => (
-                        <ul>
-                            <li key={restaurant.restaurant_id}><Link to={`/restaurant-details/${restaurant.restaurant_id}`} >{restaurant.name}</Link></li>
-                        </ul>
-                    ))}
+        <div className='container-user-profile'>
+            <div className='user-details'>
+                <h1> Welcome {userInfo.fname}! </h1>
+                <div className='user-info'>
+                    {userInfo.profile_photo ? (
+                        <img
+                            style={{ width: "30%", margin: "30px 0" }}
+                            src={userInfo.profile_photo}
+                            alt="Face"
+                        />
+                    ) : (
+                        <div className="initials-placeholder">{initials}</div>
+                    )}
+                    <ProfilePhoto userInfo={userInfo} setUserInfo={setUserInfo} />
+                    <p className='user-name'> User name : {userInfo.fname} {userInfo.lname}</p>
+                    <p className='user-email'> Email : {userInfo.email} </p>
+                    <div className="fav-lst">
+                        <h3> Favorites Restaurants </h3>
+                        {favorites.map((restaurant) => (
+                            <ul>
+                                <li key={restaurant.restaurant_id}><Link to={`/restaurant-details/${restaurant.restaurant_id}`} >{restaurant.name}</Link></li>
+                            </ul>
+                        ))}
+                    </div>
+
                 </div>
 
             </div>

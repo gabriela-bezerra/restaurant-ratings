@@ -47,7 +47,9 @@ function SearchBar({ categories }) {
     return (
         <section className="search-page">
             <div className="search-inputs">
-                <label className='search-title'> Find your next favorite restaurant</label>
+                <div class="one">
+                    <h1>Find your next favorite restaurant</h1>
+                </div>
                 <form className='search-form'>
                     <label className='categories-dropdown'> Search by category</label>
                     <div className='input-wrapper'>
