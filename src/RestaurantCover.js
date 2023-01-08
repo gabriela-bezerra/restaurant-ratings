@@ -1,6 +1,8 @@
 import { React } from 'react';
 import { useState } from 'react';
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 
 function CloudinaryWidget({ setCoverPhoto }) {
@@ -28,14 +30,15 @@ function CloudinaryWidget({ setCoverPhoto }) {
                 resourceType={'image'}
                 cloudName={'di0sy25ru'}
                 uploadPreset={'e8rqpxxs'}
-                buttonText={fileName || 'Add a photo'}
+                buttonText={fileName || <FontAwesomeIcon icon={faCamera} />}
                 style={{
                     color: 'white',
                     border: 'none',
                     width: '200px',
-                    backgroundColor: 'gray',
-                    borderRadius: '4px',
-                    height: '25px'
+                    backgroundColor: '#b84d00',
+                    borderRadius: '10px',
+                    height: 'auto',
+                    width: 'auto'
                 }}
                 folder={'my_folder'}
                 cropping={false}

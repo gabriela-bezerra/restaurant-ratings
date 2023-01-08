@@ -54,8 +54,9 @@ function SearchBar({ categories }) {
                     <label className='categories-dropdown'> Search by category</label>
                     <div className='input-wrapper'>
                         <select value={selected} onChange={(e) => setSelected(e.target.value)}>
+                            <option value="" hidden disabled> Categories </option>
                             {categories.map((category) => (
-                                <option value={category} key={category}>
+                                <option color='grey' value={category} key={category}>
                                     {category}
                                 </option>
                             ))}
@@ -65,7 +66,7 @@ function SearchBar({ categories }) {
                     <label className='categories-city'> Search by zipcode</label>
                     <div className='input-wrapper'>
 
-                        <input type="text" className='categories-city' value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
+                        <input type="text" className='categories-city' placeholder='98055' value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
                         <button type='button' className='myButton' onClick={handleSubmitZipcode}><FontAwesomeIcon icon={faMagnifyingGlass} /> </button>
                     </div>
                     <div>

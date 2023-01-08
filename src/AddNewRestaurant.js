@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import RestaurantCover from './RestaurantCover'
 import Toast from './Toast';
+import RestaurantCover from './RestaurantCover'
+
 
 function AddNewRestaurant({ coverPhoto, setCoverPhoto, categories }) {
 
@@ -35,28 +36,36 @@ function AddNewRestaurant({ coverPhoto, setCoverPhoto, categories }) {
 
 
     return (
-        <form className="add-restaurant-page">
-            <div className="cover-add">
-                <h3>Add A New Restaurant</h3>
-                Name <input type="text" name="name" onChange={(e) => setNewRestaurant({ ...newRestaurant, name: e.target.value })} value={newRestaurant.name} />
-                Address <input type="text" name="address" onChange={(e) => setNewRestaurant({ ...newRestaurant, address: e.target.value })} value={newRestaurant.address} />
-                City <input type="text" name="city" onChange={(e) => setNewRestaurant({ ...newRestaurant, city: e.target.value })} value={newRestaurant.city} />
-                State <input type="text" name="state" onChange={(e) => setNewRestaurant({ ...newRestaurant, state: e.target.value })} value={newRestaurant.state} />
-                Zipcode <input type="text" name="zipcode" onChange={(e) => setNewRestaurant({ ...newRestaurant, zipcode: e.target.value })} value={newRestaurant.zipcode} />
-                Upload a photo
-                <RestaurantCover setCoverPhoto={setCoverPhoto} />
-                <label className='categories-dropdown'> Category</label>
-                <select onChange={(e) => setNewRestaurant({ ...newRestaurant, category: e.target.value })} value={newRestaurant.category}>
-                    {categories.map((category) => (
-                        <option value={category} key={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select>
-                <input type="submit" className="submit-btn" value="Submit" onClick={handleSubmit} />
-                {statusMessage}
-            </div>
-        </form >
+        <div className='background'>
+            <form className="add-restaurant-page">
+                <div className="cover-add">
+                    <h1>Add A New Restaurant</h1>
+                    <label className="first-name">Name</label>
+                    <input type="text" name="name" onChange={(e) => setNewRestaurant({ ...newRestaurant, name: e.target.value })} value={newRestaurant.name} />
+                    <label className="address">Address</label>
+                    <input type="text" name="address" onChange={(e) => setNewRestaurant({ ...newRestaurant, address: e.target.value })} value={newRestaurant.address} />
+                    <label className="city">City</label>
+                    <input type="text" name="city" onChange={(e) => setNewRestaurant({ ...newRestaurant, city: e.target.value })} value={newRestaurant.city} />
+                    <label className="state">State</label>
+                    <input type="text" name="state" onChange={(e) => setNewRestaurant({ ...newRestaurant, state: e.target.value })} value={newRestaurant.state} />
+                    <label className="zipcode">Zipcode</label>
+                    <input type="text" name="zipcode" onChange={(e) => setNewRestaurant({ ...newRestaurant, zipcode: e.target.value })} value={newRestaurant.zipcode} />
+                    <div className="add-rest-photo">Upload a photo<RestaurantCover setCoverPhoto={setCoverPhoto} /></div>
+                    <div className="inline-block-group">
+                        <label className='categories-dropdown'> Category</label>
+                        <select onChange={(e) => setNewRestaurant({ ...newRestaurant, category: e.target.value })} value={newRestaurant.category}>
+                            {categories.map((category) => (
+                                <option value={category} key={category}>
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <button className="login-btn-new-rest" onClick={handleSubmit}>Submit </button>
+                    <div style={{ color: 'red' }} className='error-message'>{statusMessage} </div>
+                </div>
+            </form >
+        </div>
     )
 }
 export default AddNewRestaurant;

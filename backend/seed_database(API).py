@@ -133,25 +133,31 @@ for n in range(20):
 model.db.session.commit()
 
 
-# creates a review
-restaurants = crud.get_all_restaurants()
-user = crud.get_random_user_from_db()
+# # creates a review
 
-for restaurant in restaurants:
-    now = datetime.now()
-    date = now.strftime("%d %B, %Y")
-    review = fake.text()
-    restaurant_id = restaurant.restaurant_id
-    review = crud.create_review(
-        restaurant_id=restaurant_id,
-        user_id=user.user_id,
-        review=review,
-        date=date)
+# REVIEWS = ["I cannot recommend this place enough. As much as I’d like to keep it to ourselves this restaurant is one of my all time favorites. Perfect spot for a date night, celebration, or just a good eat. The meal was seared and cooked to perfection topped with perfection. The ambience is great and the drinks are amazing as well. The bartender was extremely welcoming and knowledgeable about the local area.", " This is was second time there and it’s been consistent and amazing. Went there for breakfast one day and dinner the other and both have been absolutely amazing experiences! The dishes are worth every penny.  The view, ambiance and staff are absolutely amazing! Everyone from the hostess to the waiters to the assistant waters were all so great, friendly, and professional. They made the experience top notch!",
+#            "This was our favorite restaurant while in Seattle. It's the perfect spot for dinner. The views are excellent and it's a short walk from the market area so it is super easy to get to! The food is fantastic. So many flavors and options and the dishes are not full of fried heavy foods. The dish options are veggie filled, fresh and plenty of seafood also to choose from. Definitely go with a foodie friend and someone you can order different things with and share them all family style!"]
 
-    model.db.session.add(review)
-    model.db.session.flush()
 
-model.db.session.commit()
+# restaurants = crud.get_all_restaurants()
+# # user = crud.get_random_user_from_db()
+
+# for restaurant in restaurants:
+#     user = crud.get_random_user_from_db()
+#     now = datetime.now()
+#     date = now.strftime("%d %B, %Y")
+#     review = random.choice(REVIEWS)
+#     restaurant_id = restaurant.restaurant_id
+#     review = crud.create_review(
+#         restaurant_id=restaurant_id,
+#         user_id=user.user_id,
+#         review=review,
+#         date=date)
+
+#     model.db.session.add(review)
+#     model.db.session.flush()
+
+# model.db.session.commit()
 
 
 # creates a list of favorites and add ratings

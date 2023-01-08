@@ -25,7 +25,7 @@ function SignUpForm({ setFirstName, setLastName, setEmail, setPassword, setLogge
                     setStatusMessage("")
                     Toast({ message: result.message, type: 'success' })
                     setTimeout(() => {
-                        history.push('/')
+                        history.push('/user-profile')
                     }, 2000)
                 } else {
                     setStatusMessage(result.message)
@@ -37,7 +37,6 @@ function SignUpForm({ setFirstName, setLastName, setEmail, setPassword, setLogge
 
     return (
         <div className='background'>
-
             <form className="sign-up-page" onSubmit={handleCreateSubmit}>
                 <div className="cover-sign-up">
                     <h1> Create An Account</h1>
