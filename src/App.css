@@ -35,7 +35,7 @@
 }
 
 .nav-items a:hover {
-  transform: scale(1.25);
+  transform: scale(1.10);
 }
 
 .toggle-button {
@@ -144,7 +144,7 @@
 .search-page select {
   width: 100%;
   padding: 5px 40px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   box-sizing: border-box;
   border: 1px solid #ff9a3c;
   background-color: white;
@@ -153,9 +153,6 @@
   font-family: 'Courier New', Courier, monospace;
 }
 
-/* .placeholder-select {
-  color: #999;
-} */
 
 .search-page input[type="submit"] {
   width: 100%;
@@ -183,7 +180,7 @@
   display: block;
   content: "";
   position: absolute;
-  bottom: 284px;
+  bottom: 279px;
   left: 50%;
   margin-left: -14px;
   background-color: #b84d00;
@@ -763,7 +760,7 @@ hr {
 }
 
 .cover-add {
-  margin: 0;
+  margin-top: 15px;
   box-sizing: border-box;
   font-family: 'Courier New', Courier, monospace;
 }
@@ -784,7 +781,7 @@ hr {
   display: block;
   content: "";
   position: absolute;
-  bottom: 629px;
+  bottom: 639px;
   left: 50%;
   margin-left: -14px;
   background-color: #b84d00;
@@ -821,7 +818,7 @@ hr {
 .login-btn-new-rest {
   width: 40%;
   height: 3em;
-  background-color: rgb(141, 138, 137);
+  background-color: rgb(255, 164, 10);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -839,8 +836,7 @@ hr {
 }
 
 
-
-.categories-dropdown {
+.categories-dropdown-add {
   display: inline-block;
   padding: 10px;
 }
@@ -848,6 +844,7 @@ hr {
 .add-rest-photo {
   margin-top: 10px;
 }
+
 
 /* -------------------- ALL COMPONENTS */
 

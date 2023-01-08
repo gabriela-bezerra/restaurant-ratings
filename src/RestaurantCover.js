@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { left } from '@cloudinary/url-gen/qualifiers/textAlignment';
 
 
 function CloudinaryWidget({ setCoverPhoto }) {
@@ -38,7 +39,9 @@ function CloudinaryWidget({ setCoverPhoto }) {
                     backgroundColor: '#b84d00',
                     borderRadius: '10px',
                     height: 'auto',
-                    width: 'auto'
+                    width: 'auto',
+                    margin: '5px'
+
                 }}
                 folder={'my_folder'}
                 cropping={false}
