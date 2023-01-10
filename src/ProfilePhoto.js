@@ -1,13 +1,10 @@
 import { React } from 'react';
-import { useState } from 'react';
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
-import { auto } from '@cloudinary/url-gen/qualifiers/quality';
 
 function CloudinaryWidget({ userInfo, setUserInfo }) {
 
-    // const [buttonText, setButtonText] = useState('');
 
     const successCallBack = (result) => {
         console.log('Done! Here is the image info: ', result.info)
@@ -24,7 +21,6 @@ function CloudinaryWidget({ userInfo, setUserInfo }) {
             .then((response) => response.json())
             .then((responseJson) => {
                 setUserInfo({ ...userInfo, profile_photo: responseJson.photo_url })
-                // setButtonText('Update Profile Photo')
             });
     }
 
@@ -46,8 +42,7 @@ function CloudinaryWidget({ userInfo, setUserInfo }) {
                 style={{
                     color: 'white',
                     border: 'none',
-                    width: '200px',
-                    backgroundColor: 'gray',
+                    backgroundColor: '#b84d00',
                     borderRadius: '50px',
                     height: '30px',
                     width: '32px'

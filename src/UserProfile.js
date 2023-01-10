@@ -52,27 +52,44 @@ function UserProfile({ user, userInfo, setUserInfo }) {
     return (
         <div className='container-user-profile'>
             <div className='user-details'>
-                <h1> Welcome {userInfo.fname}! </h1>
+
                 <div className='user-info'>
-                    {userInfo.profile_photo ? (
-                        <img
-                            style={{ width: "30%", margin: "30px 0" }}
-                            src={userInfo.profile_photo}
-                            alt="Face"
-                        />
-                    ) : (
-                        <div className="initials-placeholder">{initials}</div>
-                    )}
-                    <ProfilePhoto userInfo={userInfo} setUserInfo={setUserInfo} />
-                    <p className='user-name'> User name : {userInfo.fname} {userInfo.lname}</p>
-                    <p className='user-email'> Email : {userInfo.email} </p>
+                    <h1> Welcome {userInfo.fname}! </h1>
+                    <div className='input-wrapper-user'>
+                        <div className='profile-photo'>
+                            {userInfo.profile_photo ? (
+                                <img className='profile-img'
+                                    src={userInfo.profile_photo}
+                                    alt="Face"
+                                />
+                            ) : (
+                                <div className="initials-placeholder">{initials}</div>
+                            )}
+                            <ProfilePhoto userInfo={userInfo} setUserInfo={setUserInfo} />
+                        </div>
+                        <div className="personal-info" >
+                            <h2> Personal Info</h2>
+                            <p className='user-name'> User name : {userInfo.fname} {userInfo.lname}</p>
+                            <p className='user-email'> Email : {userInfo.email} </p>
+                        </div>
+
+                    </div>
                     <div className="fav-lst">
                         <h3> Favorites Restaurants </h3>
-                        {favorites.map((restaurant) => (
-                            <ul>
-                                <li key={restaurant.restaurant_id}><Link to={`/restaurant-details/${restaurant.restaurant_id}`} >{restaurant.name}</Link></li>
-                            </ul>
-                        ))}
+                        <div className="favList">
+                            {favorites.length > 0 ? (
+                                favorites.map((restaurant) => (
+                                    <ul>
+                                        <li key={restaurant.restaurant_id}>
+                                            <img className="restaurant-photo" src={restaurant.photo_cover} alt={restaurant.name} />
+                                            <Link className='results-link' to={`/restaurant-details/${restaurant.restaurant_id}`} >{restaurant.name}</Link>
+                                        </li>
+                                    </ul>
+                                ))
+                            ) : (
+                                <p>No favorites added yet.</p>
+                            )}
+                        </div>
                     </div>
 
                 </div>

@@ -54,7 +54,7 @@ function SearchBar({ categories }) {
                     <label className='categories-dropdown'> Search by category</label>
                     <div className='input-wrapper'>
                         <select value={selected} onChange={(e) => setSelected(e.target.value)}>
-                            <option value="" hidden disabled> Categories </option>
+                            <option value="Categories" hidden disabled> Categories </option>
                             {categories.map((category) => (
                                 <option color='grey' value={category} key={category}>
                                     {category}
