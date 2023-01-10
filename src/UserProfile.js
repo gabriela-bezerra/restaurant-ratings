@@ -68,7 +68,7 @@ function UserProfile({ user, userInfo, setUserInfo }) {
                             <ProfilePhoto userInfo={userInfo} setUserInfo={setUserInfo} />
                         </div>
                         <div className="personal-info" >
-                            <h2> Personal Info</h2>
+                            <h3> Personal Info</h3>
                             <p className='user-name'> User name : {userInfo.fname} {userInfo.lname}</p>
                             <p className='user-email'> Email : {userInfo.email} </p>
                         </div>
