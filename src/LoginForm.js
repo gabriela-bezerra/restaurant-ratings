@@ -26,7 +26,7 @@ function LoginForm({ user, setUser, setLoggedIn }) {
                     setLoggedIn(true);
                     Toast({ message: data.message, type: 'success' })
                     setTimeout(() => {
-                        history.push('/')
+                        history.push('/user-profile')
                     }, 2500)
                 } else {
                     setErrorMessage(data.message)
