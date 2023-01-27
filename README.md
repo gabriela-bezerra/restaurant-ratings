@@ -1,70 +1,98 @@
-# Getting Started with Create React App
+# Restaurant Finder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Restaurant Finder is an interactive platform that helps users discover new dining options, share their own restaurant experiences and contribute to a growing community of foodies. Built with Python and React, it offers fast navigation, responsive design, and a powerful Postgres database.
 
-## Available Scripts
+[Link to the live demo]
 
-In the project directory, you can run:
+## Deployment 
+https://example.app.com
 
-### `npm start`
+## Contents
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Tech Stack
+- Features
+- Installation
+- About Me
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies
 
-### `npm test`
+Backend: Python, Flask, PostgreSQL, SQLAlchemy.
+Frontend: ReactJS, JavaScript, AJAX, HTML5, CSS3.
+Libraries: Cloudinary, Faker.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
+Users can easily find the perfect restaurant by searching for it by category, zip code, or simply viewing a list of all the restaurants available.
 
-### `npm run build`
+![alt text](https://res.cloudinary.com/di0sy25ru/image/upload/v1674794087/IMG_2335_zpr4ar.jpg "Search page")
+![alt text](https://res.cloudinary.com/di0sy25ru/image/upload/v1674794084/IMG_2330_u0u4vt.jpg "Restaurnts list")
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Users can create a new account by simply providing their information and submitting the form. The data will be securely sent to our server, and a new account will be created in our database. Once once the account is created, they'll be redirected to the profile page and see a success message.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![alt text](https://res.cloudinary.com/di0sy25ru/image/upload/v1674794090/IMG_2326_rgrzol.jpg "New account")
+![alt text](https://res.cloudinary.com/di0sy25ru/image/upload/v1674794090/IMG_2327_bezmv4.jpg "Profile page")
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Users can easily add a profile photo to their account thanks to our integration of Cloudinary API for efficient image handling.
 
-### `npm run eject`
+ ![alt text](https://res.cloudinary.com/di0sy25ru/image/upload/v1674794090/IMG_2324_cpql8f.jpg "Cloudinary")
+ 
+Users can easily save their favorite restaurants with a simple click, They can add and remove restaurants from their personalized list which is then displayed and managed on the user's profile page.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+ ![alt text](https://res.cloudinary.com/di0sy25ru/image/upload/v1674794084/IMG_2331_e2uuch.jpg "Favorites")
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Our app offers an easy-to-use review feature that allows users to quickly leave a review, add a rating, and even upload an optional photo for a restaurant. Users can also view the photo of other reviews in full-size by clicking on it and opening a modal.
+![alt text](https://res.cloudinary.com/di0sy25ru/image/upload/v1674794084/IMG_2334_am67fy.jpg "Review")
+![alt text](https://res.cloudinary.com/di0sy25ru/image/upload/v1674794089/IMG_2329_lqrilq.jpg "ReviewModal")
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Users can help our platform grow by adding their own favorite restaurants, and share them with others. This will also help to expand the database."
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![alt text](https://res.cloudinary.com/di0sy25ru/image/upload/v1674794085/IMG_2332_oueqgi.jpg "New Restaurant")
 
-## Learn More
+## Installation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Requirements:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Python 3.9
+- Flask
+- PostgreSQL
 
-### Code Splitting
+To have this app running on your local computer, please follow the below steps:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Clone repository:
+```sh
+$ git clone https://github.com/gabriela-bezerra/restaurant-ratings.git
+```
 
-### Analyzing the Bundle Size
+Create and activate a virtual environment:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```sh
+$ virtualenv env
+$ source env/bin/activate
+```
 
-### Making a Progressive Web App
+Install dependencies:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```sh
+$ pip install -r requirements.txt
+```
 
-### Advanced Configuration
+Create the database and seed with the existing example data.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```sh
+$ python3 seed_database(API).py
+```
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Run the app from the command line.
 
-### `npm run build` fails to minify
+```sh
+$ python3 server.py
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## About me
+
+Gabriela is a Software Engineer in the Seattle Area; this is her first project. Visit her on [LinkedIn].
+
+[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
+
+   [Link to the live demo]: <https://www.youtube.com/watch?v=e7YCFDl5M5E&t=3s>
+   [LinkedIn]: <https://www.linkedin.com/in/gabriela-bezerra-us/>
