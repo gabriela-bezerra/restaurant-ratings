@@ -9,11 +9,6 @@ http://18.237.112.181/
 
 ## Contents
 
-- Tech Stack
-- Features
-- Installation
-- About Me
-
 - [Tech Stack](https://github.com/gabriela-bezerra/restaurant-ratings#tehcnologies)
 - [Features](https://github.com/gabriela-bezerra/restaurant-ratings#features)
 - [Installation](https://github.com/gabriela-bezerra/restaurant-ratings#installation)
@@ -101,7 +96,9 @@ I bring a unique combination of skills to the table as a Full Stack Software Eng
 
 I am a fast learner with a passion for technology and learning, and I enjoy using my skills to build robust and maintainable technical solutions. My technical skills include ReactJS, JavaScript, HTML, CSS, Python, and SQL. 
 
-As a bilingual individual, I am able to work effectively in diverse environments and thrive in constantly challenging situations. In my free time, I enjoy experimenting with new technologies and contributing to open source projects. Check out my [LinkedIn] profile and connect with me if you want to learn more about my work and how I can bring value to your team! 
+As a bilingual individual, I am able to work effectively in diverse environments and thrive in constantly challenging situations. In my free time, I enjoy experimenting with new technologies and contributing to open source projects. 
+
+Check out my [LinkedIn] profile and connect with me if you want to learn more about my work and how I can bring value to your team! 
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
