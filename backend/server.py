@@ -14,11 +14,11 @@ app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
 
-@app.route('/')
-def show_homepage():
-    """Show the application's homepage."""
+# @app.route('/')
+# def show_homepage():
+#     """Show the application's homepage."""
 
-    return render_template('index.html')
+#     return render_template('index.html')
 
 
 # USER RELATED ROUTES-------------------------------------
