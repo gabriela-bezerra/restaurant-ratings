@@ -9,7 +9,7 @@ import crud
 import json
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../build", static_url_path="/")
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
@@ -325,6 +325,17 @@ def get_restaurants_by_zipcode():
     return jsonify([restaurant.to_dict() for restaurant in get_restaurants])
 
 
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def index(path):
+    return app.send_static_file("index.html")
+
+
+@app.errorhandler(404)
+def not_found(_error):
+    return app.send_static_file("index.html")
+
+
 if __name__ == "__main__":
     connect_to_db(app)
-    app.run(host="0.0.0.0", debug=True)
+    app.run()
