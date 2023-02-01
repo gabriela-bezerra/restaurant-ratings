@@ -5,7 +5,7 @@ Restaurant Finder is an interactive platform that helps users discover new dinin
 [Link to the live demo]
 
 ## Deployment 
-https://example.app.com
+http://18.237.112.181/
 
 ## Contents
 
@@ -14,11 +14,16 @@ https://example.app.com
 - Installation
 - About Me
 
+- [Tech Stack](https://github.com/gabriela-bezerra/restaurant-ratings#tehcnologies)
+- [Features](https://github.com/gabriela-bezerra/restaurant-ratings#features)
+- [Installation](https://github.com/gabriela-bezerra/restaurant-ratings#installation)
+- [About Me](https://github.com/gabriela-bezerra/restaurant-ratings#about-me)
+
 ## Technologies
 
-Backend: Python, Flask, PostgreSQL, SQLAlchemy.
-Frontend: ReactJS, JavaScript, AJAX, HTML5, CSS3.
-Libraries: Cloudinary, Faker.
+- Backend: Python, Flask, PostgreSQL, SQLAlchemy.
+- Frontend: ReactJS, JavaScript, AJAX, HTML5, CSS3.
+- Libraries: Cloudinary, Faker.
 
 ## Features
 Users can easily find the perfect restaurant by searching for it by category, zip code, or simply viewing a list of all the restaurants available.
@@ -90,7 +95,13 @@ $ python3 server.py
 
 ## About me
 
-Gabriela is a Software Engineer in the Seattle Area; this is her first project. Visit her on [LinkedIn].
+Hi, I'm Gabriela! 
+
+I bring a unique combination of skills to the table as a Full Stack Software Engineer with a background in Human Resources. My experience in data analysis, project management, and cross-functional collaboration has taught me the importance of strong problem-solving, communication, and interpersonal skills, which I've honed during my time in HR. 
+
+I am a fast learner with a passion for technology and learning, and I enjoy using my skills to build robust and maintainable technical solutions. My technical skills include ReactJS, JavaScript, HTML, CSS, Python, and SQL. 
+
+As a bilingual individual, I am able to work effectively in diverse environments and thrive in constantly challenging situations. In my free time, I enjoy experimenting with new technologies and contributing to open source projects. Check out my [LinkedIn] profile and connect with me if you want to learn more about my work and how I can bring value to your team! 
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
